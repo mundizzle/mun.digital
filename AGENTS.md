@@ -18,7 +18,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 | Surface | Name |
 | --- | --- |
 | Domain (canonical) | `mun.digital` |
-| Domain (also serves placeholder; should redirect to apex — see Next Actions) | `www.mun.digital` |
+| Domain (308-redirects to apex) | `www.mun.digital` |
 | GitHub repo | `mundizzle/mun.digital` |
 | Vercel project slug | `mun-digital` |
 | Vercel sticky `*.vercel.app` alias | `mundigital.vercel.app` (pre-rename, still active) |
@@ -31,8 +31,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - Git: pushed to GitHub. `main` is the production branch.
 - GitHub: public repo at https://github.com/mundizzle/mun.digital. Description set. No branch protection (intentional).
 - Vercel: project `mun-digital` linked; Git integration auto-deploys `main` to production. Verified by a real Git-triggered deploy.
-- **Pipeline live:** `https://mun.digital` and `https://www.mun.digital` both return HTTP/2 200 with valid TLS, serving the placeholder. Confirmed via `dig +short` (both resolve to `76.76.21.21`) and `curl -I` (200 from Vercel, `strict-transport-security` set).
-- **Caveat:** `www` does NOT 308-redirect to apex; Vercel is serving both with identical content (same etag). For SEO/canonical correctness, configure a redirect via Vercel dashboard → project `mun-digital` → Settings → Domains → `www.mun.digital` → "Redirect to" `mun.digital`. Captured in Next Actions.
+- **Pipeline live:** `https://mun.digital` returns HTTP/2 200 with valid TLS serving the placeholder; `https://www.mun.digital` 308-redirects to apex (`location: https://mun.digital/`). DNS resolves correctly (both hosts → `76.76.21.21`).
 - Placeholder homepage: in place at `src/app/page.tsx` with title/description set in `src/app/layout.tsx`. No real site content yet.
 
 ## Operating Rules
@@ -83,17 +82,16 @@ The previous Namecheap "Redirect Domain" (`mun.digital → http://www.mun.digita
 - [x] Custom domains (`mun.digital`, `www.mun.digital`) added in Vercel
 - [x] Local directory renamed to `~/Projects/mun.digital/`
 - [x] Namecheap: redirect/parking removed; A records added for `@` and `www`
-- [x] TLS issued; both `https://mun.digital` and `https://www.mun.digital` return 200
-- [ ] `www` 308-redirects to apex (currently both serve same content)
+- [x] TLS issued; apex `https://mun.digital` returns 200
+- [x] `www.mun.digital` 308-redirects to apex (configured in Vercel dashboard)
 
 ## Next Actions
-1. Configure `www → apex` redirect in Vercel dashboard. Project `mun-digital` → Settings → Domains → `www.mun.digital` → set "Redirect to" `mun.digital` (308). Verify with `curl -I https://www.mun.digital` showing `308` + `location: https://mun.digital/`.
-2. Define site purpose / IA / branding. The placeholder is fine but should be replaced before any meaningful sharing.
-3. Replace placeholder homepage at `src/app/page.tsx`; consider full metadata (`opengraph-image`, `twitter:card`, `sitemap.xml`, `robots.txt`).
-4. Decide on favicon — currently default Next favicon.
-5. Decide on analytics: Vercel Analytics (one-click in dashboard), Plausible, or none.
-6. Decide on LICENSE — currently none.
-7. Address the 2 moderate `npm audit` vulnerabilities (`npm audit` for details).
+1. Define site purpose / IA / branding. The placeholder is fine but should be replaced before any meaningful sharing.
+2. Replace placeholder homepage at `src/app/page.tsx`; consider full metadata (`opengraph-image`, `twitter:card`, `sitemap.xml`, `robots.txt`).
+3. Decide on favicon — currently default Next favicon.
+4. Decide on analytics: Vercel Analytics (one-click in dashboard), Plausible, or none.
+5. Decide on LICENSE — currently none.
+6. Address the 2 moderate `npm audit` vulnerabilities (`npm audit` for details).
 
 ## Decision Log
 - 2026-04-30: Chose Next.js + TypeScript + Tailwind + App Router scaffold.
@@ -106,4 +104,4 @@ The previous Namecheap "Redirect Domain" (`mun.digital → http://www.mun.digita
 - 2026-04-30: 2 moderate `npm audit` vulnerabilities reported on fresh scaffold; not blocking. Track in Next Actions.
 - 2026-04-30: Originally targeted `mundigital.com`; corrected to `mun.digital` once registrar revealed the real domain. Removed the wrong domains from Vercel.
 - 2026-04-30: Renamed across surfaces for consistency: GitHub `mundigital` → `mun.digital`; Vercel project slug `mundigital` → `mun-digital` (dots disallowed in slugs); npm name `mundigital` → `mun.digital`; local directory `~/Projects/mundigital` → `~/Projects/mun.digital`.
-- 2026-04-30: Pipeline live — `https://mun.digital` serves the placeholder with TLS; `www` resolves but does not redirect to apex yet (deferred to Next Actions).
+- 2026-04-30: Pipeline live — `https://mun.digital` serves the placeholder with TLS; `https://www.mun.digital` 308-redirects to apex via Vercel domain configuration.
