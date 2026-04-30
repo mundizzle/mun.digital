@@ -16,10 +16,10 @@ This version has breaking changes — APIs, conventions, and file structure may 
 ## Current State
 - Last verified: 2026-04-30 (America/Los_Angeles)
 - Local scaffold: complete (Next.js 16.2.4, React 19.2.4, Tailwind 4, TypeScript 5, ESLint 9)
-- GitHub: not created
-- Vercel deployment: not linked
-- Custom domain: not added
-- Placeholder homepage: not replaced (default Next.js scaffold homepage in place)
+- GitHub: pushed → https://github.com/mundizzle/mundigital
+- Vercel deployment: linked + Git auto-deploy verified. Production alias: https://mundigital.vercel.app
+- Custom domain: `mundigital.com` and `www.mundigital.com` added to Vercel project; **DNS NOT YET POINTING** — user action required
+- Placeholder homepage: replaced
 
 ## Operating Rules
 - Package manager: npm
@@ -43,22 +43,30 @@ npm run build
 - Manual deploy fallback: `vercel --prod` (deploys under the authenticated personal account; no `--scope` needed)
 
 ## DNS
-| Host | Type  | Value                                                   | Source    | Verified |
-| ---- | ----- | ------------------------------------------------------- | --------- | -------- |
-| @    | A     | <from `vercel domains inspect mundigital.com`>          | Namecheap | no       |
-| www  | CNAME | <from `vercel domains inspect www.mundigital.com`>      | Namecheap | no       |
+Authoritative DNS is currently NOT Namecheap. `dig NS mundigital.com` returns `ns401/402/403.controldns.mx`. The user may have custom nameservers set at Namecheap pointing to controldns.mx, OR Namecheap nameservers must be restored. Records below must be added wherever authority lives (controldns.mx panel, or Namecheap Advanced DNS after switching NS back).
+
+Vercel's recommended records (from `vercel domains inspect`):
+
+| Host | Type  | Value                  | Verified |
+| ---- | ----- | ---------------------- | -------- |
+| @    | A     | 76.76.21.21            | no       |
+| www  | A     | 76.76.21.21            | no       |
+
+Note: Vercel recommended an A record (not CNAME) for `www` in this project. Use what `vercel domains inspect www.mundigital.com` prints; do not assume CNAME.
+
+Alternative: change nameservers to `ns1.vercel-dns.com` / `ns2.vercel-dns.com` and let Vercel manage records directly. Not recommended unless user wants Vercel as DNS provider.
 
 ## Status Checklist
 - [x] Next.js scaffolded locally
 - [x] Node version pinned (24.x in engines.node, 24 in .nvmrc)
 - [x] lint + build pass locally
-- [ ] git initialized, initial commits landed
-- [ ] GitHub repo created and pushed
-- [ ] Vercel project linked
-- [ ] GitHub auto-deploy verified by placeholder homepage commit
-- [ ] Default Next homepage replaced with minimal placeholder
-- [ ] Custom domains added in Vercel
-- [ ] Namecheap DNS updated
+- [x] git initialized, initial commits landed
+- [x] GitHub repo created and pushed
+- [x] Vercel project linked
+- [x] GitHub auto-deploy verified by placeholder homepage commit
+- [x] Default Next homepage replaced with minimal placeholder
+- [x] Custom domains added in Vercel
+- [ ] DNS records updated at authoritative nameserver (currently controldns.mx, NOT Namecheap default)
 - [ ] TLS issued; apex loads; www → apex redirect verified
 
 ## Next Actions
