@@ -1,6 +1,6 @@
 # mundigital
 
-Personal site at [mundigital.com](https://mundigital.com) — purpose TBD.
+Personal site at [mun.digital](https://mun.digital) — purpose TBD.
 
 ## Tech
 
