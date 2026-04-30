@@ -10,14 +10,14 @@ This version has breaking changes — APIs, conventions, and file structure may 
 ## Project Brief
 - Purpose: TBD — placeholder personal site at mun.digital; specific concept to be defined.
 - Canonical domain: https://mun.digital
-- Repository: https://github.com/mundizzle/mundigital
-- Deployment: Vercel personal account `mundigital`, project `mundigital`
+- Repository: https://github.com/mundizzle/mun.digital
+- Deployment: Vercel personal account `mundigital`, project `mun-digital` (Vercel slug uses hyphen — dots aren't allowed in project slugs)
 
 ## Current State
 - Last verified: 2026-04-30 (America/Los_Angeles)
 - Local scaffold: complete (Next.js 16.2.4, React 19.2.4, Tailwind 4, TypeScript 5, ESLint 9)
-- GitHub: pushed → https://github.com/mundizzle/mundigital
-- Vercel deployment: linked + Git auto-deploy verified. Production alias: https://mundigital.vercel.app
+- GitHub: pushed → https://github.com/mundizzle/mun.digital
+- Vercel deployment: linked + Git auto-deploy verified. Current production alias: https://mundigital.vercel.app (sticky from pre-rename; will be replaced by https://mun.digital once DNS is live)
 - Custom domain: `mun.digital` and `www.mun.digital` added to Vercel project; **DNS NOT YET POINTING** — user action required
 - Placeholder homepage: replaced
 

@@ -11,11 +11,11 @@ export default function Home() {
       </main>
       <footer className="mt-16 text-sm text-zinc-500 dark:text-zinc-500">
         <a
-          href="https://github.com/mundizzle/mundigital"
+          href="https://github.com/mundizzle/mun.digital"
           className="underline-offset-4 hover:underline"
           rel="noopener noreferrer"
         >
-          github.com/mundizzle/mundigital
+          github.com/mundizzle/mun.digital
         </a>
       </footer>
     </div>
