@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "mun-digital": {
+      "command": "node",
+      "args": ["bin/mun-digital.mjs", "mcp"]
+    }
+  }
+}
