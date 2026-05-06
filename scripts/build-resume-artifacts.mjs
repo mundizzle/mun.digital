@@ -21,7 +21,8 @@ const artifactStatePath = path.join(rootDir, ".resume-artifacts.json");
 const rawResume = JSON.parse(await fs.readFile(sourcePath, "utf8"));
 const resume = sanitizeResume(rawResume);
 const markdown = renderMarkdown(resume);
-const html = renderHtml(resume, markdown);
+const pdfMarkdown = renderMarkdown(resume, { includeEndorsements: false });
+const html = renderHtml(resume, pdfMarkdown);
 
 await fs.mkdir(publicDir, { recursive: true });
 await fs.writeFile(jsonPath, `${JSON.stringify(resume, null, 2)}\n`);
@@ -118,7 +119,8 @@ async function findChrome() {
   return null;
 }
 
-function renderMarkdown(resume) {
+function renderMarkdown(resume, options = {}) {
+  const includeEndorsements = options.includeEndorsements ?? true;
   const profileLine = profileLinks(resume).join(" | ");
   const lines = [
     `# ${resume.basics.name}`,
@@ -168,7 +170,7 @@ function renderMarkdown(resume) {
     );
   }
 
-  if ((resume.references ?? []).length > 0) {
+  if (includeEndorsements && (resume.references ?? []).length > 0) {
     lines.push("", "## Endorsements", "");
 
     for (const reference of resume.references ?? []) {
