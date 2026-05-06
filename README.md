@@ -61,7 +61,7 @@ mundigital profile
 - Agent discovery: [mun.digital/llms.txt](https://mun.digital/llms.txt)
 - JSON: [mun.digital/resume.json](https://mun.digital/resume.json)
 - Markdown: [mun.digital/resume.md](https://mun.digital/resume.md)
-- PDF: [mun.digital/resume.pdf](https://mun.digital/resume.pdf)
+- PDF: [mun.digital/mundi-morgado-resume.pdf](https://mun.digital/mundi-morgado-resume.pdf)
 
 Agents can request the homepage as Markdown with HTTP content negotiation:
 

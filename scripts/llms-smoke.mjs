@@ -56,7 +56,7 @@ async function assertLlmsTxt(base) {
 
   assert(response.ok, "llms.txt did not return 200");
   assert(body.startsWith("# mun.digital"), "llms.txt missing title");
-  for (const expected of ["/resume.md", "/resume.json", "/resume.pdf", "/api/mcp"]) {
+  for (const expected of ["/resume.md", "/resume.json", "/mundi-morgado-resume.pdf", "/api/mcp"]) {
     assert(body.includes(expected), `llms.txt missing ${expected}`);
   }
 }

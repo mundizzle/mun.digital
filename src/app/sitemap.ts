@@ -27,7 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
-      url: "https://mun.digital/resume.pdf",
+      url: "https://mun.digital/mundi-morgado-resume.pdf",
       lastModified: new Date("2026-05-06"),
       changeFrequency: "weekly",
       priority: 0.7,

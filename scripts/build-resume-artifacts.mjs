@@ -14,6 +14,7 @@ const publicDir = path.join(rootDir, "public");
 const jsonPath = path.join(publicDir, "resume.json");
 const markdownPath = path.join(publicDir, "resume.md");
 const pdfPath = path.join(publicDir, "resume.pdf");
+const namedPdfPath = path.join(publicDir, "mundi-morgado-resume.pdf");
 const artifactStatePath = path.join(rootDir, ".resume-artifacts.json");
 
 const rawResume = JSON.parse(await fs.readFile(sourcePath, "utf8"));
@@ -35,6 +36,11 @@ async function renderPdf(htmlContent) {
   if (state.pdfSourceHash === sourceHash) {
     try {
       await fs.access(pdfPath);
+      try {
+        await fs.access(namedPdfPath);
+      } catch {
+        await fs.copyFile(pdfPath, namedPdfPath);
+      }
       return;
     } catch {
       // Regenerate below when the tracked PDF is missing.
@@ -63,10 +69,13 @@ async function renderPdf(htmlContent) {
       "--headless",
       "--disable-gpu",
       "--no-sandbox",
+      "--no-pdf-header-footer",
+      "--print-to-pdf-no-header",
       `--print-to-pdf=${tmpPdfPath}`,
       `file://${htmlPath}`,
     ]);
     await fs.copyFile(tmpPdfPath, pdfPath);
+    await fs.copyFile(tmpPdfPath, namedPdfPath);
     await writeArtifactState({ ...state, pdfSourceHash: sourceHash });
   } finally {
     await fs.rm(tmpDir, { force: true, recursive: true });
@@ -215,13 +224,14 @@ function renderHtml(resume, markdown) {
     h1 { font-size: 25px; margin: 0 0 8px; }
     h2 {
       border-top: 1px solid #d8d0c5;
+      color: #211d18;
       font-size: 12px;
       letter-spacing: 0.16em;
       margin: 18px 0 8px;
       padding-top: 10px;
       text-transform: uppercase;
     }
-    h3 { color: #8a4d2d; font-size: 12px; margin: 12px 0 4px; }
+    h3 { color: #211d18; font-size: 12px; margin: 12px 0 4px; }
     p { margin: 0 0 6px; }
     ul { margin: 4px 0 8px 18px; padding: 0; }
     li { margin: 0 0 3px; }

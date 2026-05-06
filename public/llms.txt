@@ -9,7 +9,7 @@ The site is built for both human visitors and agentic browsing. Public agent sur
 - [Human-readable profile](https://mun.digital/)
 - [Markdown profile](https://mun.digital/resume.md)
 - [JSON Resume](https://mun.digital/resume.json)
-- [PDF resume](https://mun.digital/resume.pdf)
+- [PDF resume](https://mun.digital/mundi-morgado-resume.pdf)
 - [Read-only MCP endpoint](https://mun.digital/api/mcp)
 - [npm package](https://www.npmjs.com/package/@mun.digital/cli)
 

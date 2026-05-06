@@ -123,7 +123,7 @@ function buildContactLinks(resume: JsonResume) {
     ...profileLinks,
     { text: "JSON", href: "/resume.json" },
     { text: "MD", href: "/resume.md" },
-    { text: "PDF", href: "/resume.pdf" },
+    { text: "PDF", href: "/mundi-morgado-resume.pdf" },
   ];
 }
 
