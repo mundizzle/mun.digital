@@ -20,7 +20,7 @@ Project board: [Mun.digital on Linear](https://linear.app/mundizzle/project/mund
 ## Current module
 Active Linear issue: [REPO-36 — Module C: Rudimentary MCP](https://linear.app/mundizzle/issue/REPO-36/module-c-rudimentary-mcp).
 
-Current Phase 0 scope: local JSON Resume source, public read-only CLI, and local stdio MCP. Web UI, generated Markdown/PDF, npm publishing, and hosted Vercel MCP are deferred fast-follow work.
+Current Phase 0 scope: local JSON Resume source, public read-only CLI, local stdio MCP, and a JSON-backed resume web UI. Generated Markdown/PDF, npm publishing, and hosted Vercel MCP are deferred fast-follow work.
 
 ## Surface inventory (consistency reference)
 | Surface | Name |
@@ -39,7 +39,7 @@ Current Phase 0 scope: local JSON Resume source, public read-only CLI, and local
 ## Current State (as of 2026-05-06, America/Los_Angeles)
 - **Operational task management migrated to Linear** — see project board. The 12 modules are Linear issues (REPO-34 through REPO-45). Day-to-day work runs from there.
 - **Sanity removed from this repo's stack (2026-05-03).** Sanity will be used in a separate project the user is setting up later. Content layer for this repo is now JSON Resume + MDX in-repo. Module A (Sanity fluency) is cancelled in Linear; modules B / C / E re-based onto JSON Resume + MDX. Research artifacts in `docs/research/` retained as Sanity-AI-Growth interview-prep material.
-- **Module C / REPO-36 in progress.** Phase 0 is local JSON Resume + CLI + stdio MCP. Hosted `/api/mcp`, web UI, and generated Markdown/PDF are deferred follow-ups.
+- **Module C / REPO-36 in progress.** Phase 0 is local JSON Resume + CLI + stdio MCP + web UI. Hosted `/api/mcp` and generated Markdown/PDF are deferred follow-ups.
 - `data/resume.json` is the current source of truth for the local agentic profile surface.
 - Local scaffold: complete (Next.js 16.2.4, React 19.2.4, Tailwind 4, TypeScript 5, ESLint 9). `npm run lint` and `npm run build` pass.
 - Git: pushed to GitHub. `main` is the production branch.
@@ -119,7 +119,7 @@ Modules B–L sit in the Linear backlog. See the [project board](https://linear.
 
 See [Linear project board](https://linear.app/mundizzle/project/mundigital-25dce9d960e8). REPO-36 is active.
 
-**Deferred fast-follow.** Web UI on `mun.digital` from `data/resume.json`, generated Markdown/PDF from JSON, public npm publish, hosted Vercel MCP at `/api/mcp`, favicon, analytics, LICENSE selection, and `npm audit` follow-up.
+**Deferred fast-follow.** Generated Markdown/PDF from JSON, public npm publish, hosted Vercel MCP at `/api/mcp`, favicon, analytics, LICENSE selection, and `npm audit` follow-up.
 
 ## Decision Log
 - 2026-04-30: Chose Next.js + TypeScript + Tailwind + App Router scaffold.
@@ -143,3 +143,4 @@ See [Linear project board](https://linear.app/mundizzle/project/mundigital-25dce
 - 2026-05-03: **Sanity removed from `mun.digital` stack.** Sanity integration moves to a separate project the user will set up later. This repo's content layer is now **JSON Resume + MDX** in-repo. Module A (Sanity fluency) cancelled in Linear; the `docs/research/` artifacts retained as durable interview-prep material. Modules B / C / E re-based off Sanity onto JSON Resume + MDX. Rationale: *"I no longer want to include Sanity integration in this repo. I decided that it's better just to stick to building out my own rudimentary MCP. Plan on setting up Sanity but for a different project that will actually use Sanity as needed."*
 - 2026-05-03: **Operational task management migrated to Linear** (`Repos` team, project [Mun.digital](https://linear.app/mundizzle/project/mundigital-25dce9d960e8)). Twelve module issues created (REPO-34 through REPO-45); hard dependencies wired (F blockedBy D+B; L blockedBy J+K). Linear is canonical for tasks/sub-tasks/dependencies.
 - 2026-05-06: **Phase 0 of Module C started.** Scope narrowed to local JSON Resume + CLI + stdio MCP first; web UI, generated artifacts, npm publish, and hosted Vercel MCP are fast-follow phases.
+- 2026-05-06: **Phase 0 web UI fast-follow started.** The `mundizzle.com` dossier/resume visual system is being ported into Next.js using `data/resume.json`; the old markdown/PDF generation pipeline is intentionally not ported.

@@ -1,22 +1,33 @@
-export default function Home() {
+import { AgentCue } from "@/components/resume/AgentCue";
+import { Education } from "@/components/resume/Education";
+import { Experience } from "@/components/resume/Experience";
+import { Header } from "@/components/resume/Header";
+import { Skills } from "@/components/resume/Skills";
+import { Summary } from "@/components/resume/Summary";
+import { adaptResume } from "@/components/resume/adaptResume";
+import { loadResume } from "@/profile/resume-data.mjs";
+
+export default async function Home() {
+  const resume = adaptResume(await loadResume());
+
   return (
-    <div className="flex flex-1 flex-col items-center justify-center bg-zinc-50 px-6 font-sans text-zinc-900 dark:bg-black dark:text-zinc-100">
-      <main className="flex w-full max-w-xl flex-col items-center gap-6 text-center">
-        <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-          mundigital
-        </h1>
-        <p className="text-base text-zinc-600 dark:text-zinc-400">
-          Site purpose TBD — initial deployment pipeline active.
-        </p>
+    <div className="relative z-[1] mx-auto max-w-[860px] px-5 pt-14 pb-16 md:px-8 md:pb-24 print:max-w-none print:px-0 print:pt-0 print:pb-0">
+      <Header
+        location={resume.location}
+        name={resume.name}
+        contactLinks={resume.contactLinks}
+      />
+
+      <main>
+        <Summary index="00" title={resume.summaryTitle} paragraphs={resume.summary} />
+        <Skills index="01" title={resume.skillsTitle} groups={resume.skills} />
+        <Experience index="02" title={resume.experienceTitle} jobs={resume.jobs} />
+        <Education index="03" title={resume.educationTitle} entries={resume.education} />
+        <AgentCue />
       </main>
-      <footer className="mt-16 text-sm text-zinc-500 dark:text-zinc-500">
-        <a
-          href="https://github.com/mundizzle/mun.digital"
-          className="underline-offset-4 hover:underline"
-          rel="noopener noreferrer"
-        >
-          github.com/mundizzle/mun.digital
-        </a>
+
+      <footer className="mt-10 flex justify-between border-t border-rule-strong pt-[18px] text-[10.5px] tracking-[0.2em] text-ink-faint uppercase print:[break-inside:avoid]">
+        <div className="before:text-accent before:content-['■_']">END OF FILE</div>
       </footer>
     </div>
   );
