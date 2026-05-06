@@ -16,7 +16,7 @@
     "access": "public"
   },
   "bin": {
-    "mun-digital": "./bin/mun-digital.mjs"
+    "mun-digital": "bin/mun-digital.mjs"
   },
   "files": [
     "bin/",
