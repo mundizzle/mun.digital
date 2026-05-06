@@ -8,6 +8,7 @@ import { promisify } from "node:util";
 import { sanitizeResume } from "../src/profile/sanitize-resume.mjs";
 
 const execFileAsync = promisify(execFile);
+const humanContactLines = ["415-505-4154", "mundizzle@gmail.com"];
 const rootDir = path.resolve(import.meta.dirname, "..");
 const sourcePath = path.join(rootDir, "data/resume.json");
 const publicDir = path.join(rootDir, "public");
@@ -185,8 +186,15 @@ function renderMarkdown(resume) {
 }
 
 function renderHtml(resume, markdown) {
-  const body = markdown
-    .split("\n")
+  const [nameLine, ...markdownLines] = markdown.split("\n");
+  const htmlLines = [
+    nameLine,
+    "",
+    humanContactLines.join(" | "),
+    "",
+    ...markdownLines,
+  ];
+  const body = htmlLines
     .map((line) => {
       if (line.startsWith("# ")) {
         return `<h1>${escapeHtml(line.slice(2))}</h1>`;

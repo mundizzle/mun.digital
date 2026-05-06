@@ -6,10 +6,11 @@ import { Header } from "@/components/resume/Header";
 import { Skills } from "@/components/resume/Skills";
 import { Summary } from "@/components/resume/Summary";
 import { adaptResume } from "@/components/resume/adaptResume";
+import { webContactLinks } from "@/components/resume/webContactLinks";
 import { loadResume } from "@/profile/resume-data.mjs";
 
 export default async function Home() {
-  const resume = adaptResume(await loadResume());
+  const resume = adaptResume(await loadResume(), { contactLinks: webContactLinks });
 
   return (
     <div className="relative z-[1] mx-auto w-full max-w-[860px] min-w-0 overflow-x-hidden px-5 pt-14 pb-16 md:px-8 md:pb-24 print:max-w-none print:px-0 print:pt-0 print:pb-0">

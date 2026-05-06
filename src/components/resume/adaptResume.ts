@@ -1,4 +1,4 @@
-import type { ResumeViewModel } from "./types";
+import type { ContactLink, ResumeViewModel } from "./types";
 
 interface JsonResume {
   basics?: {
@@ -60,7 +60,11 @@ const selectedClients = [
   "Wilmington Bank",
 ];
 
-export function adaptResume(resume: JsonResume): ResumeViewModel {
+interface AdaptResumeOptions {
+  contactLinks?: ContactLink[];
+}
+
+export function adaptResume(resume: JsonResume, options: AdaptResumeOptions = {}): ResumeViewModel {
   const location = [resume.basics?.location?.city, resume.basics?.location?.region]
     .filter(Boolean)
     .join(", ");
@@ -73,7 +77,7 @@ export function adaptResume(resume: JsonResume): ResumeViewModel {
     experienceTitle: "Experience",
     educationTitle: "Education",
     endorsementsTitle: "Endorsements",
-    contactLinks: buildContactLinks(resume),
+    contactLinks: buildContactLinks(resume, options.contactLinks),
     summary: resume.basics?.summary ? [resume.basics.summary] : [],
     skills: (resume.skills ?? []).map((skill) => ({
       label: skill.name ?? "Skills",
@@ -111,13 +115,15 @@ export function adaptResume(resume: JsonResume): ResumeViewModel {
   };
 }
 
-function buildContactLinks(resume: JsonResume) {
-  return (resume.basics?.profiles ?? [])
+function buildContactLinks(resume: JsonResume, extraLinks: ContactLink[] = []) {
+  const profileLinks = (resume.basics?.profiles ?? [])
     .filter((profile) => profile.url && profile.network !== "Website")
     .map((profile) => ({
       text: formatProfileText(profile.url, profile.username),
       href: profile.url ?? "",
     }));
+
+  return [...extraLinks, ...profileLinks];
 }
 
 function formatProfileText(url?: string, username?: string) {
