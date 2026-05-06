@@ -41,8 +41,8 @@ try {
   const tools = await client.request({ method: "tools/list" }, ListToolsResultSchema);
   const toolNames = tools.tools.map((tool) => tool.name);
   assert(
-    JSON.stringify(toolNames) === JSON.stringify(["search", "fetch", "search_resume"]),
-    `expected search, fetch, search_resume tools; got ${toolNames.join(", ")}`,
+    JSON.stringify(toolNames) === JSON.stringify(["search", "fetch"]),
+    `expected search, fetch tools; got ${toolNames.join(", ")}`,
   );
 
   const search = await client.request(
@@ -67,12 +67,6 @@ try {
   assert(fetched.id === searchResult.results[0].id, "fetch did not return requested id");
   assert(fetched.text.includes(searchResult.results[0].text), "fetch text did not include search snippet");
   assertNoPrivateFields(fetched, "fetch result leaked private fields");
-
-  const aliasSearch = await callTool("search_resume", { query: "github" });
-  assert(
-    JSON.stringify(aliasSearch) === JSON.stringify(searchResult),
-    "search_resume alias did not match search output",
-  );
 
   const endorsements = await client.request(
     {

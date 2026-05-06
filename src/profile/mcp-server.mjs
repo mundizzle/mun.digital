@@ -81,31 +81,6 @@ export function createMcpServer() {
     },
   );
 
-  server.registerTool(
-    "search_resume",
-    {
-      title: "Search Resume",
-      description:
-        "[Deprecated - use search] Search the sanitized public resume and return grounded evidence snippets.",
-      inputSchema: {
-        query: z.string().min(1).describe("Search query, such as React, design systems, Rails, or endorsements."),
-        limit: z.number().int().min(1).max(20).optional().describe("Maximum number of results."),
-      },
-    },
-    async ({ query, limit }) => {
-      const result = await searchMcpEvidence(query, { limit });
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(result, null, 2),
-          },
-        ],
-        structuredContent: result,
-      };
-    },
-  );
-
   server.registerPrompt(
     "portfolio_brief",
     {

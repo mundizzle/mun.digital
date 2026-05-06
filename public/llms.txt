@@ -21,7 +21,6 @@ The canonical MCP server name is `mundigital` (one word, no space, no hyphen). T
 - Use `https://mun.digital/resume.json` for structured JSON Resume data.
 - Use `https://mun.digital/api/mcp` for public, no-auth Streamable HTTP MCP access.
 - MCP tools: `search` finds grounded public profile evidence; `fetch` retrieves full evidence text by id.
-- Deprecated MCP tool: `search_resume` remains as a compatibility alias for `search`.
 - Claude Code: `claude mcp add --transport http mundigital https://mun.digital/api/mcp`
 - Codex: `codex mcp add mundigital --url https://mun.digital/api/mcp`
 - ChatGPT / OpenAI custom connectors: add remote MCP URL `https://mun.digital/api/mcp` with no authentication.

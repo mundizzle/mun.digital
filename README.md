@@ -16,8 +16,6 @@ https://mun.digital/api/mcp
 
 This endpoint is public, read-only, and does not require authentication. It exposes `search` and `fetch` tools for LLM clients, plus a resume resource and portfolio prompt for clients that support MCP resources and prompts.
 
-Compatibility note: `search_resume` remains available as a deprecated alias for `search` during the `0.2.x` line.
-
 Claude Code:
 
 ```bash
