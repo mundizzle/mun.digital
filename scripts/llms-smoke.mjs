@@ -59,6 +59,7 @@ async function assertLlmsTxt(base) {
   for (const expected of ["/resume.md", "/resume.json", "/mundi-morgado-resume.pdf", "/api/mcp"]) {
     assert(body.includes(expected), `llms.txt missing ${expected}`);
   }
+  assert(body.includes("https://github.com/mundizzle"), "llms.txt missing GitHub profile");
 }
 
 async function assertResumeMarkdown(base) {
@@ -71,6 +72,7 @@ async function assertResumeMarkdown(base) {
     "resume.md did not return text/markdown",
   );
   assert(body.startsWith("# Mundi Morgado"), "resume.md body did not start with resume markdown");
+  assert(body.includes("github.com/mundizzle"), "resume.md is missing GitHub profile");
 }
 
 function headerStartsWith(response, name, expected) {

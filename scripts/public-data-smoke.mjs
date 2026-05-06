@@ -6,9 +6,12 @@ const raw = JSON.parse(await fs.readFile(path.join(rootDir, "data/resume.json"),
 const publicJson = JSON.parse(await fs.readFile(path.join(rootDir, "public/resume.json"), "utf8"));
 const scannedFiles = [
   "README.md",
+  "public/llms.txt",
   "public/resume.json",
   "public/resume.md",
 ];
+const githubProfileUrl = "https://github.com/mundizzle";
+const githubProfileText = "github.com/mundizzle";
 
 assert(!publicJson.basics?.phone, "public resume leaked basics.phone");
 assert(!publicJson.basics?.location?.address, "public resume leaked basics.location.address");
@@ -18,6 +21,13 @@ assert(!hasPrivateMeta(publicJson), "public resume leaked meta.private");
 if (raw.meta?.publicContact?.email !== true) {
   assert(!publicJson.basics?.email, "public resume leaked basics.email");
 }
+
+assert(
+  publicJson.basics?.profiles?.some((profile) => profile.url === githubProfileUrl),
+  "public resume is missing GitHub profile",
+);
+const markdown = await fs.readFile(path.join(rootDir, "public/resume.md"), "utf8");
+assert(markdown.includes(githubProfileText), "public resume markdown is missing GitHub profile");
 
 const privateValues = collectPrivateValues(raw);
 for (const file of scannedFiles) {

@@ -33,6 +33,10 @@ try {
   assert(!resume.basics.email, "resume resource leaked basics.email");
   assert(!resume.basics.location?.address, "resume resource leaked basics.location.address");
   assert(!resume.basics.location?.postalCode, "resume resource leaked basics.location.postalCode");
+  assert(
+    resume.basics.profiles?.some((profile) => profile.url === "https://github.com/mundizzle"),
+    "resume resource is missing GitHub profile",
+  );
 
   const tools = await client.request({ method: "tools/list" }, ListToolsResultSchema);
   assert(tools.tools[0]?.name === "search_resume", "expected search_resume tool");
@@ -42,13 +46,13 @@ try {
       method: "tools/call",
       params: {
         name: "search_resume",
-        arguments: { query: "design systems" },
+        arguments: { query: "github" },
       },
     },
     CallToolResultSchema,
   );
   assert(search.content?.[0]?.type === "text", "search_resume did not return text content");
-  assert(search.content[0].text.includes("design"), "search_resume did not return design evidence");
+  assert(search.content[0].text.includes("github.com/mundizzle"), "search_resume did not return GitHub evidence");
 
   console.log(`http mcp smoke passed: ${url.href}`);
 } finally {

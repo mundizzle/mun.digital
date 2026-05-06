@@ -39,6 +39,10 @@ try {
   assert(resume.schema_version, "resume resource is missing schema_version");
   assert(!resume.basics.phone, "resume resource leaked basics.phone");
   assert(!resume.basics.email, "resume resource leaked basics.email");
+  assert(
+    resume.basics.profiles?.some((profile) => profile.url === "https://github.com/mundizzle"),
+    "resume resource is missing GitHub profile",
+  );
 
   const tools = await client.request({ method: "tools/list" }, ListToolsResultSchema);
   assert(tools.tools.length === 1, `expected 1 tool, got ${tools.tools.length}`);
@@ -49,13 +53,13 @@ try {
       method: "tools/call",
       params: {
         name: "search_resume",
-        arguments: { query: "design systems" },
+        arguments: { query: "github" },
       },
     },
     CallToolResultSchema,
   );
   assert(search.content?.[0]?.type === "text", "search_resume did not return text content");
-  assert(search.content[0].text.includes("design"), "search_resume did not return design evidence");
+  assert(search.content[0].text.includes("github.com/mundizzle"), "search_resume did not return GitHub evidence");
 
   const prompts = await client.request({ method: "prompts/list" }, ListPromptsResultSchema);
   assert(prompts.prompts.length === 1, `expected 1 prompt, got ${prompts.prompts.length}`);

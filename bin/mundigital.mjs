@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { buildBrief, loadResume, searchResume } from "../src/profile/resume-data.mjs";
+import { buildBrief, loadResume, profileLinks, searchResume } from "../src/profile/resume-data.mjs";
 import { runStdioServer } from "../src/profile/mcp-server.mjs";
 
 const args = process.argv.slice(2);
@@ -80,11 +80,15 @@ function renderProfile(resume) {
   const skills = resume.skills
     ?.map((group) => `${group.name}: ${group.keywords.join(", ")}`)
     .join("\n");
+  const profiles = profileLinks(resume).join("\n");
 
   return [
     `${resume.basics.name} - ${resume.basics.label}`,
     "",
     resume.basics.summary,
+    "",
+    "Profiles",
+    profiles,
     "",
     skills,
   ]

@@ -51,6 +51,10 @@ try {
   assert(!profile.basics.email, "installed CLI leaked basics.email");
   assert(!profile.basics.location?.address, "installed CLI leaked basics.location.address");
   assert(!profile.basics.location?.postalCode, "installed CLI leaked basics.location.postalCode");
+  assert(
+    profile.basics.profiles?.some((entry) => entry.url === "https://github.com/mundizzle"),
+    "installed CLI output missing GitHub profile",
+  );
 
   console.log("npm pack smoke passed");
 } finally {

@@ -7,6 +7,7 @@ await assertProfile();
 await assertSearch("React");
 await assertSearch("design systems");
 await assertSearch("agentic");
+await assertSearch("github");
 
 console.log("profile smoke passed");
 
@@ -19,6 +20,13 @@ async function assertProfile() {
   assert(!profile.basics.email, "profile leaked basics.email");
   assert(!profile.basics.location?.address, "profile leaked basics.location.address");
   assert(!profile.basics.location?.postalCode, "profile leaked basics.location.postalCode");
+  assert(
+    profile.basics.profiles?.some((profile) => profile.url === "https://github.com/mundizzle"),
+    "profile is missing GitHub profile",
+  );
+
+  const { stdout: textStdout } = await execFileAsync("node", ["bin/mundigital.mjs", "profile"]);
+  assert(textStdout.includes("https://github.com/mundizzle"), "profile text is missing GitHub profile");
 }
 
 async function assertSearch(query) {

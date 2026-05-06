@@ -62,6 +62,7 @@ mundigital profile
 - JSON: [mun.digital/resume.json](https://mun.digital/resume.json)
 - Markdown: [mun.digital/resume.md](https://mun.digital/resume.md)
 - PDF: [mun.digital/mundi-morgado-resume.pdf](https://mun.digital/mundi-morgado-resume.pdf)
+- GitHub: [github.com/mundizzle](https://github.com/mundizzle)
 
 Agents can request the homepage as Markdown with HTTP content negotiation:
 

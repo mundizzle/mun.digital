@@ -54,6 +54,7 @@ export async function buildBrief() {
   const skills = resume.skills
     ?.map((group) => `${group.name}: ${group.keywords.join(", ")}`)
     .join("\n");
+  const profiles = profileLinks(resume).join("\n");
   const highlights = resume.work
     ?.slice(0, 3)
     .map((job) => {
@@ -66,6 +67,9 @@ export async function buildBrief() {
     `${resume.basics.name} - ${resume.basics.label}`,
     "",
     resume.basics.summary,
+    "",
+    "Profiles",
+    profiles,
     "",
     "Skills",
     skills,
@@ -81,6 +85,15 @@ function collectEvidence(resume) {
   const entries = [];
 
   add(entries, "basics.summary", "Summary", resume.basics?.summary);
+
+  for (const [index, profile] of (resume.basics?.profiles ?? []).entries()) {
+    add(
+      entries,
+      `basics.profiles.${index}`,
+      `Profile: ${profile.network ?? profile.username ?? index}`,
+      [profile.network, profile.username, profile.url].filter(Boolean).join(" - "),
+    );
+  }
 
   for (const skill of resume.skills ?? []) {
     add(entries, `skills.${slug(skill.name)}`, `Skills: ${skill.name}`, skill.keywords?.join(", "));
@@ -100,6 +113,16 @@ function collectEvidence(resume) {
   }
 
   return entries;
+}
+
+export function profileLinks(resume) {
+  return (resume.basics?.profiles ?? [])
+    .map((profile) => {
+      const url = profile.url ? String(profile.url).replace(/\/$/, "") : "";
+      const label = [profile.network, profile.username].filter(Boolean).join(": ");
+      return [label, url].filter(Boolean).join(" - ");
+    })
+    .filter(Boolean);
 }
 
 function add(entries, path, section, text) {

@@ -4,6 +4,8 @@ UX Engineer
 
 Oakland, CA
 
+linkedin.com/in/mundi | github.com/mundizzle | mun.digital
+
 ## Summary
 
 UX Engineer with 25+ years shipping products, platforms, and design systems across startup and enterprise. Deep experience with React, Tailwind, Figma, and Node.js-based tooling. Leads teams, shapes front-end architecture, and improves how engineering work gets done. Driving agentic development practices into team workflows and building interfaces for the AI era, where agents are users too.

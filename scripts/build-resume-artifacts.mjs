@@ -119,12 +119,15 @@ async function findChrome() {
 }
 
 function renderMarkdown(resume) {
+  const profileLine = profileLinks(resume).join(" | ");
   const lines = [
     `# ${resume.basics.name}`,
     "",
     resume.basics.label,
     "",
     locationLine(resume),
+    "",
+    profileLine,
     "",
     "## Summary",
     "",
@@ -266,6 +269,13 @@ function escapeHtml(value) {
 
 function locationLine(resume) {
   return [resume.basics?.location?.city, resume.basics?.location?.region].filter(Boolean).join(", ");
+}
+
+function profileLinks(resume) {
+  return (resume.basics?.profiles ?? [])
+    .map((profile) => profile.url)
+    .filter(Boolean)
+    .map((url) => String(url).replace(/^https?:\/\//, "").replace(/\/$/, ""));
 }
 
 function formatDateRange(start, end) {
