@@ -6,6 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, "../..");
 const resumePath = path.join(rootDir, "public/resume.json");
+const sourceResumePath = path.join(rootDir, "data/resume.json");
 
 const PRIVATE_META_KEY = "private";
 const SCHEMA_VERSION = "1.0.0";
@@ -14,11 +15,24 @@ let cachedResume;
 
 export async function loadResume() {
   if (!cachedResume) {
-    const raw = await fs.readFile(resumePath, "utf8");
-    cachedResume = JSON.parse(raw);
+    cachedResume = await readPublicResume();
   }
 
   return cachedResume;
+}
+
+async function readPublicResume() {
+  try {
+    const raw = await fs.readFile(resumePath, "utf8");
+    return JSON.parse(raw);
+  } catch (error) {
+    if (error?.code !== "ENOENT") {
+      throw error;
+    }
+
+    const raw = await fs.readFile(sourceResumePath, "utf8");
+    return sanitizeResume(JSON.parse(raw));
+  }
 }
 
 export function sanitizeResume(resume) {
