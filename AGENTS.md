@@ -30,23 +30,23 @@ Current Phase 0 scope: local JSON Resume source, public read-only CLI, local std
 | GitHub repo | `mundizzle/mun.digital` |
 | Vercel project slug | `mun-digital` |
 | Vercel sticky `*.vercel.app` alias | `mundigital.vercel.app` (pre-rename, still active) |
-| npm `package.json` name | `mun-digital` |
+| npm `package.json` name | `@mun.digital/cli` |
 | CLI bin | `mun-digital` |
 | Local MCP server | `mun-digital mcp` / `npm run mcp:start` |
+| Hosted MCP endpoint | `https://mun.digital/api/mcp` |
 | Local directory | `~/Projects/mun.digital/` |
 | Registrar | Namecheap (BasicDNS nameservers) |
 
 ## Current State (as of 2026-05-06, America/Los_Angeles)
 - **Operational task management migrated to Linear** — see project board. The 12 modules are Linear issues (REPO-34 through REPO-45). Day-to-day work runs from there.
 - **Sanity removed from this repo's stack (2026-05-03).** Sanity will be used in a separate project the user is setting up later. Content layer for this repo is now JSON Resume + MDX in-repo. Module A (Sanity fluency) is cancelled in Linear; modules B / C / E re-based onto JSON Resume + MDX. Research artifacts in `docs/research/` retained as Sanity-AI-Growth interview-prep material.
-- **Module C / REPO-36 in progress.** Phase 0 is local JSON Resume + CLI + stdio MCP + web UI. Hosted `/api/mcp` and generated Markdown/PDF are deferred follow-ups.
-- `data/resume.json` is the current source of truth for the local agentic profile surface.
+- **Module C / REPO-36 in progress.** Phase 0 is local JSON Resume + CLI + stdio MCP + web UI. Fast-follow work added sanitized generated artifacts, a hosted `/api/mcp` route, and publish-ready npm package metadata for `@mun.digital/cli`.
+- `data/resume.json` is the editorial source of truth. Runtime/public surfaces use generated sanitized artifacts in `public/resume.json`, `public/resume.md`, and `public/resume.pdf`.
 - Local scaffold: complete (Next.js 16.2.4, React 19.2.4, Tailwind 4, TypeScript 5, ESLint 9). `npm run lint` and `npm run build` pass.
 - Git: pushed to GitHub. `main` is the production branch.
 - GitHub: public repo at https://github.com/mundizzle/mun.digital. Description set. No branch protection (intentional).
 - Vercel: project `mun-digital` linked; Git integration auto-deploys `main` to production. Verified by a real Git-triggered deploy.
-- **Pipeline live:** `https://mun.digital` returns HTTP/2 200 with valid TLS serving the placeholder; `https://www.mun.digital` 308-redirects to apex (`location: https://mun.digital/`). DNS resolves correctly (both hosts → `76.76.21.21`).
-- Placeholder homepage: in place at `src/app/page.tsx` with title/description set in `src/app/layout.tsx`. No real site content yet — replacement deferred to Phase 2.2.
+- **Pipeline live:** `https://mun.digital` returns HTTP/2 200 with valid TLS serving the JSON-backed resume UI; `https://www.mun.digital` 308-redirects to apex (`location: https://mun.digital/`). DNS resolves correctly (both hosts → `76.76.21.21`).
 
 ## Operating Rules
 - Package manager: npm.
@@ -65,9 +65,13 @@ npm run lint
 npm run build
 npm run mun -- profile --json
 npm run mun -- search "design systems" --json
+npm run resume:build
+npm run public:smoke
 npm run mcp:start
 npm run profile:smoke
 npm run mcp:smoke
+npm run mcp:http:smoke -- http://localhost:3000/api/mcp
+npm run pack:smoke
 vercel --prod    # manual production deploy fallback (no --scope needed)
 vercel ls        # list recent deployments
 ```
@@ -119,7 +123,7 @@ Modules B–L sit in the Linear backlog. See the [project board](https://linear.
 
 See [Linear project board](https://linear.app/mundizzle/project/mundigital-25dce9d960e8). REPO-36 is active.
 
-**Deferred fast-follow.** Generated Markdown/PDF from JSON, public npm publish, hosted Vercel MCP at `/api/mcp`, favicon, analytics, LICENSE selection, and `npm audit` follow-up.
+**Remaining fast-follow.** Public npm publish ([REPO-47](https://linear.app/mundizzle/issue/REPO-47/publish-mundigitalcli-to-npm)), Vercel usage/invocation alert and optional Firewall rate limiting before promoting the hosted MCP endpoint as production-ready ([REPO-46](https://linear.app/mundizzle/issue/REPO-46/configure-vercel-usage-guardrails-for-hosted-mcp)), favicon/OG polish, analytics decision, and `npm audit` follow-up.
 
 ## Decision Log
 - 2026-04-30: Chose Next.js + TypeScript + Tailwind + App Router scaffold.
@@ -144,3 +148,4 @@ See [Linear project board](https://linear.app/mundizzle/project/mundigital-25dce
 - 2026-05-03: **Operational task management migrated to Linear** (`Repos` team, project [Mun.digital](https://linear.app/mundizzle/project/mundigital-25dce9d960e8)). Twelve module issues created (REPO-34 through REPO-45); hard dependencies wired (F blockedBy D+B; L blockedBy J+K). Linear is canonical for tasks/sub-tasks/dependencies.
 - 2026-05-06: **Phase 0 of Module C started.** Scope narrowed to local JSON Resume + CLI + stdio MCP first; web UI, generated artifacts, npm publish, and hosted Vercel MCP are fast-follow phases.
 - 2026-05-06: **Phase 0 web UI fast-follow started.** The `mundizzle.com` dossier/resume visual system is being ported into Next.js using `data/resume.json`; the old markdown/PDF generation pipeline is intentionally not ported.
+- 2026-05-06: **Agent-surface fast-follow implemented locally.** Added sanitized public resume projection/artifacts, hosted stateless Streamable HTTP MCP route at `/api/mcp`, package metadata for public scoped npm package `@mun.digital/cli`, MIT license, package tarball smoke gate, robots, sitemap, and JSON-sourced metadata. Npm publish and Vercel usage alert remain operator steps.

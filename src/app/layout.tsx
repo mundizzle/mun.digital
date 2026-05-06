@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { loadResume } from "@/profile/resume-data.mjs";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,10 +13,35 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Mundi Morgado | mun.digital",
-  description: "Agent-readable professional profile and resume for Mundi Morgado.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const resume = await loadResume();
+  const name = typeof resume.basics?.name === "string" ? resume.basics.name : "Mundi Morgado";
+  const description =
+    typeof resume.basics?.summary === "string"
+      ? resume.basics.summary
+      : "Agent-readable professional profile and resume for Mundi Morgado.";
+
+  return {
+    title: `${name} | mun.digital`,
+    description,
+    metadataBase: new URL("https://mun.digital"),
+    openGraph: {
+      title: `${name} | mun.digital`,
+      description,
+      url: "https://mun.digital",
+      siteName: "mun.digital",
+      type: "profile",
+    },
+    twitter: {
+      card: "summary",
+      title: `${name} | mun.digital`,
+      description,
+    },
+    alternates: {
+      canonical: "https://mun.digital",
+    },
+  };
+}
 
 export default function RootLayout({
   children,

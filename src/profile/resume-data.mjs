@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, "../..");
-const resumePath = path.join(rootDir, "data/resume.json");
+const resumePath = path.join(rootDir, "public/resume.json");
 
 const PRIVATE_META_KEY = "private";
 const SCHEMA_VERSION = "1.0.0";
@@ -18,7 +18,7 @@ export async function loadResume() {
     cachedResume = JSON.parse(raw);
   }
 
-  return sanitizeResume(cachedResume);
+  return cachedResume;
 }
 
 export function sanitizeResume(resume) {
