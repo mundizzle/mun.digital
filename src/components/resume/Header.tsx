@@ -8,6 +8,9 @@ interface HeaderProps {
 }
 
 export function Header({ location, name, contactLinks }: HeaderProps) {
+  const actionLinkClassName =
+    "inline-flex h-[28px] w-[42px] items-center justify-center border-r border-accent text-[12px] leading-none tracking-[0.12em] text-accent uppercase no-underline transition-colors hover:bg-accent hover:text-bg focus-visible:ring-1 focus-visible:ring-accent focus-visible:outline-none last:border-r-0";
+
   return (
     <header className="mb-7 border-t border-b border-rule py-6 [border-top-color:var(--rule-strong)] print:[break-inside:avoid]">
       <div className="grid gap-y-[18px]">
@@ -18,6 +21,25 @@ export function Header({ location, name, contactLinks }: HeaderProps) {
               <span>CV</span>
             </span>
           }
+          aside={
+            <span
+              className="inline-flex w-fit items-stretch justify-self-start border border-accent print:hidden md:justify-self-end"
+              role="group"
+              aria-label="Format"
+            >
+              <a className={actionLinkClassName} href="/resume.md" title="View in Markdown format">
+                MD
+              </a>
+              <a
+                className={actionLinkClassName}
+                href="/mundi-morgado-resume.pdf"
+                title="View in PDF format"
+              >
+                PDF
+              </a>
+            </span>
+          }
+          asideClassName="md:self-center"
           labelClassName="leading-none"
         >
           <h1 className="m-0 text-[28px] leading-[1.05] font-bold tracking-[-0.015em] text-ink md:text-[34px]">

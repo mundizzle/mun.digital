@@ -112,19 +112,12 @@ export function adaptResume(resume: JsonResume): ResumeViewModel {
 }
 
 function buildContactLinks(resume: JsonResume) {
-  const profileLinks = (resume.basics?.profiles ?? [])
-    .filter((profile) => profile.url)
+  return (resume.basics?.profiles ?? [])
+    .filter((profile) => profile.url && profile.network !== "Website")
     .map((profile) => ({
-      text: profile.network === "Website" ? "mun.digital" : formatProfileText(profile.url, profile.username),
+      text: formatProfileText(profile.url, profile.username),
       href: profile.url ?? "",
     }));
-
-  return [
-    ...profileLinks,
-    { text: "JSON", href: "/resume.json" },
-    { text: "MD", href: "/resume.md" },
-    { text: "PDF", href: "/mundi-morgado-resume.pdf" },
-  ];
 }
 
 function formatProfileText(url?: string, username?: string) {
