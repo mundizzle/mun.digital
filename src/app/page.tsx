@@ -1,5 +1,6 @@
 import { AgentCue } from "@/components/resume/AgentCue";
 import { Education } from "@/components/resume/Education";
+import { Endorsements } from "@/components/resume/Endorsements";
 import { Experience } from "@/components/resume/Experience";
 import { Header } from "@/components/resume/Header";
 import { Skills } from "@/components/resume/Skills";
@@ -23,6 +24,11 @@ export default async function Home() {
         <Skills index="01" title={resume.skillsTitle} groups={resume.skills} />
         <Experience index="02" title={resume.experienceTitle} jobs={resume.jobs} />
         <Education index="03" title={resume.educationTitle} entries={resume.education} />
+        <Endorsements
+          index="04"
+          title={resume.endorsementsTitle}
+          endorsements={resume.endorsements}
+        />
         <AgentCue />
       </main>
 

@@ -36,6 +36,13 @@ interface JsonResume {
     startDate?: string;
     endDate?: string;
   }>;
+  references?: Array<{
+    name?: string;
+    reference?: string;
+    title?: string;
+    company?: string;
+    url?: string;
+  }>;
 }
 
 const selectedWorkPatterns = /^(Wilson QBX|Peak Performance Project|Iron Mountain|Experian BusinessIQ|United Airlines)/i;
@@ -65,6 +72,7 @@ export function adaptResume(resume: JsonResume): ResumeViewModel {
     skillsTitle: "Skills",
     experienceTitle: "Experience",
     educationTitle: "Education",
+    endorsementsTitle: "Endorsements",
     contactLinks: buildContactLinks(resume),
     summary: resume.basics?.summary ? [resume.basics.summary] : [],
     skills: (resume.skills ?? []).map((skill) => ({
@@ -92,6 +100,13 @@ export function adaptResume(resume: JsonResume): ResumeViewModel {
       school: entry.institution ?? "School",
       degree: [entry.studyType, entry.area].filter(Boolean).join(", "),
       dates: formatDateRange(entry.startDate, entry.endDate),
+    })),
+    endorsements: (resume.references ?? []).map((reference) => ({
+      author: reference.name ?? "Reference",
+      authorTitle: reference.title,
+      company: reference.company,
+      sourceUrl: reference.url,
+      quoteParagraphs: reference.reference ? [reference.reference] : [],
     })),
   };
 }

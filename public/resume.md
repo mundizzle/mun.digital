@@ -77,3 +77,36 @@ Pioneering dot-com era internet strategy and development consultancy.
 ## Education
 
 - **Providence College:** B.S., Business Management (1992 - 1996)
+
+## Endorsements
+
+### Marlo Stewart
+
+Engineering Chief of Staff, Project & Strategic Program Leader — Gierd
+
+> Mundi is an exceptional front-end developer who consistently delivers high-quality work. He combines strong technical skill with a great eye for user experience, communicates clearly, takes ownership, and is the kind of teammate any team would be lucky to have.
+
+### Robert Evans
+
+Chief Technology Officer — Gierd
+
+> Mundi is one of the nicest engineers out there who is also amazingly smart, talented, and efficient.
+
+### Keisha Archuleta, MBA
+
+Associate Director - Project Management — Rightpoint
+
+> This is the person you want on your team. He possesses immense talent and a fantastic personality, and any company would be lucky to bring him in.
+
+### Corey Larson
+
+VP, Lead Software Engineer — JPMorganChase
+
+> Mundi is one of the best developers I've had the privilege of working with. Any project he touches improves under his leadership.
+
+### Nathan Logan
+
+Engineering Manager — Bluebeam Inc.
+
+> Mundi is extremely talented, forward-thinking, and consistently pairs technology decisions with real business needs. As a leader, he is humble, hard-working, and leads by action. As a mentor, he is patient, wise, and a great communicator.
+

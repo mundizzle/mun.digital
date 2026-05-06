@@ -140,6 +140,43 @@
       "endDate": "1996"
     }
   ],
+  "references": [
+    {
+      "name": "Marlo Stewart",
+      "title": "Engineering Chief of Staff, Project & Strategic Program Leader",
+      "company": "Gierd",
+      "url": "https://www.linkedin.com/in/mundi/details/recommendations/",
+      "reference": "Mundi is an exceptional front-end developer who consistently delivers high-quality work. He combines strong technical skill with a great eye for user experience, communicates clearly, takes ownership, and is the kind of teammate any team would be lucky to have."
+    },
+    {
+      "name": "Robert Evans",
+      "title": "Chief Technology Officer",
+      "company": "Gierd",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7449546407583125504/",
+      "reference": "Mundi is one of the nicest engineers out there who is also amazingly smart, talented, and efficient."
+    },
+    {
+      "name": "Keisha Archuleta, MBA",
+      "title": "Associate Director - Project Management",
+      "company": "Rightpoint",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7449546407583125504/",
+      "reference": "This is the person you want on your team. He possesses immense talent and a fantastic personality, and any company would be lucky to bring him in."
+    },
+    {
+      "name": "Corey Larson",
+      "title": "VP, Lead Software Engineer",
+      "company": "JPMorganChase",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7449546407583125504/",
+      "reference": "Mundi is one of the best developers I've had the privilege of working with. Any project he touches improves under his leadership."
+    },
+    {
+      "name": "Nathan Logan",
+      "title": "Engineering Manager",
+      "company": "Bluebeam Inc.",
+      "url": "https://www.linkedin.com/in/mundi/details/recommendations/",
+      "reference": "Mundi is extremely talented, forward-thinking, and consistently pairs technology decisions with real business needs. As a leader, he is humble, hard-working, and leads by action. As a mentor, he is patient, wise, and a great communicator."
+    }
+  ],
   "meta": {
     "canonical": "https://mun.digital",
     "source": "Converted from /Users/mundizzle/Projects/mundizzle.com/src/resume.md on 2026-05-06.",

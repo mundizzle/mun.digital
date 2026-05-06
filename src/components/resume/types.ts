@@ -26,6 +26,14 @@ export interface EducationEntry {
   dates: string;
 }
 
+export interface Endorsement {
+  author: string;
+  authorTitle?: string;
+  company?: string;
+  sourceUrl?: string;
+  quoteParagraphs: string[];
+}
+
 export interface ResumeViewModel {
   name: string;
   location: string;
@@ -33,9 +41,11 @@ export interface ResumeViewModel {
   skillsTitle: string;
   experienceTitle: string;
   educationTitle: string;
+  endorsementsTitle: string;
   contactLinks: ContactLink[];
   summary: string[];
   skills: SkillGroup[];
   jobs: Job[];
   education: EducationEntry[];
+  endorsements: Endorsement[];
 }

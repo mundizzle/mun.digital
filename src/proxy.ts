@@ -11,6 +11,7 @@ export async function proxy(request: NextRequest) {
   const target = prefersMarkdown(accept) ? "/resume.md" : "/";
   const upstream = await fetchWithBypass(request, target);
   const headers = new Headers(upstream.headers);
+  stripHopByHop(headers);
   appendVary(headers, "Accept");
 
   if (target === "/resume.md") {
@@ -71,6 +72,23 @@ function parseAccept(accept: string): MediaPreference[] {
       };
     })
     .filter((item) => item.mediaType.length > 0);
+}
+
+function stripHopByHop(headers: Headers) {
+  for (const header of [
+    "connection",
+    "content-encoding",
+    "content-length",
+    "keep-alive",
+    "proxy-authenticate",
+    "proxy-authorization",
+    "te",
+    "trailer",
+    "transfer-encoding",
+    "upgrade",
+  ]) {
+    headers.delete(header);
+  }
 }
 
 function appendVary(headers: Headers, value: string) {

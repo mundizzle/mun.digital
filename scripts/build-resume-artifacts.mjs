@@ -155,6 +155,23 @@ function renderMarkdown(resume) {
     );
   }
 
+  if ((resume.references ?? []).length > 0) {
+    lines.push("", "## Endorsements", "");
+
+    for (const reference of resume.references ?? []) {
+      lines.push(`### ${reference.name}`, "");
+
+      const attribution = [reference.title, reference.company].filter(Boolean).join(" — ");
+      if (attribution) {
+        lines.push(attribution, "");
+      }
+
+      if (reference.reference) {
+        lines.push(`> ${reference.reference}`, "");
+      }
+    }
+  }
+
   return `${lines.filter((line, index, all) => !(line === "" && all[index - 1] === "")).join("\n")}\n`;
 }
 
