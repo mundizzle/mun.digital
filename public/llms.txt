@@ -1,0 +1,21 @@
+# mun.digital
+
+Public, read-only professional profile for Mundi Morgado.
+
+The site is built for both human visitors and agentic browsing. Public agent surfaces are generated from sanitized resume data and exclude private contact details, private metadata, write actions, deploy actions, shell access, filesystem access, environment access, secrets, telemetry, and postinstall behavior.
+
+## Primary Resources
+
+- [Human-readable profile](https://mun.digital/)
+- [Markdown profile](https://mun.digital/resume.md)
+- [JSON Resume](https://mun.digital/resume.json)
+- [PDF resume](https://mun.digital/resume.pdf)
+- [Read-only MCP endpoint](https://mun.digital/api/mcp)
+- [npm package](https://www.npmjs.com/package/@mun.digital/cli)
+
+## Agent Notes
+
+- Request `https://mun.digital/` with `Accept: text/markdown` to receive the Markdown profile.
+- Use `https://mun.digital/resume.md` as the stable canonical Markdown URL.
+- Use `https://mun.digital/resume.json` for structured JSON Resume data.
+- Use `https://mun.digital/api/mcp` for Streamable HTTP MCP access.

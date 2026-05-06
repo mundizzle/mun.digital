@@ -37,6 +37,7 @@
     "mun": "node bin/mundigital.mjs",
     "resume:build": "node scripts/build-resume-artifacts.mjs",
     "public:smoke": "node scripts/public-data-smoke.mjs",
+    "llms:smoke": "node scripts/llms-smoke.mjs",
     "mcp:start": "node bin/mundigital.mjs mcp",
     "mcp:http:smoke": "node scripts/http-mcp-smoke.mjs",
     "mcp:smoke": "node scripts/mcp-smoke.mjs",

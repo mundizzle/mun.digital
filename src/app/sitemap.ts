@@ -15,6 +15,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
+      url: "https://mun.digital/llms.txt",
+      lastModified: new Date("2026-05-06"),
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+    {
       url: "https://mun.digital/resume.md",
       lastModified: new Date("2026-05-06"),
       changeFrequency: "weekly",

@@ -41,6 +41,7 @@ Current Phase 0 scope: local JSON Resume source, public read-only CLI, local std
 - **Operational task management migrated to Linear** — see project board. The 12 modules are Linear issues (REPO-34 through REPO-45). Day-to-day work runs from there.
 - **Sanity removed from this repo's stack (2026-05-03).** Sanity will be used in a separate project the user is setting up later. Content layer for this repo is now JSON Resume + MDX in-repo. Module A (Sanity fluency) is cancelled in Linear; modules B / C / E re-based onto JSON Resume + MDX. Research artifacts in `docs/research/` retained as Sanity-AI-Growth interview-prep material.
 - **Module C / REPO-36 in progress.** Phase 0 is local JSON Resume + CLI + stdio MCP + web UI. Fast-follow work added sanitized generated artifacts, a hosted `/api/mcp` route, public npm package `@mun.digital/cli`, and favicon/OG metadata polish.
+- **Agent-readable Markdown follow-up tracked in Linear as REPO-48 and implemented locally.** Scope: native `Accept: text/markdown` handling for `/`, root `/llms.txt`, smoke checks, and docs, using the existing sanitized `public/resume.md` pipeline.
 - `data/resume.json` is the editorial source of truth. Runtime/public surfaces use generated sanitized artifacts in `public/resume.json`, `public/resume.md`, and `public/resume.pdf`.
 - Local scaffold: complete (Next.js 16.2.4, React 19.2.4, Tailwind 4, TypeScript 5, ESLint 9). `npm run lint` and `npm run build` pass.
 - Git: pushed to GitHub. `main` is the production branch.
@@ -67,6 +68,7 @@ npm run mun -- profile --json
 npm run mun -- search "design systems" --json
 npm run resume:build
 npm run public:smoke
+npm run llms:smoke
 npm run mcp:start
 npm run profile:smoke
 npm run mcp:smoke
@@ -123,7 +125,7 @@ Modules B–L sit in the Linear backlog. See the [project board](https://linear.
 
 See [Linear project board](https://linear.app/mundizzle/project/mundigital-25dce9d960e8). REPO-36 is active.
 
-**Remaining fast-follow.** `npm audit` follow-up and broader post-interview polish. Vercel usage guardrails and npm publish are complete; hosted MCP is public at `https://mun.digital/api/mcp`.
+**Remaining fast-follow.** `npm audit` follow-up, REPO-48 deploy verification, and broader post-interview polish. Vercel usage guardrails and npm publish are complete; hosted MCP is public at `https://mun.digital/api/mcp`.
 
 ## Decision Log
 - 2026-04-30: Chose Next.js + TypeScript + Tailwind + App Router scaffold.

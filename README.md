@@ -58,9 +58,16 @@ mundigital profile
 ## Website
 
 - Site: [mun.digital](https://mun.digital)
+- Agent discovery: [mun.digital/llms.txt](https://mun.digital/llms.txt)
 - JSON: [mun.digital/resume.json](https://mun.digital/resume.json)
 - Markdown: [mun.digital/resume.md](https://mun.digital/resume.md)
 - PDF: [mun.digital/resume.pdf](https://mun.digital/resume.pdf)
+
+Agents can request the homepage as Markdown with HTTP content negotiation:
+
+```bash
+curl -H "Accept: text/markdown" https://mun.digital/
+```
 
 ## Data boundary
 
@@ -83,6 +90,7 @@ npm run dev   # http://localhost:3000
 ```bash
 npm run resume:build
 npm run public:smoke
+npm run llms:smoke
 npm run profile:smoke
 npm run mcp:smoke
 npm run mcp:http:smoke -- https://mun.digital/api/mcp
