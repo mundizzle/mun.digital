@@ -5,7 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import { promisify } from "node:util";
 
-import { sanitizeResume } from "../src/profile/resume-data.mjs";
+import { sanitizeResume } from "../src/profile/sanitize-resume.mjs";
 
 const execFileAsync = promisify(execFile);
 const rootDir = path.resolve(import.meta.dirname, "..");

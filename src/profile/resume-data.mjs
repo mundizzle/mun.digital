@@ -1,60 +1,15 @@
-import fs from "node:fs/promises";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
+import publicResume from "../../public/resume.json" with { type: "json" };
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const rootDir = path.resolve(__dirname, "../..");
-const resumePath = path.join(rootDir, "public/resume.json");
-const sourceResumePath = path.join(rootDir, "data/resume.json");
-
-const PRIVATE_META_KEY = "private";
-const SCHEMA_VERSION = "1.0.0";
+import { sanitizeResume, SCHEMA_VERSION } from "./sanitize-resume.mjs";
 
 let cachedResume;
 
 export async function loadResume() {
   if (!cachedResume) {
-    cachedResume = await readPublicResume();
+    cachedResume = sanitizeResume(publicResume);
   }
 
   return cachedResume;
-}
-
-async function readPublicResume() {
-  try {
-    const raw = await fs.readFile(resumePath, "utf8");
-    return JSON.parse(raw);
-  } catch (error) {
-    if (error?.code !== "ENOENT") {
-      throw error;
-    }
-
-    const raw = await fs.readFile(sourceResumePath, "utf8");
-    return sanitizeResume(JSON.parse(raw));
-  }
-}
-
-export function sanitizeResume(resume) {
-  const clone = JSON.parse(JSON.stringify(resume));
-  clone.schema_version = clone.schema_version ?? SCHEMA_VERSION;
-
-  if (clone.basics) {
-    delete clone.basics.phone;
-
-    const emailIsPublic = clone.meta?.publicContact?.email === true;
-    if (!emailIsPublic) {
-      delete clone.basics.email;
-    }
-
-    if (clone.basics.location) {
-      delete clone.basics.location.address;
-      delete clone.basics.location.postalCode;
-    }
-  }
-
-  removePrivateMeta(clone);
-  return clone;
 }
 
 export async function searchResume(query, options = {}) {
@@ -120,23 +75,6 @@ export async function buildBrief() {
   ]
     .filter(Boolean)
     .join("\n");
-}
-
-function removePrivateMeta(value) {
-  if (!value || typeof value !== "object") {
-    return;
-  }
-
-  if (Array.isArray(value)) {
-    value.forEach(removePrivateMeta);
-    return;
-  }
-
-  delete value[PRIVATE_META_KEY];
-
-  for (const child of Object.values(value)) {
-    removePrivateMeta(child);
-  }
 }
 
 function collectEvidence(resume) {
