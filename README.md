@@ -4,9 +4,40 @@ Public, read-only professional profile for Mundi Morgado at [mun.digital](https:
 
 The same sanitized resume data powers the website, generated resume artifacts, CLI, and MCP server.
 
-## Tech
+## MCP
 
-Next.js (App Router) + TypeScript + Tailwind CSS, deployed on Vercel.
+The hosted MCP endpoint exposes read-only, sanitized resume data:
+
+```bash
+https://mun.digital/api/mcp
+```
+
+Claude Code can connect to the hosted Streamable HTTP server:
+
+```bash
+claude mcp add --transport http mundigital https://mun.digital/api/mcp
+```
+
+For local stdio, run the npm package directly:
+
+```bash
+claude mcp add --transport stdio mundigital -- npx -y @mun.digital/cli mcp
+```
+
+Claude Desktop local stdio configuration:
+
+```json
+{
+  "mcpServers": {
+    "mundigital": {
+      "command": "npx",
+      "args": ["-y", "@mun.digital/cli", "mcp"]
+    }
+  }
+}
+```
+
+Other MCP clients use analogous stdio or Streamable HTTP configuration. This MCP is public, read-only, and intentionally limited to sanitized professional profile data.
 
 ## CLI
 
@@ -24,11 +55,20 @@ npm install -g @mun.digital/cli
 mundigital profile
 ```
 
-## Public artifacts
+## Website
 
+- Site: [mun.digital](https://mun.digital)
 - JSON: [mun.digital/resume.json](https://mun.digital/resume.json)
 - Markdown: [mun.digital/resume.md](https://mun.digital/resume.md)
 - PDF: [mun.digital/resume.pdf](https://mun.digital/resume.pdf)
+
+## Data boundary
+
+Public surfaces exclude private contact details and private metadata. CLI and MCP output are read-only; they do not expose write, deploy, shell, filesystem, environment, secret, telemetry, or postinstall behavior.
+
+## Tech
+
+Next.js (App Router) + TypeScript + Tailwind CSS, deployed on Vercel.
 
 ## Local development
 
@@ -45,6 +85,7 @@ npm run resume:build
 npm run public:smoke
 npm run profile:smoke
 npm run mcp:smoke
+npm run mcp:http:smoke -- https://mun.digital/api/mcp
 npm run lint
 npm run build
 npm run pack:smoke

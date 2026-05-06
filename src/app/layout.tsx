@@ -25,20 +25,35 @@ export async function generateMetadata(): Promise<Metadata> {
     title: `${name} | mun.digital`,
     description,
     metadataBase: new URL("https://mun.digital"),
+    applicationName: "mun.digital",
     openGraph: {
       title: `${name} | mun.digital`,
       description,
       url: "https://mun.digital",
       siteName: "mun.digital",
       type: "profile",
+      images: [
+        {
+          url: "/opengraph-image",
+          width: 1200,
+          height: 630,
+          alt: "Mundi Morgado - UX Engineer",
+        },
+      ],
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title: `${name} | mun.digital`,
       description,
+      images: ["/opengraph-image"],
     },
     alternates: {
       canonical: "https://mun.digital",
+    },
+    icons: {
+      icon: "/icon",
+      shortcut: "/icon",
+      apple: "/icon",
     },
   };
 }

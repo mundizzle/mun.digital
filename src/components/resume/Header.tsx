@@ -33,10 +33,13 @@ export function Header({ location, name, contactLinks }: HeaderProps) {
             <ul className="m-0 flex list-none flex-wrap gap-y-[6px] p-0">
               {contactLinks.map((item) => (
                 <li
-                  className="mr-[18px] flex border-r border-rule pr-[18px] last:mr-0 last:border-r-0 last:pr-0"
+                  className="mr-[18px] flex min-w-0 max-w-full border-r border-rule pr-[18px] last:mr-0 last:border-r-0 last:pr-0"
                   key={item.href}
                 >
-                  <a className="leading-[1.2] no-underline hover:text-accent" href={item.href}>
+                  <a
+                    className="min-w-0 max-w-full break-all leading-[1.2] no-underline hover:text-accent"
+                    href={item.href}
+                  >
                     {item.text}
                   </a>
                 </li>
