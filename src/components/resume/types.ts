@@ -1,6 +1,7 @@
 export interface ContactLink {
   text: string;
   href: string;
+  group?: "direct" | "profile";
 }
 
 export interface SkillGroup {

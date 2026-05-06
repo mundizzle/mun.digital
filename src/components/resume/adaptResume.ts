@@ -121,6 +121,7 @@ function buildContactLinks(resume: JsonResume, extraLinks: ContactLink[] = []) {
     .map((profile) => ({
       text: formatProfileText(profile.url, profile.username),
       href: profile.url ?? "",
+      group: "profile" as const,
     }));
 
   return [...extraLinks, ...profileLinks];
