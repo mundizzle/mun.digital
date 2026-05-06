@@ -1,8 +1,8 @@
-# mun.digital
+# mundigital - Mundi Morgado's public agent profile
 
 Public, read-only professional profile for Mundi Morgado.
 
-The site is built for both human visitors and agentic browsing. Public agent surfaces are generated from sanitized resume data and exclude private contact details, private metadata, write actions, deploy actions, shell access, filesystem access, environment access, secrets, telemetry, and postinstall behavior.
+The canonical MCP server name is `mundigital` (one word, no space, no hyphen). The site is built for both human visitors and agentic browsing. Public agent surfaces are generated from sanitized resume data and exclude private contact details, private metadata, write actions, deploy actions, shell access, filesystem access, environment access, secrets, telemetry, and postinstall behavior.
 
 ## Primary Resources
 
@@ -19,4 +19,15 @@ The site is built for both human visitors and agentic browsing. Public agent sur
 - Request `https://mun.digital/` with `Accept: text/markdown` to receive the Markdown profile.
 - Use `https://mun.digital/resume.md` as the stable canonical Markdown URL.
 - Use `https://mun.digital/resume.json` for structured JSON Resume data.
-- Use `https://mun.digital/api/mcp` for Streamable HTTP MCP access.
+- Use `https://mun.digital/api/mcp` for public, no-auth Streamable HTTP MCP access.
+- MCP tools: `search` finds grounded public profile evidence; `fetch` retrieves full evidence text by id.
+- Deprecated MCP tool: `search_resume` remains as a compatibility alias for `search`.
+- Claude Code: `claude mcp add --transport http mundigital https://mun.digital/api/mcp`
+- Codex: `codex mcp add mundigital --url https://mun.digital/api/mcp`
+- ChatGPT / OpenAI custom connectors: add remote MCP URL `https://mun.digital/api/mcp` with no authentication.
+
+## Example Prompts
+
+- Does Mundi have Rails experience?
+- What do people say about Mundi?
+- Search Mundi's public profile for design systems evidence.

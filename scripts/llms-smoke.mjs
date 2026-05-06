@@ -55,11 +55,14 @@ async function assertLlmsTxt(base) {
   const body = await response.text();
 
   assert(response.ok, "llms.txt did not return 200");
-  assert(body.startsWith("# mun.digital"), "llms.txt missing title");
+  assert(body.startsWith("# mundigital"), "llms.txt missing title");
   for (const expected of ["/resume.md", "/resume.json", "/mundi-morgado-resume.pdf", "/api/mcp"]) {
     assert(body.includes(expected), `llms.txt missing ${expected}`);
   }
   assert(body.includes("https://github.com/mundizzle"), "llms.txt missing GitHub profile");
+  for (const expected of ["mundigital", "search", "fetch", "Claude", "Codex", "https://mun.digital/api/mcp"]) {
+    assert(body.includes(expected), `llms.txt missing ${expected}`);
+  }
 }
 
 async function assertResumeMarkdown(base) {

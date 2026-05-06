@@ -45,27 +45,46 @@ try {
   );
 
   const tools = await client.request({ method: "tools/list" }, ListToolsResultSchema);
-  assert(tools.tools.length === 1, `expected 1 tool, got ${tools.tools.length}`);
-  assert(tools.tools[0].name === "search_resume", "expected search_resume tool");
+  const toolNames = tools.tools.map((tool) => tool.name);
+  assert(
+    JSON.stringify(toolNames) === JSON.stringify(["search", "fetch", "search_resume"]),
+    `expected search, fetch, search_resume tools; got ${toolNames.join(", ")}`,
+  );
 
   const search = await client.request(
     {
       method: "tools/call",
       params: {
-        name: "search_resume",
+        name: "search",
         arguments: { query: "github" },
       },
     },
     CallToolResultSchema,
   );
-  assert(search.content?.[0]?.type === "text", "search_resume did not return text content");
-  assert(search.content[0].text.includes("github.com/mundizzle"), "search_resume did not return GitHub evidence");
+  assert(search.content?.[0]?.type === "text", "search did not return text content");
+  const searchResult = JSON.parse(search.content[0].text);
+  assert(searchResult.results?.[0]?.id, "search result is missing id");
+  assert(searchResult.results[0].title, "search result is missing title");
+  assert(searchResult.results[0].text, "search result is missing text snippet");
+  assert(searchResult.results[0].url, "search result is missing url");
+  assert(search.content[0].text.includes("github.com/mundizzle"), "search did not return GitHub evidence");
+
+  const fetched = await callTool("fetch", { id: searchResult.results[0].id });
+  assert(fetched.id === searchResult.results[0].id, "fetch did not return requested id");
+  assert(fetched.text.includes(searchResult.results[0].text), "fetch text did not include search snippet");
+  assertNoPrivateFields(fetched, "fetch result leaked private fields");
+
+  const aliasSearch = await callTool("search_resume", { query: "github" });
+  assert(
+    JSON.stringify(aliasSearch) === JSON.stringify(searchResult),
+    "search_resume alias did not match search output",
+  );
 
   const endorsements = await client.request(
     {
       method: "tools/call",
       params: {
-        name: "search_resume",
+        name: "search",
         arguments: { query: "what are people saying about Mundi" },
       },
     },
@@ -73,8 +92,25 @@ try {
   );
   assert(
     endorsements.content?.[0]?.text.includes("Endorsement:"),
-    "search_resume did not return endorsement evidence",
+    "search did not return endorsement evidence",
   );
+  const endorsementSearch = JSON.parse(endorsements.content[0].text);
+  assertNoPrivateFields(endorsementSearch, "endorsement search leaked private fields");
+  const endorsementFetch = await callTool("fetch", { id: endorsementSearch.results[0].id });
+  assert(endorsementFetch.title.startsWith("Endorsement:"), "fetch did not return endorsement evidence");
+  assertNoPrivateFields(endorsementFetch, "endorsement fetch leaked private fields");
+
+  const unknownFetch = await client.request(
+    {
+      method: "tools/call",
+      params: {
+        name: "fetch",
+        arguments: { id: "nope" },
+      },
+    },
+    CallToolResultSchema,
+  );
+  assert(unknownFetch.isError === true, "unknown fetch id did not return an MCP tool error");
 
   const prompts = await client.request({ method: "prompts/list" }, ListPromptsResultSchema);
   assert(prompts.prompts.length === 1, `expected 1 prompt, got ${prompts.prompts.length}`);
@@ -88,10 +124,37 @@ try {
     GetPromptResultSchema,
   );
   assert(prompt.messages[0].content.text.includes("mun://resume"), "prompt is not grounded in mun://resume");
+  assert(prompt.messages[0].content.text.includes("search"), "prompt is not grounded in search");
+  assert(prompt.messages[0].content.text.includes("fetch"), "prompt is not grounded in fetch");
 
   console.log("mcp smoke passed");
 } finally {
   await transport.close();
+}
+
+async function callTool(name, args) {
+  const result = await client.request(
+    {
+      method: "tools/call",
+      params: {
+        name,
+        arguments: args,
+      },
+    },
+    CallToolResultSchema,
+  );
+
+  assert(result.content?.[0]?.type === "text", `${name} did not return text content`);
+  const parsed = JSON.parse(result.content[0].text);
+  assertNoPrivateFields(parsed, `${name} leaked private fields`);
+  return parsed;
+}
+
+function assertNoPrivateFields(value, message) {
+  const serialized = JSON.stringify(value);
+  for (const privateField of ["phone", "postalCode", "address", "private", "email"]) {
+    assert(!serialized.includes(privateField), `${message}: ${privateField}`);
+  }
 }
 
 function assert(condition, message) {

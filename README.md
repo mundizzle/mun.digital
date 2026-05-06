@@ -4,21 +4,40 @@ Public, read-only professional profile for Mundi Morgado at [mun.digital](https:
 
 The same sanitized resume data powers the website, generated resume artifacts, CLI, and MCP server.
 
-## MCP
+## Connect from your LLM
 
-The hosted MCP endpoint exposes read-only, sanitized resume data:
+Canonical server name: `mundigital` (one word, no space, no hyphen).
+
+The recommended MCP connection is the hosted Streamable HTTP endpoint:
 
 ```bash
 https://mun.digital/api/mcp
 ```
 
-Claude Code can connect to the hosted Streamable HTTP server:
+This endpoint is public, read-only, and does not require authentication. It exposes `search` and `fetch` tools for LLM clients, plus a resume resource and portfolio prompt for clients that support MCP resources and prompts.
+
+Compatibility note: `search_resume` remains available as a deprecated alias for `search` during the `0.2.x` line.
+
+Claude Code:
 
 ```bash
 claude mcp add --transport http mundigital https://mun.digital/api/mcp
 ```
 
-For local stdio, run the npm package directly:
+Codex:
+
+```bash
+codex mcp add mundigital --url https://mun.digital/api/mcp
+```
+
+ChatGPT / OpenAI custom connector:
+
+- Add a remote MCP connector named `mundigital`.
+- Use URL `https://mun.digital/api/mcp`.
+- Use no authentication.
+- Available tools are `search` and `fetch`.
+
+For local stdio fallback, run the npm package directly:
 
 ```bash
 claude mcp add --transport stdio mundigital -- npx -y @mun.digital/cli mcp
@@ -37,7 +56,7 @@ Claude Desktop local stdio configuration:
 }
 ```
 
-Other MCP clients use analogous stdio or Streamable HTTP configuration. This MCP is public, read-only, and intentionally limited to sanitized professional profile data.
+Other MCP clients use analogous stdio or Streamable HTTP configuration. The hosted endpoint should be the default unless the client only supports stdio or you are debugging local package behavior.
 
 ## CLI
 

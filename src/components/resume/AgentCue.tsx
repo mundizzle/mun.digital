@@ -9,7 +9,7 @@ export function AgentCue() {
           <span className="mx-[6px] font-normal text-ink-faint">{"//"}</span>{" "}
           <span className="font-semibold text-ink">MCP endpoint /api/mcp</span>{" "}
           <span className="mx-[6px] font-normal text-ink-faint">{"//"}</span>{" "}
-          <span className="font-semibold text-ink">resource mun://resume</span>
+          <span className="font-semibold text-ink">tools search/fetch</span>
         </p>
       </RailBaselineRow>
     </section>
