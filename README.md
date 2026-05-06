@@ -21,7 +21,7 @@ Or install it globally:
 
 ```bash
 npm install -g @mun.digital/cli
-mun-digital profile
+mundigital profile
 ```
 
 ## Public artifacts

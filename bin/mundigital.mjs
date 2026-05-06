@@ -26,7 +26,7 @@ async function main(argv) {
   if (command === "search") {
     const query = argv.filter((arg) => arg !== "--json").slice(1).join(" ");
     if (!query.trim()) {
-      throw new Error('Usage: mun-digital search <query> [--json]');
+      throw new Error('Usage: mundigital search <query> [--json]');
     }
 
     const result = await searchResume(query);
@@ -103,12 +103,12 @@ function renderSearch(result) {
 }
 
 function printHelp() {
-  console.log(`mun-digital
+  console.log(`mundigital
 
 Usage:
-  mun-digital profile [--json]
-  mun-digital search <query> [--json]
-  mun-digital brief [--json]
-  mun-digital mcp
+  mundigital profile [--json]
+  mundigital search <query> [--json]
+  mundigital brief [--json]
+  mundigital mcp
 `);
 }

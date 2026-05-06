@@ -12,7 +12,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - Canonical domain: https://mun.digital — **LIVE** with TLS.
 - Repository: https://github.com/mundizzle/mun.digital
 - Local directory: `/Users/mundizzle/Projects/mun.digital/`
-- Deployment: Vercel personal account `mundigital`, project slug `mun-digital` (Vercel disallows dots in slugs)
+- Deployment: Vercel personal account `mundigital`, project slug `mundigital`
 
 ## Project tracking
 Project board: [Mun.digital on Linear](https://linear.app/mundizzle/project/mundigital-25dce9d960e8). Day-to-day tasks, module status, and dependencies live there. This file remains the always-loaded ops index. Linear is canonical for planning and task state.
@@ -28,11 +28,11 @@ Current Phase 0 scope: local JSON Resume source, public read-only CLI, local std
 | Domain (canonical) | `mun.digital` |
 | Domain (308-redirects to apex) | `www.mun.digital` |
 | GitHub repo | `mundizzle/mun.digital` |
-| Vercel project slug | `mun-digital` |
+| Vercel project slug | `mundigital` |
 | Vercel sticky `*.vercel.app` alias | `mundigital.vercel.app` (pre-rename, still active) |
 | npm `package.json` name | `@mun.digital/cli` |
-| CLI bin | `mun-digital` |
-| Local MCP server | `mun-digital mcp` / `npm run mcp:start` |
+| CLI bin | `mundigital` |
+| Local MCP server | `mundigital mcp` / `npm run mcp:start` |
 | Hosted MCP endpoint | `https://mun.digital/api/mcp` |
 | Local directory | `~/Projects/mun.digital/` |
 | Registrar | Namecheap (BasicDNS nameservers) |
@@ -45,7 +45,7 @@ Current Phase 0 scope: local JSON Resume source, public read-only CLI, local std
 - Local scaffold: complete (Next.js 16.2.4, React 19.2.4, Tailwind 4, TypeScript 5, ESLint 9). `npm run lint` and `npm run build` pass.
 - Git: pushed to GitHub. `main` is the production branch.
 - GitHub: public repo at https://github.com/mundizzle/mun.digital. Description set. No branch protection (intentional).
-- Vercel: project `mun-digital` linked; Git integration auto-deploys `main` to production. Verified by a real Git-triggered deploy.
+- Vercel: project `mundigital` linked; Git integration auto-deploys `main` to production. Verified by a real Git-triggered deploy.
 - **Pipeline live:** `https://mun.digital` returns HTTP/2 200 with valid TLS serving the JSON-backed resume UI; `https://www.mun.digital` 308-redirects to apex (`location: https://mun.digital/`). DNS resolves correctly (both hosts → `76.76.21.21`).
 
 ## Operating Rules
@@ -103,7 +103,7 @@ The previous Namecheap "Redirect Domain" (`mun.digital → http://www.mun.digita
 - [x] lint + build pass locally
 - [x] git initialized, initial commits landed
 - [x] GitHub repo created and pushed (renamed to `mun.digital`)
-- [x] Vercel project linked (renamed slug to `mun-digital`)
+- [x] Vercel project linked (renamed slug to `mundigital`)
 - [x] GitHub auto-deploy verified by placeholder homepage commit
 - [x] Default Next homepage replaced with minimal placeholder
 - [x] Custom domains (`mun.digital`, `www.mun.digital`) added in Vercel
@@ -135,7 +135,7 @@ See [Linear project board](https://linear.app/mundizzle/project/mundigital-25dce
 - 2026-04-30: Node pinned to major line `24.x` via `engines.node`; `.nvmrc` mirrors major (`24`).
 - 2026-04-30: 2 moderate `npm audit` vulnerabilities reported on fresh scaffold; not blocking. Track in Next Actions.
 - 2026-04-30: Originally targeted `mundigital.com`; corrected to `mun.digital` once registrar revealed the real domain. Removed the wrong domains from Vercel.
-- 2026-04-30: Renamed across surfaces for consistency: GitHub `mundigital` → `mun.digital`; Vercel project slug `mundigital` → `mun-digital` (dots disallowed in slugs); npm name `mundigital` → `mun.digital`; local directory `~/Projects/mundigital` → `~/Projects/mun.digital`.
+- 2026-04-30: Renamed across surfaces for consistency: GitHub `mundigital` → `mun.digital`; npm name `mundigital` → `mun.digital`; local directory `~/Projects/mundigital` → `~/Projects/mun.digital`.
 - 2026-04-30: Pipeline live — `https://mun.digital` serves the placeholder with TLS; `https://www.mun.digital` 308-redirects to apex via Vercel domain configuration.
 - 2026-04-30: Phase 2 strategic direction drafted: design-engineer / agentic-design portfolio; agent-first-as-user editorial spine; first-principles operating mode; Sanity adopted as content backbone; resume-shaped MCP elevated from wishlist to V0 priority because the live Sanity AI Growth opportunity is specifically MCP work.
 - 2026-04-30: **Two-tier planning** adopted — overarching arc was separated from phase-level plans. Never roll multi-phase work into a single plan.
@@ -149,3 +149,4 @@ See [Linear project board](https://linear.app/mundizzle/project/mundigital-25dce
 - 2026-05-06: **Phase 0 of Module C started.** Scope narrowed to local JSON Resume + CLI + stdio MCP first; web UI, generated artifacts, npm publish, and hosted Vercel MCP are fast-follow phases.
 - 2026-05-06: **Phase 0 web UI fast-follow started.** The `mundizzle.com` dossier/resume visual system is being ported into Next.js using `data/resume.json`; the old markdown/PDF generation pipeline is intentionally not ported.
 - 2026-05-06: **Agent-surface fast-follow implemented locally.** Added sanitized public resume projection/artifacts, hosted stateless Streamable HTTP MCP route at `/api/mcp`, package metadata for public scoped npm package `@mun.digital/cli`, MIT license, package tarball smoke gate, robots, sitemap, and JSON-sourced metadata. Npm publish and Vercel usage alert remain operator steps.
+- 2026-05-06: **Naming rule tightened.** Public surfaces must use either `mun.digital` or `mundigital`; do not introduce hyphenated variants. The CLI executable and MCP server name are `mundigital`.

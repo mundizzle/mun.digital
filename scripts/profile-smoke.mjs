@@ -11,7 +11,7 @@ await assertSearch("agentic");
 console.log("profile smoke passed");
 
 async function assertProfile() {
-  const { stdout } = await execFileAsync("node", ["bin/mun-digital.mjs", "profile", "--json"]);
+  const { stdout } = await execFileAsync("node", ["bin/mundigital.mjs", "profile", "--json"]);
   const profile = JSON.parse(stdout);
 
   assert(profile.schema_version, "profile is missing schema_version");
@@ -22,7 +22,7 @@ async function assertProfile() {
 }
 
 async function assertSearch(query) {
-  const { stdout } = await execFileAsync("node", ["bin/mun-digital.mjs", "search", query, "--json"]);
+  const { stdout } = await execFileAsync("node", ["bin/mundigital.mjs", "search", query, "--json"]);
   const result = JSON.parse(stdout);
 
   assert(result.schema_version, `search ${query} is missing schema_version`);

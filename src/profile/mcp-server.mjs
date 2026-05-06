@@ -6,7 +6,7 @@ import { loadResume, searchResume } from "./resume-data.mjs";
 
 export function createMcpServer() {
   const server = new McpServer({
-    name: "mun-digital",
+    name: "mundigital",
     version: "0.1.0",
   });
 
@@ -83,5 +83,5 @@ export async function runStdioServer() {
   const server = createMcpServer();
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error("mun-digital MCP server running on stdio");
+  console.error("mundigital MCP server running on stdio");
 }

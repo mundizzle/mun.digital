@@ -1,6 +1,6 @@
 {
   "name": "@mun.digital/cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Public read-only resume CLI and MCP server for Mundi Morgado.",
   "homepage": "https://mun.digital",
   "repository": {
@@ -16,7 +16,7 @@
     "access": "public"
   },
   "bin": {
-    "mun-digital": "bin/mun-digital.mjs"
+    "mundigital": "bin/mundigital.mjs"
   },
   "files": [
     "bin/",
@@ -34,10 +34,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "mun": "node bin/mun-digital.mjs",
+    "mun": "node bin/mundigital.mjs",
     "resume:build": "node scripts/build-resume-artifacts.mjs",
     "public:smoke": "node scripts/public-data-smoke.mjs",
-    "mcp:start": "node bin/mun-digital.mjs mcp",
+    "mcp:start": "node bin/mundigital.mjs mcp",
     "mcp:http:smoke": "node scripts/http-mcp-smoke.mjs",
     "mcp:smoke": "node scripts/mcp-smoke.mjs",
     "pack:smoke": "node scripts/npm-pack-smoke.mjs",

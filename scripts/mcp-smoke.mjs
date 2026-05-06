@@ -10,13 +10,13 @@ import {
 } from "@modelcontextprotocol/sdk/types.js";
 
 const client = new Client({
-  name: "mun-digital-smoke",
+  name: "mundigital-smoke",
   version: "0.1.0",
 });
 
 const transport = new StdioClientTransport({
   command: "node",
-  args: ["bin/mun-digital.mjs", "mcp"],
+  args: ["bin/mundigital.mjs", "mcp"],
   cwd: process.cwd(),
   stderr: "pipe",
 });

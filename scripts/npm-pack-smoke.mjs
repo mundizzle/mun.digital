@@ -14,7 +14,7 @@ const jsonStart = stdout.indexOf("[");
 assert(jsonStart >= 0, "npm pack did not return a JSON array");
 const pack = JSON.parse(stdout.slice(jsonStart))[0];
 const tarballPath = path.join(rootDir, pack.filename);
-const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "mun-digital-pack-"));
+const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "mundigital-pack-"));
 const extractDir = path.join(tmpDir, "extract");
 const installDir = path.join(tmpDir, "install");
 
@@ -42,7 +42,7 @@ try {
   }
 
   await execFileAsync("npm", ["install", tarballPath, "--ignore-scripts"], { cwd: installDir });
-  const { stdout: profileStdout } = await execFileAsync("npx", ["mun-digital", "profile", "--json"], {
+  const { stdout: profileStdout } = await execFileAsync("npx", ["mundigital", "profile", "--json"], {
     cwd: installDir,
   });
   const profile = JSON.parse(profileStdout);

@@ -9,7 +9,7 @@ import {
 
 const url = new URL(process.argv[2] ?? "http://localhost:3000/api/mcp");
 const client = new Client({
-  name: "mun-digital-http-smoke",
+  name: "mundigital-http-smoke",
   version: "0.1.0",
 });
 const transport = new StreamableHTTPClientTransport(url);

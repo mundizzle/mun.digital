@@ -53,7 +53,7 @@ async function renderPdf(htmlContent) {
     }
   }
 
-  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "mun-digital-resume-"));
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "mundigital-resume-"));
   const htmlPath = path.join(tmpDir, "resume.html");
   const tmpPdfPath = path.join(tmpDir, "resume.pdf");
   await fs.writeFile(htmlPath, htmlContent);
