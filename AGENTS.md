@@ -11,7 +11,7 @@ This file is only for durable rules needed to plan and code correctly in this re
 ## Stack
 
 - Use npm.
-- Keep Node pinned to major line `24.x` in `package.json`; `.nvmrc` should stay `24`.
+- Keep local development on Node `24` via `.nvmrc`. In `package.json`, use the broadest safe minimum Node engine for the published CLI so newer Node versions do not warn unnecessarily.
 - Use Next.js App Router, TypeScript, and Tailwind.
 - Before writing Next-specific code, check the relevant docs in `node_modules/next/dist/docs/`; this repo uses Next 16 and some conventions differ from older examples.
 - Use `src/proxy.ts` for Next 16 request interception. Do not add deprecated `middleware.ts`.

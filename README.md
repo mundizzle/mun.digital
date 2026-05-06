@@ -41,11 +41,67 @@ Other MCP clients use analogous stdio or Streamable HTTP configuration. This MCP
 
 ## CLI
 
+Run the public profile tools without installing:
+
 ```bash
 npx @mun.digital/cli profile
 npx @mun.digital/cli search react
 npx @mun.digital/cli brief
 npx @mun.digital/cli mcp
+```
+
+| Command                               | Purpose                                                                                                                                                                      |
+| ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npx @mun.digital/cli profile`        | Prints the public sanitized profile summary, links, and skills.                                                                                                              |
+| `npx @mun.digital/cli search <query>` | Searches public resume evidence for a topic, keyword, company, or technology.                                                                                                |
+| `npx @mun.digital/cli brief`          | Prints an agent-ready career brief with selected work evidence.                                                                                                              |
+| `npx @mun.digital/cli mcp`            | Starts the local stdio MCP server for MCP clients. This is intended to be launched by tools such as Claude Desktop or Claude Code, not run directly in an interactive shell. |
+
+Most commands also support `--json` for agent and script workflows:
+
+```bash
+npx @mun.digital/cli profile --json
+npx @mun.digital/cli search "design systems" --json
+npx @mun.digital/cli brief --json
+```
+
+Example fit checks:
+
+```bash
+# Does Mundi have Rails experience?
+npx @mun.digital/cli search rails
+```
+
+Example Rails output:
+
+```text
+[Principal Front-End Engineer, Gierd] Introduced agentic development practices for a 20-engineer team, including agent instructions and review standards that improved consistency in Rails view code, design-system adoption, and UI PR quality.
+
+[Principal Front-End Engineer, Gierd] Co-created the Gierd Design System, with 20+ reusable components implemented as Rails view helpers and adopted as the canonical UI foundation for the product platform.
+```
+
+Example endorsement questions:
+
+```bash
+npx @mun.digital/cli search "what do people say about Mundi?"
+npx @mun.digital/cli search endorsements
+```
+
+Example endorsement output:
+
+```text
+[Endorsement: Marlo Stewart] Marlo Stewart, Engineering Chief of Staff, Project & Strategic Program Leader, Gierd: Mundi is an exceptional front-end developer who consistently delivers high-quality work. He combines strong technical skill with a great eye for user experience, communicates clearly, takes ownership, and is the kind of teammate any team would be lucky to have.
+
+[Endorsement: Robert Evans] Robert Evans, Chief Technology Officer, Gierd: Mundi is one of the nicest engineers out there who is also amazingly smart, talented, and efficient.
+```
+
+Other useful searches:
+
+```bash
+npx @mun.digital/cli search accessibility
+npx @mun.digital/cli search "design systems"
+npx @mun.digital/cli search endorsements
+npx @mun.digital/cli search "technical leadership"
 ```
 
 Or install it globally:

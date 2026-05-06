@@ -61,6 +61,21 @@ try {
   assert(search.content?.[0]?.type === "text", "search_resume did not return text content");
   assert(search.content[0].text.includes("github.com/mundizzle"), "search_resume did not return GitHub evidence");
 
+  const endorsements = await client.request(
+    {
+      method: "tools/call",
+      params: {
+        name: "search_resume",
+        arguments: { query: "what are people saying about Mundi" },
+      },
+    },
+    CallToolResultSchema,
+  );
+  assert(
+    endorsements.content?.[0]?.text.includes("Endorsement:"),
+    "search_resume did not return endorsement evidence",
+  );
+
   const prompts = await client.request({ method: "prompts/list" }, ListPromptsResultSchema);
   assert(prompts.prompts.length === 1, `expected 1 prompt, got ${prompts.prompts.length}`);
   assert(prompts.prompts[0].name === "portfolio_brief", "expected portfolio_brief prompt");

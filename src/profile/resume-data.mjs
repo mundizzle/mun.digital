@@ -27,10 +27,13 @@ export async function searchResume(query, options = {}) {
 
   const resume = await loadResume();
   const evidence = collectEvidence(resume);
-  const matches = evidence
+  const searchableEvidence = isEndorsementQuery(normalizedQuery)
+    ? evidence.filter((entry) => entry.path.startsWith("references."))
+    : evidence;
+  const matches = searchableEvidence
     .map((entry) => ({
       ...entry,
-      score: scoreEntry(entry.text, normalizedQuery),
+      score: scoreEntry(entry.searchText ?? entry.text, normalizedQuery),
     }))
     .filter((entry) => entry.score > 0)
     .sort((a, b) => b.score - a.score || a.path.localeCompare(b.path))
@@ -108,6 +111,28 @@ function collectEvidence(resume) {
     }
   }
 
+  for (const [index, reference] of (resume.references ?? []).entries()) {
+    const author = [reference.name, reference.title, reference.company].filter(Boolean).join(", ");
+    add(
+      entries,
+      `references.${index}`,
+      `Endorsement: ${reference.name ?? index}`,
+      [author, reference.reference].filter(Boolean).join(": "),
+      [
+        "endorsement",
+        "endorsements",
+        "recommendation",
+        "recommendations",
+        "reference",
+        "references",
+        "what are people saying about mundi",
+        "what do people think about mundi",
+        "people saying about mundi",
+        "people think about mundi",
+      ],
+    );
+  }
+
   for (const keyword of resume.meta?.keywords ?? []) {
     add(entries, "meta.keywords", "Keywords", keyword);
   }
@@ -125,7 +150,7 @@ export function profileLinks(resume) {
     .filter(Boolean);
 }
 
-function add(entries, path, section, text) {
+function add(entries, path, section, text, aliases = []) {
   if (!text) {
     return;
   }
@@ -134,6 +159,7 @@ function add(entries, path, section, text) {
     path,
     section,
     text,
+    searchText: [text, ...aliases].join(" "),
   });
 }
 
@@ -145,6 +171,19 @@ function scoreEntry(text, query) {
 
   const terms = query.split(/\s+/).filter(Boolean);
   return terms.reduce((score, term) => (haystack.includes(term) ? score + 10 : score), 0);
+}
+
+function isEndorsementQuery(query) {
+  return [
+    "endorsement",
+    "endorsements",
+    "recommendation",
+    "recommendations",
+    "reference",
+    "references",
+    "people saying",
+    "people think",
+  ].some((term) => query.includes(term));
 }
 
 function slug(value) {

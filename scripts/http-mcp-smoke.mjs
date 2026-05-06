@@ -54,6 +54,21 @@ try {
   assert(search.content?.[0]?.type === "text", "search_resume did not return text content");
   assert(search.content[0].text.includes("github.com/mundizzle"), "search_resume did not return GitHub evidence");
 
+  const endorsements = await client.request(
+    {
+      method: "tools/call",
+      params: {
+        name: "search_resume",
+        arguments: { query: "what are people saying about Mundi" },
+      },
+    },
+    CallToolResultSchema,
+  );
+  assert(
+    endorsements.content?.[0]?.text.includes("Endorsement:"),
+    "search_resume did not return endorsement evidence",
+  );
+
   console.log(`http mcp smoke passed: ${url.href}`);
 } finally {
   await transport.close();

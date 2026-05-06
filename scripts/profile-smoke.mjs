@@ -8,6 +8,7 @@ await assertSearch("React");
 await assertSearch("design systems");
 await assertSearch("agentic");
 await assertSearch("github");
+await assertSearchIncludes("what are people saying about Mundi", "Endorsement:");
 
 console.log("profile smoke passed");
 
@@ -36,6 +37,18 @@ async function assertSearch(query) {
   assert(result.schema_version, `search ${query} is missing schema_version`);
   assert(result.query === query, `search ${query} did not echo query`);
   assert(result.results.length > 0, `search ${query} returned no evidence`);
+}
+
+async function assertSearchIncludes(query, expectedText) {
+  const { stdout } = await execFileAsync("node", ["bin/mundigital.mjs", "search", query, "--json"]);
+  const result = JSON.parse(stdout);
+
+  assert(result.schema_version, `search ${query} is missing schema_version`);
+  assert(result.query === query, `search ${query} did not echo query`);
+  assert(
+    result.results.some((entry) => entry.section.includes(expectedText) || entry.text.includes(expectedText)),
+    `search ${query} did not include ${expectedText}`,
+  );
 }
 
 function assert(condition, message) {
