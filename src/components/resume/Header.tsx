@@ -71,10 +71,10 @@ function ContactLinkRow({ links }: { links: ContactLink[] }) {
   }
 
   return (
-    <ul className="m-0 flex list-none flex-wrap gap-y-[6px] p-0">
+    <ul className="m-0 flex list-none flex-wrap gap-x-[18px] gap-y-[6px] p-0">
       {links.map((item) => (
         <li
-          className="mr-[18px] flex min-w-0 max-w-full border-r border-rule pr-[18px] last:mr-0 last:border-r-0 last:pr-0"
+          className="flex min-w-0 max-w-full items-center gap-[18px] before:font-medium before:text-accent before:content-['—'] first:before:hidden"
           key={item.href}
         >
           <a
