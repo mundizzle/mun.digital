@@ -4,9 +4,18 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/resume-data.mjs",
-    "./mcp": "./src/mcp-server.mjs",
-    "./sanitize": "./src/sanitize-resume.mjs"
+    ".": {
+      "types": "./src/resume-data.mjs.d.ts",
+      "default": "./src/resume-data.mjs"
+    },
+    "./mcp": {
+      "types": "./src/mcp-server.mjs.d.ts",
+      "default": "./src/mcp-server.mjs"
+    },
+    "./sanitize": {
+      "types": "./src/sanitize-resume.mjs.d.ts",
+      "default": "./src/sanitize-resume.mjs"
+    }
   },
   "scripts": {
     "build": "node scripts/build-artifacts.mjs"

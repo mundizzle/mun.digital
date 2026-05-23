@@ -1,4 +1,4 @@
-import publicResume from "../../../apps/web/public/resume.json" with { type: "json" };
+import publicResume from "../public/resume.json" with { type: "json" };
 
 import { sanitizeResume, SCHEMA_VERSION } from "./sanitize-resume.mjs";
 

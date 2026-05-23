@@ -28,9 +28,9 @@ try {
     await fs.readFile(path.join(extractDir, "package/package.json"), "utf8"),
   );
   assert(!files.some((file) => file.startsWith("packages/profile/data/")), "tarball included raw profile data");
-  assert(files.includes("apps/web/public/resume.json"), "tarball missing apps/web/public/resume.json");
-  assert(files.includes("apps/web/public/resume.md"), "tarball missing apps/web/public/resume.md");
-  assert(files.includes("apps/web/public/resume.pdf"), "tarball missing apps/web/public/resume.pdf");
+  assert(files.includes("packages/profile/public/resume.json"), "tarball missing packages/profile/public/resume.json");
+  assert(files.includes("packages/profile/public/resume.md"), "tarball missing packages/profile/public/resume.md");
+  assert(files.includes("packages/profile/public/resume.pdf"), "tarball missing packages/profile/public/resume.pdf");
   for (const webOnlyDependency of ["next", "react", "react-dom"]) {
     assert(
       !packedPackage.dependencies?.[webOnlyDependency],

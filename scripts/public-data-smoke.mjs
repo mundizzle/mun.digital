@@ -3,9 +3,11 @@ import path from "node:path";
 
 const rootDir = path.resolve(import.meta.dirname, "..");
 const raw = JSON.parse(await fs.readFile(path.join(rootDir, "packages/profile/data/resume.json"), "utf8"));
-const publicJson = JSON.parse(await fs.readFile(path.join(rootDir, "apps/web/public/resume.json"), "utf8"));
+const publicJson = JSON.parse(await fs.readFile(path.join(rootDir, "packages/profile/public/resume.json"), "utf8"));
 const scannedFiles = [
   "README.md",
+  "packages/profile/public/resume.json",
+  "packages/profile/public/resume.md",
   "apps/web/public/llms.txt",
   "apps/web/public/resume.json",
   "apps/web/public/resume.md",
@@ -26,7 +28,12 @@ assert(
   publicJson.basics?.profiles?.some((profile) => profile.url === githubProfileUrl),
   "public resume is missing GitHub profile",
 );
-const markdown = await fs.readFile(path.join(rootDir, "apps/web/public/resume.md"), "utf8");
+await assertMirroredArtifact("resume.json");
+await assertMirroredArtifact("resume.md");
+await assertMirroredArtifact("resume.pdf");
+await assertMirroredArtifact("mundi-morgado-resume.pdf");
+
+const markdown = await fs.readFile(path.join(rootDir, "packages/profile/public/resume.md"), "utf8");
 assert(markdown.includes(githubProfileText), "public resume markdown is missing GitHub profile");
 
 const privateValues = collectPrivateValues(raw);
@@ -38,6 +45,15 @@ for (const file of scannedFiles) {
 }
 
 console.log("public data smoke passed");
+
+async function assertMirroredArtifact(filename) {
+  const profileArtifact = await fs.readFile(path.join(rootDir, "packages/profile/public", filename));
+  const webArtifact = await fs.readFile(path.join(rootDir, "apps/web/public", filename));
+  assert(
+    profileArtifact.equals(webArtifact),
+    `apps/web/public/${filename} is not mirrored from packages/profile/public/${filename}`,
+  );
+}
 
 function collectPrivateValues(resume) {
   return [

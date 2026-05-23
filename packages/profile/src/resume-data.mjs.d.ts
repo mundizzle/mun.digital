@@ -1,15 +1,29 @@
-type JsonValue =
-  | string
-  | number
-  | boolean
-  | null
-  | JsonValue[]
-  | { [key: string]: JsonValue };
+type JsonRecord = Record<string, unknown>;
 
-type JsonRecord = { [key: string]: JsonValue };
+type PublicResume = JsonRecord & {
+  schema_version?: string;
+  basics?: {
+    name?: string;
+    label?: string;
+    summary?: string;
+    email?: string;
+    phone?: string;
+    location?: {
+      city?: string;
+      region?: string;
+      address?: string;
+      postalCode?: string;
+    };
+    profiles?: Array<{
+      network?: string;
+      username?: string;
+      url?: string;
+    }>;
+  };
+};
 
-export function loadResume(): Promise<JsonRecord>;
-export function sanitizeResume(resume: JsonRecord): JsonRecord;
+export function loadResume(): Promise<PublicResume>;
+export function sanitizeResume(resume: JsonRecord): PublicResume;
 export function searchResume(
   query: string,
   options?: { limit?: number },

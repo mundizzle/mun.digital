@@ -5,9 +5,9 @@ import { Experience } from "@/components/resume/Experience";
 import { Header } from "@/components/resume/Header";
 import { Skills } from "@/components/resume/Skills";
 import { Summary } from "@/components/resume/Summary";
+import { loadResume } from "@mun.digital/profile";
 import { adaptResume } from "@/components/resume/adaptResume";
 import { webContactLinks } from "@/components/resume/webContactLinks";
-import { loadResume } from "../../../../packages/profile/src/resume-data.mjs";
 
 export default async function Home() {
   const resume = adaptResume(await loadResume(), { contactLinks: webContactLinks });
