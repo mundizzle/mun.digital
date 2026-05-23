@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 const rootDir = path.resolve(import.meta.dirname, "..");
-const raw = JSON.parse(await fs.readFile(path.join(rootDir, "data/resume.json"), "utf8"));
+const raw = JSON.parse(await fs.readFile(path.join(rootDir, "packages/profile/data/resume.json"), "utf8"));
 const publicJson = JSON.parse(await fs.readFile(path.join(rootDir, "public/resume.json"), "utf8"));
 const scannedFiles = [
   "README.md",

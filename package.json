@@ -24,7 +24,7 @@
     "public/resume.md",
     "public/resume.pdf",
     "public/mundi-morgado-resume.pdf",
-    "src/profile/",
+    "packages/profile/src/",
     "README.md",
     "LICENSE"
   ],
@@ -36,7 +36,7 @@
     "start": "next start",
     "lint": "eslint",
     "mun": "node bin/mundigital.mjs",
-    "resume:build": "node scripts/build-resume-artifacts.mjs",
+    "resume:build": "node packages/profile/scripts/build-artifacts.mjs",
     "public:smoke": "node scripts/public-data-smoke.mjs",
     "llms:smoke": "node scripts/llms-smoke.mjs",
     "mcp:start": "node bin/mundigital.mjs mcp",
