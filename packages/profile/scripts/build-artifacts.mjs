@@ -11,7 +11,7 @@ const execFileAsync = promisify(execFile);
 const humanContactLines = ["415-505-4154", "mundizzle@gmail.com"];
 const rootDir = path.resolve(import.meta.dirname, "../../..");
 const sourcePath = path.join(rootDir, "packages/profile/data/resume.json");
-const publicDir = path.join(rootDir, "public");
+const publicDir = path.join(rootDir, "apps/web/public");
 const jsonPath = path.join(publicDir, "resume.json");
 const markdownPath = path.join(publicDir, "resume.md");
 const pdfPath = path.join(publicDir, "resume.pdf");
@@ -54,10 +54,10 @@ async function renderPdf(htmlContent) {
   if (!chromePath) {
     try {
       await fs.access(pdfPath);
-      console.warn("Chrome not found; keeping existing public/resume.pdf");
+      console.warn("Chrome not found; keeping existing apps/web/public/resume.pdf");
       return;
     } catch {
-      throw new Error("Chrome not found and public/resume.pdf does not exist");
+      throw new Error("Chrome not found and apps/web/public/resume.pdf does not exist");
     }
   }
 

@@ -3,12 +3,12 @@ import path from "node:path";
 
 const rootDir = path.resolve(import.meta.dirname, "..");
 const raw = JSON.parse(await fs.readFile(path.join(rootDir, "packages/profile/data/resume.json"), "utf8"));
-const publicJson = JSON.parse(await fs.readFile(path.join(rootDir, "public/resume.json"), "utf8"));
+const publicJson = JSON.parse(await fs.readFile(path.join(rootDir, "apps/web/public/resume.json"), "utf8"));
 const scannedFiles = [
   "README.md",
-  "public/llms.txt",
-  "public/resume.json",
-  "public/resume.md",
+  "apps/web/public/llms.txt",
+  "apps/web/public/resume.json",
+  "apps/web/public/resume.md",
 ];
 const githubProfileUrl = "https://github.com/mundizzle";
 const githubProfileText = "github.com/mundizzle";
@@ -26,7 +26,7 @@ assert(
   publicJson.basics?.profiles?.some((profile) => profile.url === githubProfileUrl),
   "public resume is missing GitHub profile",
 );
-const markdown = await fs.readFile(path.join(rootDir, "public/resume.md"), "utf8");
+const markdown = await fs.readFile(path.join(rootDir, "apps/web/public/resume.md"), "utf8");
 assert(markdown.includes(githubProfileText), "public resume markdown is missing GitHub profile");
 
 const privateValues = collectPrivateValues(raw);

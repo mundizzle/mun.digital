@@ -1,6 +1,6 @@
 import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
 
-import { createMcpServer } from "../../../../packages/profile/src/mcp-server.mjs";
+import { createMcpServer } from "../../../../../../packages/profile/src/mcp-server.mjs";
 
 export const runtime = "nodejs";
 

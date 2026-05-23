@@ -1,6 +1,7 @@
 {
   "name": "@mun.digital/cli",
   "version": "0.2.1",
+  "packageManager": "pnpm@11.2.2",
   "description": "Public read-only resume CLI and MCP server for Mundi Morgado.",
   "homepage": "https://mun.digital",
   "repository": {
@@ -20,21 +21,20 @@
   },
   "files": [
     "bin/",
-    "public/resume.json",
-    "public/resume.md",
-    "public/resume.pdf",
-    "public/mundi-morgado-resume.pdf",
+    "apps/web/public/resume.json",
+    "apps/web/public/resume.md",
+    "apps/web/public/resume.pdf",
+    "apps/web/public/mundi-morgado-resume.pdf",
     "packages/profile/src/",
     "README.md",
     "LICENSE"
   ],
   "scripts": {
-    "prebuild": "npm run resume:build",
-    "prepack": "npm run resume:build",
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint",
+    "prepack": "pnpm run resume:build",
+    "dev": "pnpm --filter mun.digital-web dev",
+    "build": "pnpm --filter mun.digital-web build",
+    "start": "pnpm --filter mun.digital-web start",
+    "lint": "pnpm --filter mun.digital-web lint",
     "mun": "node bin/mundigital.mjs",
     "resume:build": "node packages/profile/scripts/build-artifacts.mjs",
     "public:smoke": "node scripts/public-data-smoke.mjs",
@@ -47,20 +47,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
-    "next": "16.2.4",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
     "zod": "^4.4.3"
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.2.4",
-    "tailwindcss": "^4",
-    "typescript": "^5"
   },
   "engines": {
     "node": ">=20.9.0"
