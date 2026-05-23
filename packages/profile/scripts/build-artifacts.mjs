@@ -5,12 +5,12 @@ import os from "node:os";
 import path from "node:path";
 import { promisify } from "node:util";
 
-import { sanitizeResume } from "../src/profile/sanitize-resume.mjs";
+import { sanitizeResume } from "../src/sanitize-resume.mjs";
 
 const execFileAsync = promisify(execFile);
 const humanContactLines = ["415-505-4154", "mundizzle@gmail.com"];
-const rootDir = path.resolve(import.meta.dirname, "..");
-const sourcePath = path.join(rootDir, "data/resume.json");
+const rootDir = path.resolve(import.meta.dirname, "../../..");
+const sourcePath = path.join(rootDir, "packages/profile/data/resume.json");
 const publicDir = path.join(rootDir, "public");
 const jsonPath = path.join(publicDir, "resume.json");
 const markdownPath = path.join(publicDir, "resume.md");

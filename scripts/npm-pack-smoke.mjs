@@ -6,7 +6,7 @@ import { promisify } from "node:util";
 
 const execFileAsync = promisify(execFile);
 const rootDir = path.resolve(import.meta.dirname, "..");
-const raw = JSON.parse(await fs.readFile(path.join(rootDir, "data/resume.json"), "utf8"));
+const raw = JSON.parse(await fs.readFile(path.join(rootDir, "packages/profile/data/resume.json"), "utf8"));
 const privateValues = collectPrivateValues(raw);
 
 const { stdout } = await execFileAsync("npm", ["pack", "--json"], { cwd: rootDir });
@@ -24,7 +24,7 @@ try {
   await execFileAsync("tar", ["-xzf", tarballPath, "-C", extractDir]);
 
   const files = await listFiles(path.join(extractDir, "package"));
-  assert(!files.some((file) => file.startsWith("data/")), "tarball included raw data directory");
+  assert(!files.some((file) => file.startsWith("packages/profile/data/")), "tarball included raw profile data");
   assert(files.includes("public/resume.json"), "tarball missing public/resume.json");
   assert(files.includes("public/resume.md"), "tarball missing public/resume.md");
   assert(files.includes("public/resume.pdf"), "tarball missing public/resume.pdf");

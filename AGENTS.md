@@ -18,7 +18,7 @@ This file is only for durable rules needed to plan and code correctly in this re
 
 ## Data Boundary
 
-- `data/resume.json` is the editorial source of truth for profile data.
+- `packages/profile/data/resume.json` is the editorial source of truth for profile data.
 - Public artifacts are generated from sanitized data: `public/resume.json`, `public/resume.md`, and `public/resume.pdf`.
 - Public outputs must not expose `basics.phone`, `basics.location.address`, `basics.location.postalCode`, `meta.private.*`, or `basics.email` unless `meta.publicContact.email=true`.
 - CLI and MCP surfaces are public and read-only. Do not add write, deploy, shell, arbitrary filesystem, environment, secret, telemetry, or postinstall behavior without an explicit plan.

@@ -1,0 +1,14 @@
+{
+  "name": "@mun.digital/profile",
+  "version": "0.0.0-private",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/resume-data.mjs",
+    "./mcp": "./src/mcp-server.mjs",
+    "./sanitize": "./src/sanitize-resume.mjs"
+  },
+  "scripts": {
+    "build": "node scripts/build-artifacts.mjs"
+  }
+}
