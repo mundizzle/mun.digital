@@ -20,7 +20,7 @@ The canonical MCP server name is `mundigital` (one word, no space, no hyphen). T
 - Use `https://mun.digital/resume.md` as the stable canonical Markdown URL.
 - Use `https://mun.digital/resume.json` for structured JSON Resume data.
 - Use `https://mun.digital/api/mcp` for public, no-auth Streamable HTTP MCP access.
-- MCP tools: `search` finds grounded public profile evidence; `fetch` retrieves full evidence text by id.
+- MCP tools: `search` finds grounded public profile evidence; `brief` generates an agent-ready public career brief; `fetch` retrieves full evidence text by id.
 - Claude Code: `claude mcp add --transport http mundigital https://mun.digital/api/mcp`
 - Codex: `codex mcp add mundigital --url https://mun.digital/api/mcp`
 - ChatGPT / OpenAI custom connectors: add remote MCP URL `https://mun.digital/api/mcp` with no authentication.
@@ -28,5 +28,6 @@ The canonical MCP server name is `mundigital` (one word, no space, no hyphen). T
 ## Example Prompts
 
 - Does Mundi have Rails experience?
+- Generate a portfolio brief for Mundi.
 - What do people say about Mundi?
 - Search Mundi's public profile for design systems evidence.

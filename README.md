@@ -14,7 +14,7 @@ The recommended MCP connection is the hosted Streamable HTTP endpoint:
 https://mun.digital/api/mcp
 ```
 
-This endpoint is public, read-only, and does not require authentication. It exposes `search` and `fetch` tools for LLM clients, plus a resume resource and portfolio prompt for clients that support MCP resources and prompts.
+This endpoint is public, read-only, and does not require authentication. It exposes `search`, `brief`, and `fetch` tools for LLM clients, plus a resume resource and portfolio prompt for clients that support MCP resources and prompts.
 
 Claude Code:
 

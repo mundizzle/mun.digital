@@ -2,12 +2,12 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 
-import { fetchMcpEvidence, loadResume, searchMcpEvidence } from "./resume-data.mjs";
+import { buildBrief, fetchMcpEvidence, loadResume, searchMcpEvidence } from "./resume-data.mjs";
 
 export function createMcpServer() {
   const server = new McpServer({
     name: "mundigital",
-    version: "0.2.0",
+    version: "0.3.0",
   });
 
   server.registerResource(
@@ -58,6 +58,33 @@ export function createMcpServer() {
   );
 
   server.registerTool(
+    "brief",
+    {
+      title: "Generate Portfolio Brief",
+      description:
+        "Generate an agent-ready public career brief for Mundi Morgado using sanitized resume evidence.",
+      inputSchema: {},
+    },
+    async () => {
+      const resume = await loadResume();
+      const result = {
+        schema_version: resume.schema_version,
+        brief: await buildBrief(),
+      };
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(result, null, 2),
+          },
+        ],
+        structuredContent: result,
+      };
+    },
+  );
+
+  server.registerTool(
     "fetch",
     {
       title: "Fetch Public Profile Evidence",
@@ -94,7 +121,7 @@ export function createMcpServer() {
           content: {
             type: "text",
             text:
-              "Use only evidence from mun://resume, search, and fetch to summarize Mundi Morgado's fit for a design-engineering, front-end architecture, or agentic-development conversation. Cite the specific resume sections you rely on and do not invent details.",
+              "Use only evidence from mun://resume, search, brief, and fetch to summarize Mundi Morgado's fit for a design-engineering, front-end architecture, or agentic-development conversation. Cite the specific resume sections you rely on and do not invent details.",
           },
         },
       ],
