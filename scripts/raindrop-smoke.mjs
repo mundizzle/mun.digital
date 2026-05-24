@@ -44,6 +44,13 @@ const fixture = [
     collection: { $id: 999 },
     created: "2026-01-01T00:00:00.000Z",
   },
+  {
+    _id: 2,
+    title: "Unsafe URL",
+    link: "javascript:alert(1)",
+    collection: { $id: 123 },
+    created: "2026-01-01T00:00:00.000Z",
+  },
 ];
 
 const first = sanitizeRaindropItems(fixture, config);
@@ -71,12 +78,16 @@ for (const forbidden of [
   "456",
   "789",
   "999",
+  "Unsafe URL",
+  "javascript:",
 ]) {
   assert(!serialized.includes(forbidden), `raindrop public output leaked forbidden value: ${forbidden}`);
 }
 
 await assertNoTokenFailsClosed();
 await assertEmptyApiFailsClosed();
+await assertSanitizedEmptyFailsClosed();
+await assertPaginationFailsClosed();
 
 console.log("raindrop smoke passed");
 
@@ -114,6 +125,74 @@ async function assertEmptyApiFailsClosed() {
       assert(
         error instanceof Error && error.message.includes("returned no items"),
         "empty Raindrop API response failed with the wrong error",
+      );
+    },
+  );
+}
+
+async function assertSanitizedEmptyFailsClosed() {
+  await fetchRaindropSnapshot({
+    token: "token",
+    config,
+    fetchImpl: async () => ({
+      ok: true,
+      async json() {
+        return {
+          items: [
+            {
+              _id: 100,
+              title: "Wrong collection",
+              link: "https://example.com/private",
+              collection: { $id: 999 },
+            },
+          ],
+        };
+      },
+    }),
+  }).then(
+    () => {
+      throw new Error("sanitized-empty Raindrop API response did not fail closed");
+    },
+    (error) => {
+      assert(
+        error instanceof Error && error.message.includes("no public links"),
+        "sanitized-empty Raindrop API response failed with the wrong error",
+      );
+    },
+  );
+}
+
+async function assertPaginationFailsClosed() {
+  let calls = 0;
+  await fetchRaindropSnapshot({
+    token: "token",
+    config,
+    fetchImpl: async () => {
+      calls += 1;
+      return {
+        ok: true,
+        async json() {
+          return {
+            items: Array.from({ length: 50 }, (_, index) => ({
+              _id: `${calls}-${index}`,
+              title: `Paginated link ${calls}-${index}`,
+              link: `https://example.com/${calls}-${index}`,
+              collection: { $id: 123 },
+              created: "2026-01-01T00:00:00.000Z",
+            })),
+          };
+        },
+      };
+    },
+  }).then(
+    () => {
+      throw new Error("endless Raindrop pagination did not fail closed");
+    },
+    (error) => {
+      assert(calls === 20, `expected pagination to stop after 20 calls, got ${calls}`);
+      assert(
+        error instanceof Error && error.message.includes("pagination exceeded"),
+        "endless Raindrop pagination failed with the wrong error",
       );
     },
   );

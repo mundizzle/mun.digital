@@ -2,6 +2,7 @@ import publicLinks from "../public/raindrops.json" with { type: "json" };
 
 export const LINKS_SCHEMA_VERSION = "1.0.0";
 const RAINDROP_API_BASE_URL = "https://api.raindrop.io/rest/v1";
+const RAINDROP_MAX_PAGES = 20;
 const RAINDROP_PER_PAGE = 50;
 
 let cachedLinks;
@@ -122,7 +123,8 @@ export async function fetchRaindropSnapshot({ token, config, fetchImpl = fetch }
   const items = [];
   for (const collection of collections) {
     const collectionItems = await fetchCollectionItems({
-      collectionId: collection.id,
+      collectionId: stringValue(collection.id),
+      collectionName: publicCollectionName(collection),
       fetchImpl,
       token,
     });
@@ -133,14 +135,23 @@ export async function fetchRaindropSnapshot({ token, config, fetchImpl = fetch }
     throw new Error("Raindrop API returned no items; refusing to overwrite public artifact");
   }
 
-  return sanitizeRaindropItems(items, config);
+  const snapshot = sanitizeRaindropItems(items, config);
+  if (snapshot.links.length === 0) {
+    throw new Error("Raindrop sync produced no public links; refusing to overwrite public artifact");
+  }
+
+  return snapshot;
 }
 
-async function fetchCollectionItems({ collectionId, fetchImpl, token }) {
+async function fetchCollectionItems({ collectionId, collectionName, fetchImpl, token }) {
+  if (!collectionId) {
+    throw new Error("Configured Raindrop collection is missing an id");
+  }
+
   const items = [];
   let page = 0;
 
-  while (true) {
+  while (page < RAINDROP_MAX_PAGES) {
     const url = new URL(`${RAINDROP_API_BASE_URL}/raindrops/${encodeURIComponent(collectionId)}`);
     url.searchParams.set("page", String(page));
     url.searchParams.set("perpage", String(RAINDROP_PER_PAGE));
@@ -154,7 +165,7 @@ async function fetchCollectionItems({ collectionId, fetchImpl, token }) {
     });
 
     if (!response.ok) {
-      throw new Error(`Raindrop API request failed for collection ${collectionId}: ${response.status}`);
+      throw new Error(`Raindrop API request failed for ${collectionName}: ${response.status}`);
     }
 
     const body = await response.json();
@@ -162,13 +173,13 @@ async function fetchCollectionItems({ collectionId, fetchImpl, token }) {
     items.push(...pageItems);
 
     if (pageItems.length < RAINDROP_PER_PAGE) {
-      break;
+      return items;
     }
 
     page += 1;
   }
 
-  return items;
+  throw new Error(`Raindrop API pagination exceeded ${RAINDROP_MAX_PAGES} pages for ${collectionName}`);
 }
 
 function sanitizePublicLink(link) {
@@ -286,6 +297,10 @@ function cleanUrl(value) {
 
   try {
     const parsed = new URL(url);
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+      return "";
+    }
+
     return parsed.href;
   } catch {
     return "";
@@ -311,4 +326,8 @@ function slugify(value) {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
+}
+
+function publicCollectionName(collection) {
+  return cleanText(collection?.slug) || cleanText(collection?.label) || "configured collection";
 }
