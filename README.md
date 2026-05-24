@@ -33,7 +33,7 @@ ChatGPT / OpenAI custom connector:
 - Add a remote MCP connector named `mundigital`.
 - Use URL `https://mun.digital/api/mcp`.
 - Use no authentication.
-- Available tools are `search` and `fetch`.
+- Available tools are `search`, `brief`, and `fetch`.
 
 For local stdio fallback, run the npm package directly:
 
@@ -61,32 +61,32 @@ Other MCP clients use analogous stdio or Streamable HTTP configuration. The host
 Run the public profile tools without installing:
 
 ```bash
-npx @mun.digital/cli profile
-npx @mun.digital/cli search react
-npx @mun.digital/cli brief
-npx @mun.digital/cli mcp
+npx -y @mun.digital/cli profile
+npx -y @mun.digital/cli search react
+npx -y @mun.digital/cli brief
+npx -y @mun.digital/cli mcp
 ```
 
 | Command                               | Purpose                                                                                                                                                                      |
 | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npx @mun.digital/cli profile`        | Prints the public sanitized profile summary, links, and skills.                                                                                                              |
-| `npx @mun.digital/cli search <query>` | Searches public resume evidence for a topic, keyword, company, or technology.                                                                                                |
-| `npx @mun.digital/cli brief`          | Prints an agent-ready career brief with selected work evidence.                                                                                                              |
-| `npx @mun.digital/cli mcp`            | Starts the local stdio MCP server for MCP clients. This is intended to be launched by tools such as Claude Desktop or Claude Code, not run directly in an interactive shell. |
+| `npx -y @mun.digital/cli profile`        | Prints the public sanitized profile summary, links, and skills.                                                                                                              |
+| `npx -y @mun.digital/cli search <query>` | Searches public resume evidence for a topic, keyword, company, or technology.                                                                                                |
+| `npx -y @mun.digital/cli brief`          | Prints an agent-ready career brief with selected work evidence.                                                                                                              |
+| `npx -y @mun.digital/cli mcp`            | Starts the local stdio MCP server for MCP clients. This is intended to be launched by tools such as Claude Desktop or Claude Code, not run directly in an interactive shell. |
 
 Most commands also support `--json` for agent and script workflows:
 
 ```bash
-npx @mun.digital/cli profile --json
-npx @mun.digital/cli search "design systems" --json
-npx @mun.digital/cli brief --json
+npx -y @mun.digital/cli profile --json
+npx -y @mun.digital/cli search "design systems" --json
+npx -y @mun.digital/cli brief --json
 ```
 
 Example fit checks:
 
 ```bash
 # Does Mundi have Rails experience?
-npx @mun.digital/cli search rails
+npx -y @mun.digital/cli search rails
 ```
 
 Example Rails output:
@@ -100,8 +100,8 @@ Example Rails output:
 Example endorsement questions:
 
 ```bash
-npx @mun.digital/cli search "what do people say about Mundi?"
-npx @mun.digital/cli search endorsements
+npx -y @mun.digital/cli search "what do people say about Mundi?"
+npx -y @mun.digital/cli search endorsements
 ```
 
 Example endorsement output:
@@ -115,10 +115,10 @@ Example endorsement output:
 Other useful searches:
 
 ```bash
-npx @mun.digital/cli search accessibility
-npx @mun.digital/cli search "design systems"
-npx @mun.digital/cli search endorsements
-npx @mun.digital/cli search "technical leadership"
+npx -y @mun.digital/cli search accessibility
+npx -y @mun.digital/cli search "design systems"
+npx -y @mun.digital/cli search endorsements
+npx -y @mun.digital/cli search "technical leadership"
 ```
 
 Or install it globally:
