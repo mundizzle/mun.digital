@@ -16,6 +16,8 @@
   "author": "Mundi Morgado",
   "scripts": {
     "dev": "pnpm --filter @mun.digital/web dev",
+    "design:build": "node scripts/build-design-tokens.mjs",
+    "design:check": "node scripts/build-design-tokens.mjs --check",
     "build": "pnpm --filter @mun.digital/web build",
     "start": "pnpm --filter @mun.digital/web start",
     "lint": "pnpm --filter @mun.digital/web lint",

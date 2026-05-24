@@ -11,7 +11,7 @@ interface SkillsProps {
 export function Skills({ index, title, groups }: SkillsProps) {
   return (
     <section
-      className="relative border-t border-rule pt-6 pb-6 print:[break-inside:avoid]"
+      className="relative border-t border-border pt-6 pb-6 print:[break-inside:avoid]"
       id="skills"
       aria-labelledby="skills-title"
     >
@@ -35,7 +35,7 @@ export function Skills({ index, title, groups }: SkillsProps) {
             >
               {group.tokens.map((token) => (
                 <li
-                  className="inline-flex items-center gap-[8px] before:font-medium before:text-accent before:content-['—']"
+                  className="inline-flex items-center gap-[8px] before:font-medium before:text-primary before:content-['—']"
                   key={token}
                 >
                   {token}

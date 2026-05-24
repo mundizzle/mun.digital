@@ -41,7 +41,7 @@ function RailFrame({
 }
 
 const gutterLabelClassName =
-  "break-words text-[11px] leading-[1.35] uppercase tracking-[0.2em] text-ink-faint";
+  "break-words text-[11px] leading-[1.35] uppercase tracking-[0.2em] text-subtle-foreground";
 
 export function RailBaselineRow({
   label,
@@ -83,7 +83,7 @@ export function RailDividerRow({
     >
       <div
         aria-hidden="true"
-        className="absolute top-0 right-0 left-[calc(var(--rail-width)+var(--rail-gap))] border-t border-rule [border-top-style:dashed]"
+        className="absolute top-0 right-0 left-[calc(var(--rail-width)+var(--rail-gap))] border-t border-border [border-top-style:dashed]"
       ></div>
       <div className={joinClasses(gutterLabelClassName, "pt-[10px] md:pt-[18px]", labelClassName)}>
         {label}
@@ -111,7 +111,7 @@ export function RailInsetRow({
     >
       <div
         aria-hidden="true"
-        className="absolute top-0 right-0 left-[calc(var(--rail-width)+var(--rail-gap))] border-t border-rule [border-top-style:dashed]"
+        className="absolute top-0 right-0 left-[calc(var(--rail-width)+var(--rail-gap))] border-t border-border [border-top-style:dashed]"
       ></div>
       <div className={joinClasses(gutterLabelClassName, insetClassName, labelClassName)}>
         {label}

@@ -33,8 +33,8 @@ export default async function Home() {
         <AgentCue />
       </main>
 
-      <footer className="mt-10 flex justify-between border-t border-rule-strong pt-[18px] text-[10.5px] tracking-[0.2em] text-ink-faint uppercase print:[break-inside:avoid]">
-        <div className="before:text-accent before:content-['■_']">END OF FILE</div>
+      <footer className="mt-10 flex justify-between border-t border-border-strong pt-[18px] text-[10.5px] tracking-[0.2em] text-subtle-foreground uppercase print:[break-inside:avoid]">
+        <div className="before:text-primary before:content-['■_']">END OF FILE</div>
       </footer>
     </div>
   );
