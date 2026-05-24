@@ -2,10 +2,23 @@ packages:
   - apps/*
   - packages/*
 
+overrides:
+  valibot: ^1.4.0
+
+peerDependencyRules:
+  allowedVersions:
+    tailwindcss: ">=4.0.0"
+
 allowBuilds:
+  "@swc/core": true
+  esbuild: true
+  msw: true
   sharp: true
   unrs-resolver: true
 
 onlyBuiltDependencies:
+  - "@swc/core"
+  - esbuild
+  - msw
   - sharp
   - unrs-resolver

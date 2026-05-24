@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "./tokens.generated.css";
+@import "@mun.digital/tokens/css";
 @plugin "@tailwindcss/typography";
 
 @theme inline {

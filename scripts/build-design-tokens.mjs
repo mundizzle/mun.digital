@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const tokenPath = path.join(rootDir, "design.tokens.json");
-const outputPath = path.join(rootDir, "apps/web/src/app/tokens.generated.css");
+const outputPath = path.join(rootDir, "packages/tokens/css/tokens.generated.css");
 const checkMode = process.argv.includes("--check");
 
 const colorNames = [

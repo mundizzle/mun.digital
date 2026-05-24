@@ -1,26 +1,24 @@
 {
-  "name": "@mun.digital/web",
+  "name": "@mun.digital/docs",
   "version": "0.0.0-private",
   "private": true,
+  "type": "module",
   "scripts": {
-    "prebuild": "pnpm --dir ../.. run resume:build",
-    "dev": "next dev",
+    "dev": "next dev -p 3001",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3001",
     "lint": "eslint"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.29.0",
-    "@mun.digital/profile": "workspace:*",
     "@mun.digital/tokens": "workspace:*",
-    "@mun.digital/ui": "workspace:*",
+    "fumadocs-mdx": "^15.0.8",
+    "fumadocs-ui": "^16.9.1",
     "next": "16.2.4",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
-    "@tailwindcss/typography": "^0.5.19",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
