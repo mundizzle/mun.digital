@@ -24,10 +24,10 @@ This file is only for durable rules needed to plan and code correctly in this re
 
 ## Local Skills
 
-- Use locally installed Codex skills when creating functionality, writing code, reviewing code, or deploying this repo.
+- Use locally installed skills when creating functionality, writing code, reviewing code, or deploying this repo.
 - For web UI, HTML, CSS, browser APIs, or client-side JavaScript, follow the installed web guidance skills before coding.
 - For React or Next.js work, follow the installed React, Next.js, and Vercel React best-practice skills in addition to the local Next 16 docs.
-- For deployment, Vercel configuration, environment variables, or preview/production releases, follow the installed Vercel deployment skills.
+- For deployment, Vercel configuration, Vercel deployment environment variables, or preview/production releases, follow the installed Vercel deployment skills.
 - If a relevant skill is unavailable in the current session, note that and continue with the repo rules and official docs.
 
 ## Data Boundary
