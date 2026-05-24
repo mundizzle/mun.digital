@@ -35,6 +35,10 @@ yarn-error.log*
 # private integration caches
 .raindrop-cache/
 
+# local agent tooling
+.agents/skills/
+.claude/skills/
+
 # env files (can opt-in for committing if needed)
 .env*
 

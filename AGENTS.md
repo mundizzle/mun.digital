@@ -22,6 +22,14 @@ This file is only for durable rules needed to plan and code correctly in this re
 - Before writing Next-specific code, check the relevant docs in `apps/web/node_modules/next/dist/docs/`; this repo uses Next 16 and some conventions differ from older examples.
 - Use `apps/web/src/proxy.ts` for Next 16 request interception. Do not add deprecated `middleware.ts`.
 
+## Local Skills
+
+- Use locally installed skills when creating functionality, writing code, reviewing code, or deploying this repo.
+- For web UI, HTML, CSS, browser APIs, or client-side JavaScript, follow the installed web guidance skills before coding.
+- For React or Next.js work, follow the installed React, Next.js, and Vercel React best-practice skills in addition to the local Next 16 docs.
+- For deployment, Vercel configuration, Vercel deployment environment variables, or preview/production releases, follow the installed Vercel deployment skills.
+- If a relevant skill is unavailable in the current session, note that and continue with the repo rules and official docs.
+
 ## Data Boundary
 
 - `packages/profile/data/resume.json` is the editorial source of truth for profile data.
