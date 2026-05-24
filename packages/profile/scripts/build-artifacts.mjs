@@ -11,7 +11,8 @@ const execFileAsync = promisify(execFile);
 const humanContactLines = ["415-505-4154", "mundizzle@gmail.com"];
 const rootDir = path.resolve(import.meta.dirname, "../../..");
 const sourcePath = path.join(rootDir, "packages/profile/data/resume.json");
-const publicDir = path.join(rootDir, "public");
+const publicDir = path.join(rootDir, "packages/profile/public");
+const webPublicDir = path.join(rootDir, "apps/web/public");
 const jsonPath = path.join(publicDir, "resume.json");
 const markdownPath = path.join(publicDir, "resume.md");
 const pdfPath = path.join(publicDir, "resume.pdf");
@@ -28,8 +29,21 @@ await fs.mkdir(publicDir, { recursive: true });
 await fs.writeFile(jsonPath, `${JSON.stringify(resume, null, 2)}\n`);
 await fs.writeFile(markdownPath, markdown);
 await renderPdf(html);
+await mirrorWebArtifacts();
 
 console.log("resume artifacts built");
+
+async function mirrorWebArtifacts() {
+  await fs.mkdir(webPublicDir, { recursive: true });
+  for (const filename of [
+    "resume.json",
+    "resume.md",
+    "resume.pdf",
+    "mundi-morgado-resume.pdf",
+  ]) {
+    await fs.copyFile(path.join(publicDir, filename), path.join(webPublicDir, filename));
+  }
+}
 
 async function renderPdf(htmlContent) {
   const sourceHash = sha256(htmlContent);
@@ -54,10 +68,10 @@ async function renderPdf(htmlContent) {
   if (!chromePath) {
     try {
       await fs.access(pdfPath);
-      console.warn("Chrome not found; keeping existing public/resume.pdf");
+      console.warn("Chrome not found; keeping existing packages/profile/public/resume.pdf");
       return;
     } catch {
-      throw new Error("Chrome not found and public/resume.pdf does not exist");
+      throw new Error("Chrome not found and packages/profile/public/resume.pdf does not exist");
     }
   }
 

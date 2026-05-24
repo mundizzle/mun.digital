@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { loadResume } from "../../packages/profile/src/resume-data.mjs";
+import { loadResume } from "@mun.digital/profile";
 import "./globals.css";
 
 export async function generateMetadata(): Promise<Metadata> {

@@ -1,3 +1,9 @@
+<!-- BEGIN:nextjs-agent-rules -->
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `apps/web/node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
+<!-- END:nextjs-agent-rules -->
+
 # mun.digital Agent Rules
 
 This file is only for durable rules needed to plan and code correctly in this repo. Project state lives in Linear.
@@ -10,16 +16,16 @@ This file is only for durable rules needed to plan and code correctly in this re
 
 ## Stack
 
-- Use npm.
+- Use pnpm.
 - Keep local development on Node `24` via `.nvmrc`. In `package.json`, use the broadest safe minimum Node engine for the published CLI so newer Node versions do not warn unnecessarily.
 - Use Next.js App Router, TypeScript, and Tailwind.
-- Before writing Next-specific code, check the relevant docs in `node_modules/next/dist/docs/`; this repo uses Next 16 and some conventions differ from older examples.
-- Use `src/proxy.ts` for Next 16 request interception. Do not add deprecated `middleware.ts`.
+- Before writing Next-specific code, check the relevant docs in `apps/web/node_modules/next/dist/docs/`; this repo uses Next 16 and some conventions differ from older examples.
+- Use `apps/web/src/proxy.ts` for Next 16 request interception. Do not add deprecated `middleware.ts`.
 
 ## Data Boundary
 
 - `packages/profile/data/resume.json` is the editorial source of truth for profile data.
-- Public artifacts are generated from sanitized data: `public/resume.json`, `public/resume.md`, and `public/resume.pdf`.
+- Public artifacts are generated from sanitized data in `packages/profile/public/` and mirrored to `apps/web/public/` for serving.
 - Public outputs must not expose `basics.phone`, `basics.location.address`, `basics.location.postalCode`, `meta.private.*`, or `basics.email` unless `meta.publicContact.email=true`.
 - CLI and MCP surfaces are public and read-only. Do not add write, deploy, shell, arbitrary filesystem, environment, secret, telemetry, or postinstall behavior without an explicit plan.
 - Do not create a parallel content source for profile data.
@@ -44,15 +50,15 @@ This file is only for durable rules needed to plan and code correctly in this re
 Run the checks that match the changed surface:
 
 ```bash
-npm run lint
-npm run build
-npm run resume:build
-npm run public:smoke
-npm run llms:smoke
-npm run profile:smoke
-npm run mcp:smoke
-npm run mcp:http:smoke -- http://localhost:3000/api/mcp
-npm run pack:smoke
+pnpm run lint
+pnpm run build
+pnpm run resume:build
+pnpm run public:smoke
+pnpm run llms:smoke
+pnpm run profile:smoke
+pnpm run mcp:smoke
+pnpm run mcp:http:smoke http://localhost:3000/api/mcp
+pnpm run pack:smoke
 ```
 
 ## Secrets

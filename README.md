@@ -149,28 +149,28 @@ Public surfaces exclude private contact details and private metadata. CLI and MC
 
 ## Tech
 
-Next.js (App Router) + TypeScript + Tailwind CSS, deployed on Vercel.
+pnpm workspace with a Next.js App Router web app, TypeScript, Tailwind CSS, and shared profile logic, deployed on Vercel.
 
 ## Local development
 
 ```bash
-npm install
-npm run resume:build
-npm run dev   # http://localhost:3000
+pnpm install
+pnpm run resume:build
+pnpm run dev   # http://localhost:3000
 ```
 
 ## Verification
 
 ```bash
-npm run resume:build
-npm run public:smoke
-npm run llms:smoke
-npm run profile:smoke
-npm run mcp:smoke
-npm run mcp:http:smoke -- https://mun.digital/api/mcp
-npm run lint
-npm run build
-npm run pack:smoke
+pnpm run resume:build
+pnpm run public:smoke
+pnpm run llms:smoke
+pnpm run profile:smoke
+pnpm run mcp:smoke
+pnpm run mcp:http:smoke https://mun.digital/api/mcp
+pnpm run lint
+pnpm run build
+pnpm run pack:smoke
 ```
 
 ## Agent context

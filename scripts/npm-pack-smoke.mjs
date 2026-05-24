@@ -24,10 +24,19 @@ try {
   await execFileAsync("tar", ["-xzf", tarballPath, "-C", extractDir]);
 
   const files = await listFiles(path.join(extractDir, "package"));
+  const packedPackage = JSON.parse(
+    await fs.readFile(path.join(extractDir, "package/package.json"), "utf8"),
+  );
   assert(!files.some((file) => file.startsWith("packages/profile/data/")), "tarball included raw profile data");
-  assert(files.includes("public/resume.json"), "tarball missing public/resume.json");
-  assert(files.includes("public/resume.md"), "tarball missing public/resume.md");
-  assert(files.includes("public/resume.pdf"), "tarball missing public/resume.pdf");
+  assert(files.includes("packages/profile/public/resume.json"), "tarball missing packages/profile/public/resume.json");
+  assert(files.includes("packages/profile/public/resume.md"), "tarball missing packages/profile/public/resume.md");
+  assert(files.includes("packages/profile/public/resume.pdf"), "tarball missing packages/profile/public/resume.pdf");
+  for (const webOnlyDependency of ["next", "react", "react-dom"]) {
+    assert(
+      !packedPackage.dependencies?.[webOnlyDependency],
+      `tarball package.json should not depend on ${webOnlyDependency}`,
+    );
+  }
 
   for (const file of files) {
     const filePath = path.join(extractDir, "package", file);
