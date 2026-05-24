@@ -6,13 +6,13 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 # mun.digital Agent Rules
 
-This file is only for durable rules needed to plan and code correctly in this repo. Project state lives in Linear.
+This file is only for durable rules needed to plan and code correctly in this repo.
 
 ## Project State
 
-- Linear is the source of truth for tasks, status, dependencies, and next actions.
+- Major portfolio features should use their own Git branch and PR.
 - Do not add status snapshots, history, roadmaps, task lists, or decision logs to this file.
-- For non-trivial work, use the relevant Linear issue as the scope and update it before ending.
+- Keep task-specific plans, status, and implementation notes in the active PR or the issue/discussion context provided by the user.
 
 ## Stack
 
@@ -40,10 +40,10 @@ This file is only for durable rules needed to plan and code correctly in this re
 
 ## Planning
 
-- Keep plans small and scoped to the active Linear issue.
+- Keep plans small and scoped to the active branch or PR.
 - For architecture, deployment, public-data, MCP, CLI, or agent-surface changes, state risks and verification before coding.
 - Use `/ask claude ...` or the local ask skill when the user requests cross-agent review.
-- Keep implementation notes in Linear, not in this file.
+- Keep implementation notes in the active PR or user-provided task context, not in this file.
 
 ## Verification
 
