@@ -9,3 +9,17 @@ The workspace separates public surfaces by responsibility:
 - `packages/ui` contains reusable, data-agnostic components.
 
 Turborepo coordinates build tasks so shared token and UI changes are visible to affected apps.
+
+## Static Documentation Routes
+
+Docs pages are generated from local Markdown-compatible content and expose matching `.md` routes for source-oriented readers. Markdown and LLM route handlers are static-safe and do not use request-time APIs.
+
+Canonical metadata is page-specific:
+
+- `https://docs.mun.digital` for the docs homepage.
+- `https://docs.mun.digital/tokens` for token docs.
+- Matching page URLs for shared UI, architecture, Storybook, and agent workflow docs.
+
+## Public Data Boundary
+
+The docs and Storybook apps document the design system only. They must not import `packages/profile/data/resume.json`, generated resume artifacts, or private profile fields.

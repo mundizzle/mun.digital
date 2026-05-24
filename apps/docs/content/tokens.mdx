@@ -1,11 +1,40 @@
 # Token Model
 
-The source of truth is root `design.tokens.json`. Colors are structured OKLCH token values, and semantic light/dark groups reference primitive leaves.
+The source of truth is root `design.tokens.json`. Colors are structured OKLCH token values, and semantic light/dark groups reference primitive leaves. CSS strings are generated output only.
 
-`packages/tokens` distributes generated CSS through `@mun.digital/tokens/css`. Apps should import that package entry instead of copying generated values.
+`packages/tokens` distributes the canonical CSS through `@mun.digital/tokens/css` and generated static metadata through `@mun.digital/tokens/metadata`. Apps should import package entries instead of copying generated values.
+
+## Authoring Model
+
+- Primitive color tokens describe raw OKLCH values.
+- Semantic color tokens describe product intent: `background`, `foreground`, `primary`, `border`, and related surface roles.
+- Layout tokens describe shared structure such as the portfolio rail width and gap.
+- Shared UI authors use semantic Tailwind utilities backed by generated variables, not raw color literals.
+
+## Generated Outputs
+
+| Export | File | Purpose |
+| --- | --- | --- |
+| `@mun.digital/tokens/css` | `packages/tokens/css/tokens.generated.css` | Runtime CSS variables for web, docs, Storybook, and shared UI styles. |
+| `@mun.digital/tokens/metadata` | `packages/tokens/metadata/tokens.generated.mjs` | Static metadata for docs and Storybook references. |
+
+The CSS includes `storybook-design-token` comment annotations so Storybook can browse token categories from the canonical CSS file. The docs token reference below is rendered from metadata, so reference content does not depend on Storybook addon compatibility.
+
+## Semantic Usage
+
+Use semantic tokens for component intent:
+
+```tsx
+<h2 className="text-foreground">Experience</h2>
+<span className="text-primary">[02]</span>
+<div className="border-border bg-card" />
+```
+
+Avoid raw color values when a semantic token exists. Add new tokens in `design.tokens.json`, then regenerate outputs.
 
 Verification:
 
 - Run `pnpm design:build` after editing `design.tokens.json`.
 - Run `pnpm design:check` before committing.
 - Run `pnpm tokens:smoke` when a consumer changes.
+- Run `pnpm pack:smoke` when package exports change.

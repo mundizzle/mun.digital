@@ -7,7 +7,12 @@ const config: StorybookConfig = {
     options: {},
   },
   stories: ["../../../packages/ui/src/**/*.stories.@(ts|tsx)"],
-  addons: ["@storybook/addon-docs", "@storybook/addon-a11y", "@storybook/addon-mcp"],
+  addons: [
+    "@storybook/addon-docs",
+    "@storybook/addon-a11y",
+    "@storybook/addon-mcp",
+    "@storybook/addon-vitest",
+  ],
   docs: {
     autodocs: "tag",
   },

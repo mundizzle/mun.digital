@@ -5,3 +5,41 @@ For foundation-level design-system changes, start with an OpenSpec change and ke
 Before editing web UI, read the relevant local Next.js 16 docs and installed web guidance skills. Keep shared UI components reusable, semantic-token-backed, and free of profile data ownership.
 
 The docs LLM surface is design-system-only. Use `https://mun.digital/llms.txt` for profile and resume information.
+
+## Change Sequence
+
+1. Create or update an OpenSpec change for foundation-level surfaces: tokens, architecture, docs, Storybook, deployment, public data, MCP, CLI, or agent surfaces.
+2. Vet substantive plans with Claude through `/ask` before coding.
+3. Implement against accepted OpenSpec artifacts.
+4. Update OpenSpec artifacts before code when implementation reveals a plan change.
+5. Keep task notes in the active PR or user-provided context, not in `AGENTS.md`.
+6. Archive the OpenSpec change only after implementation and review are complete.
+
+## Verification
+
+Run checks that match the changed surface. For this design-system reference phase, use:
+
+```bash
+pnpm dlx @fission-ai/openspec@latest validate --specs --strict
+pnpm run design:check
+pnpm run tokens:smoke
+pnpm run lint
+pnpm run build
+pnpm run docs:build
+pnpm run docs:llms:smoke
+pnpm run storybook:build
+pnpm --filter @mun.digital/storybook test:storybook
+pnpm run storybook:a11y
+pnpm run public:smoke
+pnpm run llms:smoke
+pnpm run profile:smoke
+pnpm run mcp:smoke
+pnpm run pack:smoke
+```
+
+## Boundaries
+
+- Do not create parallel profile data sources.
+- Do not expose private resume fields in docs or Storybook.
+- Do not add write, deploy, shell, arbitrary filesystem, environment, secret, telemetry, or postinstall behavior to public CLI or MCP surfaces without an explicit plan.
+- Do not expand the reusable component surface during a docs/reference-only phase.
