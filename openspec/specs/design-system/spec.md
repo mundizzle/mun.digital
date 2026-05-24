@@ -29,15 +29,15 @@ The design token file SHALL conform to the Design Tokens Format Module 2025.10 t
 - **THEN** `semantic.light.*` and `semantic.dark.*` token groups reference same-type primitive token leaves instead of using `{ light, dark }` value wrappers
 
 ### Requirement: Generated CSS boundary
-The system SHALL generate web CSS semantic token values from `design.tokens.json`.
+The system SHALL generate web CSS semantic token values from `design.tokens.json` through the shared token package.
 
 #### Scenario: Design tokens are built
 - **WHEN** `pnpm design:build` is run
-- **THEN** `apps/web/src/app/tokens.generated.css` is fully regenerated from `design.tokens.json` with a generated-file banner
+- **THEN** `packages/tokens/css/tokens.generated.css` is fully regenerated from `design.tokens.json` with a generated-file banner
 
 #### Scenario: Generated CSS is maintained
-- **WHEN** a maintainer needs to change values in `apps/web/src/app/tokens.generated.css`
-- **THEN** they update `design.tokens.json` and regenerate the file instead of hand-editing generated CSS
+- **WHEN** a maintainer needs to change generated token values
+- **THEN** they update `design.tokens.json` and regenerate package CSS instead of hand-editing generated CSS
 
 #### Scenario: Generated CSS is stale
 - **WHEN** `pnpm design:check` is run and committed generated CSS does not match `design.tokens.json`
@@ -77,8 +77,8 @@ The system SHALL install and register Tailwind Typography for future rendered pr
 - **THEN** `@tailwindcss/typography` is available through Tailwind's CSS-first plugin registration without adding an unverified custom prose theme
 
 ### Requirement: Verification
-The design system contract SHALL be protected by token generation checks, OpenSpec validation, web checks, and visual review.
+The design system contract SHALL be protected by token generation checks, OpenSpec validation, web checks, docs checks, Storybook checks, and visual review.
 
 #### Scenario: Design system verification runs
 - **WHEN** maintainers verify design system changes
-- **THEN** they run `pnpm design:build`, `pnpm design:check`, `pnpm dlx @fission-ai/openspec@latest validate establish-design-system --strict`, `pnpm run lint`, `pnpm run build`, and manually check light, dark, and print rendering
+- **THEN** they run token, web, docs, Storybook, and relevant profile smoke checks for the changed surfaces
