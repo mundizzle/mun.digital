@@ -38,5 +38,5 @@
 - [x] 5.4 Run `pnpm run lint`.
 - [x] 5.5 Run `pnpm run build`.
 - [x] 5.6 Manually check light, dark, and print rendering.
-- [ ] 5.7 Ask Claude to review PR implementation for spec conformance.
-- [ ] 5.8 Archive the OpenSpec change as the final commit after review consensus.
+- [x] 5.7 Ask Claude to review PR implementation for spec conformance.
+- [x] 5.8 Archive the OpenSpec change as the final commit after review consensus.
