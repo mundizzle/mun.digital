@@ -4,16 +4,24 @@ import os from "node:os";
 import path from "node:path";
 import { promisify } from "node:util";
 
+import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
+import {
+  CallToolResultSchema,
+  ListToolsResultSchema,
+} from "@modelcontextprotocol/sdk/types.js";
+
 const execFileAsync = promisify(execFile);
 const rootDir = path.resolve(import.meta.dirname, "..");
+const cliDir = path.join(rootDir, "packages/cli");
 const raw = JSON.parse(await fs.readFile(path.join(rootDir, "packages/profile/data/resume.json"), "utf8"));
 const privateValues = collectPrivateValues(raw);
 
-const { stdout } = await execFileAsync("npm", ["pack", "--json"], { cwd: rootDir });
+const { stdout } = await execFileAsync("npm", ["pack", "--json"], { cwd: cliDir });
 const jsonStart = stdout.indexOf("[");
 assert(jsonStart >= 0, "npm pack did not return a JSON array");
 const pack = JSON.parse(stdout.slice(jsonStart))[0];
-const tarballPath = path.join(rootDir, pack.filename);
+const tarballPath = path.join(cliDir, pack.filename);
 const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "mundigital-pack-"));
 const extractDir = path.join(tmpDir, "extract");
 const installDir = path.join(tmpDir, "install");
@@ -28,10 +36,11 @@ try {
     await fs.readFile(path.join(extractDir, "package/package.json"), "utf8"),
   );
   assert(!files.some((file) => file.startsWith("packages/profile/data/")), "tarball included raw profile data");
-  assert(files.includes("packages/profile/public/resume.json"), "tarball missing packages/profile/public/resume.json");
-  assert(files.includes("packages/profile/public/resume.md"), "tarball missing packages/profile/public/resume.md");
-  assert(files.includes("packages/profile/public/resume.pdf"), "tarball missing packages/profile/public/resume.pdf");
-  for (const webOnlyDependency of ["next", "react", "react-dom"]) {
+  assert(!files.some((file) => file.startsWith("profile/data/")), "tarball included raw profile data");
+  assert(files.includes("profile/public/resume.json"), "tarball missing profile/public/resume.json");
+  assert(files.includes("profile/public/resume.md"), "tarball missing profile/public/resume.md");
+  assert(files.includes("profile/public/resume.pdf"), "tarball missing profile/public/resume.pdf");
+  for (const webOnlyDependency of ["@mun.digital/profile", "next", "react", "react-dom"]) {
     assert(
       !packedPackage.dependencies?.[webOnlyDependency],
       `tarball package.json should not depend on ${webOnlyDependency}`,
@@ -65,10 +74,57 @@ try {
     "installed CLI output missing GitHub profile",
   );
 
+  const { stdout: briefStdout } = await execFileAsync("npx", ["mundigital", "brief", "--json"], {
+    cwd: installDir,
+  });
+  const brief = JSON.parse(briefStdout);
+  assert(brief.schema_version, "installed brief output missing schema_version");
+  assert(brief.brief?.includes("https://github.com/mundizzle"), "installed brief output missing GitHub profile");
+
+  await assertInstalledMcp(installDir);
+
   console.log("npm pack smoke passed");
 } finally {
   await fs.rm(tmpDir, { force: true, recursive: true });
   await fs.rm(tarballPath, { force: true });
+}
+
+async function assertInstalledMcp(cwd) {
+  const client = new Client({
+    name: "mundigital-pack-smoke",
+    version: "0.1.0",
+  });
+  const transport = new StdioClientTransport({
+    command: "npx",
+    args: ["mundigital", "mcp"],
+    cwd,
+    stderr: "pipe",
+  });
+
+  try {
+    await client.connect(transport);
+    const tools = await client.request({ method: "tools/list" }, ListToolsResultSchema);
+    const toolNames = tools.tools.map((tool) => tool.name);
+    assert(
+      JSON.stringify(toolNames) === JSON.stringify(["search", "fetch"]),
+      `installed MCP expected search, fetch tools; got ${toolNames.join(", ")}`,
+    );
+
+    const search = await client.request(
+      {
+        method: "tools/call",
+        params: {
+          name: "search",
+          arguments: { query: "github" },
+        },
+      },
+      CallToolResultSchema,
+    );
+    assert(search.content?.[0]?.type === "text", "installed MCP search did not return text content");
+    assert(search.content[0].text.includes("github.com/mundizzle"), "installed MCP search missing GitHub evidence");
+  } finally {
+    await transport.close();
+  }
 }
 
 async function listFiles(dir, base = dir) {

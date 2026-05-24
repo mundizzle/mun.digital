@@ -2,6 +2,7 @@ import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 
 const execFileAsync = promisify(execFile);
+const cliBin = "packages/cli/bin/mundigital.mjs";
 
 await assertProfile();
 await assertSearch("React");
@@ -13,7 +14,7 @@ await assertSearchIncludes("what are people saying about Mundi", "Endorsement:")
 console.log("profile smoke passed");
 
 async function assertProfile() {
-  const { stdout } = await execFileAsync("node", ["bin/mundigital.mjs", "profile", "--json"]);
+  const { stdout } = await execFileAsync("node", [cliBin, "profile", "--json"]);
   const profile = JSON.parse(stdout);
 
   assert(profile.schema_version, "profile is missing schema_version");
@@ -26,12 +27,12 @@ async function assertProfile() {
     "profile is missing GitHub profile",
   );
 
-  const { stdout: textStdout } = await execFileAsync("node", ["bin/mundigital.mjs", "profile"]);
+  const { stdout: textStdout } = await execFileAsync("node", [cliBin, "profile"]);
   assert(textStdout.includes("https://github.com/mundizzle"), "profile text is missing GitHub profile");
 }
 
 async function assertSearch(query) {
-  const { stdout } = await execFileAsync("node", ["bin/mundigital.mjs", "search", query, "--json"]);
+  const { stdout } = await execFileAsync("node", [cliBin, "search", query, "--json"]);
   const result = JSON.parse(stdout);
 
   assert(result.schema_version, `search ${query} is missing schema_version`);
@@ -40,7 +41,7 @@ async function assertSearch(query) {
 }
 
 async function assertSearchIncludes(query, expectedText) {
-  const { stdout } = await execFileAsync("node", ["bin/mundigital.mjs", "search", query, "--json"]);
+  const { stdout } = await execFileAsync("node", [cliBin, "search", query, "--json"]);
   const result = JSON.parse(stdout);
 
   assert(result.schema_version, `search ${query} is missing schema_version`);

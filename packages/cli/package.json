@@ -1,0 +1,45 @@
+{
+  "name": "@mun.digital/cli",
+  "version": "0.2.2",
+  "type": "module",
+  "description": "Public read-only resume CLI and MCP server for Mundi Morgado.",
+  "homepage": "https://mun.digital",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mundizzle/mun.digital.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/mundizzle/mun.digital/issues"
+  },
+  "license": "MIT",
+  "author": "Mundi Morgado",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "mundigital": "bin/mundigital.mjs"
+  },
+  "files": [
+    "bin/",
+    "profile/public/resume.json",
+    "profile/public/resume.md",
+    "profile/public/resume.pdf",
+    "profile/public/mundi-morgado-resume.pdf",
+    "profile/src/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "prepack": "pnpm --dir ../.. run resume:build",
+    "mun": "node bin/mundigital.mjs",
+    "mcp:start": "node bin/mundigital.mjs mcp"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.4.3"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  }
+}

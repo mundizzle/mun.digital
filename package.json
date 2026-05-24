@@ -1,8 +1,9 @@
 {
-  "name": "@mun.digital/cli",
-  "version": "0.2.1",
+  "name": "mun.digital",
+  "version": "0.0.0-private",
+  "private": true,
   "packageManager": "pnpm@11.2.2",
-  "description": "Public read-only resume CLI and MCP server for Mundi Morgado.",
+  "description": "Public portfolio and agent-readable profile for Mundi Morgado.",
   "homepage": "https://mun.digital",
   "repository": {
     "type": "git",
@@ -13,41 +14,23 @@
   },
   "license": "MIT",
   "author": "Mundi Morgado",
-  "publishConfig": {
-    "access": "public"
-  },
-  "bin": {
-    "mundigital": "bin/mundigital.mjs"
-  },
-  "files": [
-    "bin/",
-    "packages/profile/public/resume.json",
-    "packages/profile/public/resume.md",
-    "packages/profile/public/resume.pdf",
-    "packages/profile/public/mundi-morgado-resume.pdf",
-    "packages/profile/src/",
-    "README.md",
-    "LICENSE"
-  ],
   "scripts": {
-    "prepack": "pnpm run resume:build",
     "dev": "pnpm --filter @mun.digital/web dev",
     "build": "pnpm --filter @mun.digital/web build",
     "start": "pnpm --filter @mun.digital/web start",
     "lint": "pnpm --filter @mun.digital/web lint",
-    "mun": "node bin/mundigital.mjs",
+    "mun": "node packages/cli/bin/mundigital.mjs",
     "resume:build": "node packages/profile/scripts/build-artifacts.mjs",
     "public:smoke": "node scripts/public-data-smoke.mjs",
     "llms:smoke": "node scripts/llms-smoke.mjs",
-    "mcp:start": "node bin/mundigital.mjs mcp",
+    "mcp:start": "node packages/cli/bin/mundigital.mjs mcp",
     "mcp:http:smoke": "node scripts/http-mcp-smoke.mjs",
     "mcp:smoke": "node scripts/mcp-smoke.mjs",
     "pack:smoke": "node scripts/npm-pack-smoke.mjs",
     "profile:smoke": "node scripts/profile-smoke.mjs"
   },
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.29.0",
-    "zod": "^4.4.3"
+  "devDependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0"
   },
   "engines": {
     "node": ">=20.9.0"
