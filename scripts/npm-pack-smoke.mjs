@@ -106,8 +106,8 @@ async function assertInstalledMcp(cwd) {
     const tools = await client.request({ method: "tools/list" }, ListToolsResultSchema);
     const toolNames = tools.tools.map((tool) => tool.name);
     assert(
-      JSON.stringify(toolNames) === JSON.stringify(["search", "fetch"]),
-      `installed MCP expected search, fetch tools; got ${toolNames.join(", ")}`,
+      JSON.stringify(toolNames) === JSON.stringify(["search", "brief", "fetch"]),
+      `installed MCP expected search, brief, fetch tools; got ${toolNames.join(", ")}`,
     );
 
     const search = await client.request(
@@ -122,6 +122,19 @@ async function assertInstalledMcp(cwd) {
     );
     assert(search.content?.[0]?.type === "text", "installed MCP search did not return text content");
     assert(search.content[0].text.includes("github.com/mundizzle"), "installed MCP search missing GitHub evidence");
+
+    const brief = await client.request(
+      {
+        method: "tools/call",
+        params: {
+          name: "brief",
+          arguments: {},
+        },
+      },
+      CallToolResultSchema,
+    );
+    assert(brief.content?.[0]?.type === "text", "installed MCP brief did not return text content");
+    assert(brief.content[0].text.includes("github.com/mundizzle"), "installed MCP brief missing GitHub profile");
   } finally {
     await transport.close();
   }
