@@ -22,7 +22,7 @@ The current system exposes a public portfolio website, generated public profile 
 - **Use fine-grained capability specs.** Public data, artifacts, website delivery, CLI, MCP, Raindrop sync, data safety, and package distribution change independently enough to deserve separate specs.
 - **Keep public-data-safety cross-cutting.** Privacy and redaction invariants apply across resume data, Raindrop data, generated artifacts, CLI, MCP, website delivery, and package contents.
 - **Keep package-distribution separate from CLI runtime behavior.** Published package safety and file allowlisting are different contracts from command behavior.
-- **Attach verification notes to specs.** Smokes are process checks, not product capabilities; each capability names the smoke commands that protect it.
+- **Model verification per capability.** Smokes are process checks, not product capabilities; each capability includes a verification requirement naming the smoke commands that protect it.
 
 ## Risks / Trade-offs
 

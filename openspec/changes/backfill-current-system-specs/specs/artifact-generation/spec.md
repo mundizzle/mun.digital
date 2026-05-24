@@ -32,7 +32,7 @@ The system SHALL maintain `llms.txt` as a public agent discovery artifact.
 The system SHALL treat `raindrops.json` as a generated sanitized public artifact.
 
 #### Scenario: Public artifacts are mirrored
-- **WHEN** public artifacts are built after a successful Raindrop sync
+- **WHEN** public artifacts are built
 - **THEN** the sanitized Raindrop snapshot is mirrored for website and CLI package consumption
 
 ### Requirement: Verification

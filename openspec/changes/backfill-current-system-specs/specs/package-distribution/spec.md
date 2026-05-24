@@ -10,6 +10,10 @@ The system SHALL publish the public CLI package as `@mun.digital/cli` with binar
 ### Requirement: Published file allowlist
 The package distribution SHALL include only the CLI binary, package metadata, license/readme, public artifacts, and mirrored shared source modules needed for CLI and MCP behavior.
 
+#### Scenario: Package is prepared
+- **WHEN** the npm package is packed or published from the workspace
+- **THEN** package preparation rebuilds public profile artifacts before the package contents are assembled
+
 #### Scenario: Package is packed
 - **WHEN** the npm package is packed
 - **THEN** it includes public resume artifacts, the public Raindrop snapshot, CLI runtime files, and required MCP/profile modules
