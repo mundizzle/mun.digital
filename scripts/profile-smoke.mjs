@@ -10,6 +10,7 @@ await assertSearch("design systems");
 await assertSearch("agentic");
 await assertSearch("github");
 await assertSearchIncludes("what are people saying about Mundi", "Endorsement:");
+await assertLinks();
 
 console.log("profile smoke passed");
 
@@ -50,6 +51,19 @@ async function assertSearchIncludes(query, expectedText) {
     result.results.some((entry) => entry.section.includes(expectedText) || entry.text.includes(expectedText)),
     `search ${query} did not include ${expectedText}`,
   );
+}
+
+async function assertLinks() {
+  const { stdout } = await execFileAsync("node", [cliBin, "links", "--json"]);
+  const links = JSON.parse(stdout);
+
+  assert(links.schema_version, "links output is missing schema_version");
+  assert(Array.isArray(links.links), "links output is missing links array");
+
+  const { stdout: searchStdout } = await execFileAsync("node", [cliBin, "links", "search", "design", "--json"]);
+  const search = JSON.parse(searchStdout);
+  assert(search.schema_version, "links search output is missing schema_version");
+  assert(search.query === "design", "links search did not echo query");
 }
 
 function assert(condition, message) {

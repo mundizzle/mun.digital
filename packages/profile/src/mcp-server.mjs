@@ -2,12 +2,13 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 
+import { fetchLink, searchLinks } from "./raindrop-links.mjs";
 import { buildBrief, fetchMcpEvidence, loadResume, searchMcpEvidence } from "./resume-data.mjs";
 
 export function createMcpServer() {
   const server = new McpServer({
     name: "mundigital",
-    version: "0.3.0",
+    version: "0.4.0",
   });
 
   server.registerResource(
@@ -72,6 +73,55 @@ export function createMcpServer() {
         brief: await buildBrief(),
       };
 
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(result, null, 2),
+          },
+        ],
+        structuredContent: result,
+      };
+    },
+  );
+
+  server.registerTool(
+    "links_search",
+    {
+      title: "Search Public Links",
+      description:
+        "Search Mundi Morgado's curated public link snapshot from Raindrop. Returns read-only public bookmark evidence for follow-up with links_fetch.",
+      inputSchema: {
+        query: z.string().min(1).describe("Search query, such as design systems, React, accessibility, or AI."),
+        limit: z.number().int().min(1).max(20).optional().describe("Maximum number of results."),
+      },
+    },
+    async ({ query, limit }) => {
+      const result = await searchLinks(query, { limit });
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(result, null, 2),
+          },
+        ],
+        structuredContent: result,
+      };
+    },
+  );
+
+  server.registerTool(
+    "links_fetch",
+    {
+      title: "Fetch Public Link",
+      description:
+        "Fetch one full public link by id from a previous links_search result.",
+      inputSchema: {
+        id: z.string().min(1).describe("Link id returned by links_search."),
+      },
+    },
+    async ({ id }) => {
+      const result = await fetchLink(id);
       return {
         content: [
           {

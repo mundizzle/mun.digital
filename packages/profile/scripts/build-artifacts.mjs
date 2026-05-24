@@ -39,6 +39,7 @@ async function mirrorWebArtifacts() {
   await fs.mkdir(webPublicDir, { recursive: true });
   for (const filename of [
     "resume.json",
+    "raindrops.json",
     "resume.md",
     "resume.pdf",
     "mundi-morgado-resume.pdf",
@@ -56,6 +57,7 @@ async function mirrorCliProfile() {
 
   for (const filename of [
     "resume.json",
+    "raindrops.json",
     "resume.md",
     "resume.pdf",
     "mundi-morgado-resume.pdf",
@@ -65,6 +67,7 @@ async function mirrorCliProfile() {
 
   for (const filename of [
     "mcp-server.mjs",
+    "raindrop-links.mjs",
     "resume-data.mjs",
     "sanitize-resume.mjs",
   ]) {

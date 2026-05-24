@@ -47,8 +47,8 @@ try {
   const tools = await client.request({ method: "tools/list" }, ListToolsResultSchema);
   const toolNames = tools.tools.map((tool) => tool.name);
   assert(
-    JSON.stringify(toolNames) === JSON.stringify(["search", "brief", "fetch"]),
-    `expected search, brief, fetch tools; got ${toolNames.join(", ")}`,
+    JSON.stringify(toolNames) === JSON.stringify(["search", "brief", "links_search", "links_fetch", "fetch"]),
+    `expected search, brief, links_search, links_fetch, fetch tools; got ${toolNames.join(", ")}`,
   );
 
   const search = await client.request(
@@ -78,6 +78,23 @@ try {
   assert(brief.schema_version, "brief result is missing schema_version");
   assert(brief.brief?.includes("https://github.com/mundizzle"), "brief result is missing GitHub profile");
   assertNoPrivateFields(brief, "brief result leaked private fields");
+
+  const links = await callTool("links_search", { query: "design systems" });
+  assert(links.schema_version, "links_search result is missing schema_version");
+  assert(Array.isArray(links.results), "links_search result is missing results");
+  assertNoPrivateFields(links, "links_search result leaked private fields");
+
+  const unknownLinkFetch = await client.request(
+    {
+      method: "tools/call",
+      params: {
+        name: "links_fetch",
+        arguments: { id: "nope" },
+      },
+    },
+    CallToolResultSchema,
+  );
+  assert(unknownLinkFetch.isError === true, "unknown links_fetch id did not return an MCP tool error");
 
   const endorsements = await client.request(
     {
@@ -152,7 +169,7 @@ async function callTool(name, args) {
 
 function assertNoPrivateFields(value, message) {
   const serialized = JSON.stringify(value);
-  for (const privateField of ["phone", "postalCode", "address", "private", "email"]) {
+  for (const privateField of ["phone", "postalCode", "address", "private", "email", "note", "creatorRef"]) {
     assert(!serialized.includes(privateField), `${message}: ${privateField}`);
   }
 }

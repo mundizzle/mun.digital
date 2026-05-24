@@ -38,6 +38,7 @@ try {
   assert(!files.some((file) => file.startsWith("packages/profile/data/")), "tarball included raw profile data");
   assert(!files.some((file) => file.startsWith("profile/data/")), "tarball included raw profile data");
   assert(files.includes("profile/public/resume.json"), "tarball missing profile/public/resume.json");
+  assert(files.includes("profile/public/raindrops.json"), "tarball missing profile/public/raindrops.json");
   assert(files.includes("profile/public/resume.md"), "tarball missing profile/public/resume.md");
   assert(files.includes("profile/public/resume.pdf"), "tarball missing profile/public/resume.pdf");
   for (const webOnlyDependency of ["@mun.digital/profile", "next", "react", "react-dom"]) {
@@ -106,8 +107,8 @@ async function assertInstalledMcp(cwd) {
     const tools = await client.request({ method: "tools/list" }, ListToolsResultSchema);
     const toolNames = tools.tools.map((tool) => tool.name);
     assert(
-      JSON.stringify(toolNames) === JSON.stringify(["search", "brief", "fetch"]),
-      `installed MCP expected search, brief, fetch tools; got ${toolNames.join(", ")}`,
+      JSON.stringify(toolNames) === JSON.stringify(["search", "brief", "links_search", "links_fetch", "fetch"]),
+      `installed MCP expected search, brief, links_search, links_fetch, fetch tools; got ${toolNames.join(", ")}`,
     );
 
     const search = await client.request(
@@ -135,6 +136,19 @@ async function assertInstalledMcp(cwd) {
     );
     assert(brief.content?.[0]?.type === "text", "installed MCP brief did not return text content");
     assert(brief.content[0].text.includes("github.com/mundizzle"), "installed MCP brief missing GitHub profile");
+
+    const links = await client.request(
+      {
+        method: "tools/call",
+        params: {
+          name: "links_search",
+          arguments: { query: "design systems" },
+        },
+      },
+      CallToolResultSchema,
+    );
+    assert(links.content?.[0]?.type === "text", "installed MCP links_search did not return text content");
+    assert(JSON.parse(links.content[0].text).schema_version, "installed MCP links_search missing schema_version");
   } finally {
     await transport.close();
   }

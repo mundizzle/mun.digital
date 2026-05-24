@@ -32,6 +32,9 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
+# private integration caches
+.raindrop-cache/
+
 # env files (can opt-in for committing if needed)
 .env*
 
