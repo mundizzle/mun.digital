@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import { buildBrief, loadResume, profileLinks, searchResume } from "../packages/profile/src/resume-data.mjs";
-import { runStdioServer } from "../packages/profile/src/mcp-server.mjs";
+import { buildBrief, loadResume, profileLinks, searchResume } from "../profile/src/resume-data.mjs";
+import { runStdioServer } from "../profile/src/mcp-server.mjs";
 
 const args = process.argv.slice(2);
 

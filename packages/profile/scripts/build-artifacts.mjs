@@ -13,6 +13,7 @@ const rootDir = path.resolve(import.meta.dirname, "../../..");
 const sourcePath = path.join(rootDir, "packages/profile/data/resume.json");
 const publicDir = path.join(rootDir, "packages/profile/public");
 const webPublicDir = path.join(rootDir, "apps/web/public");
+const cliProfileDir = path.join(rootDir, "packages/cli/profile");
 const jsonPath = path.join(publicDir, "resume.json");
 const markdownPath = path.join(publicDir, "resume.md");
 const pdfPath = path.join(publicDir, "resume.pdf");
@@ -30,6 +31,7 @@ await fs.writeFile(jsonPath, `${JSON.stringify(resume, null, 2)}\n`);
 await fs.writeFile(markdownPath, markdown);
 await renderPdf(html);
 await mirrorWebArtifacts();
+await mirrorCliProfile();
 
 console.log("resume artifacts built");
 
@@ -42,6 +44,31 @@ async function mirrorWebArtifacts() {
     "mundi-morgado-resume.pdf",
   ]) {
     await fs.copyFile(path.join(publicDir, filename), path.join(webPublicDir, filename));
+  }
+}
+
+async function mirrorCliProfile() {
+  const cliPublicDir = path.join(cliProfileDir, "public");
+  const cliSrcDir = path.join(cliProfileDir, "src");
+
+  await fs.mkdir(cliPublicDir, { recursive: true });
+  await fs.mkdir(cliSrcDir, { recursive: true });
+
+  for (const filename of [
+    "resume.json",
+    "resume.md",
+    "resume.pdf",
+    "mundi-morgado-resume.pdf",
+  ]) {
+    await fs.copyFile(path.join(publicDir, filename), path.join(cliPublicDir, filename));
+  }
+
+  for (const filename of [
+    "mcp-server.mjs",
+    "resume-data.mjs",
+    "sanitize-resume.mjs",
+  ]) {
+    await fs.copyFile(path.join(rootDir, "packages/profile/src", filename), path.join(cliSrcDir, filename));
   }
 }
 

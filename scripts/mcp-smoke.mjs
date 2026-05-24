@@ -16,7 +16,7 @@ const client = new Client({
 
 const transport = new StdioClientTransport({
   command: "node",
-  args: ["bin/mundigital.mjs", "mcp"],
+  args: ["packages/cli/bin/mundigital.mjs", "mcp"],
   cwd: process.cwd(),
   stderr: "pipe",
 });

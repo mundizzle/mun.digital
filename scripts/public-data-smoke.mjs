@@ -8,6 +8,8 @@ const scannedFiles = [
   "README.md",
   "packages/profile/public/resume.json",
   "packages/profile/public/resume.md",
+  "packages/cli/profile/public/resume.json",
+  "packages/cli/profile/public/resume.md",
   "apps/web/public/llms.txt",
   "apps/web/public/resume.json",
   "apps/web/public/resume.md",
@@ -32,6 +34,7 @@ await assertMirroredArtifact("resume.json");
 await assertMirroredArtifact("resume.md");
 await assertMirroredArtifact("resume.pdf");
 await assertMirroredArtifact("mundi-morgado-resume.pdf");
+await assertCliMirror();
 
 const markdown = await fs.readFile(path.join(rootDir, "packages/profile/public/resume.md"), "utf8");
 assert(markdown.includes(githubProfileText), "public resume markdown is missing GitHub profile");
@@ -53,6 +56,35 @@ async function assertMirroredArtifact(filename) {
     profileArtifact.equals(webArtifact),
     `apps/web/public/${filename} is not mirrored from packages/profile/public/${filename}`,
   );
+}
+
+async function assertCliMirror() {
+  for (const filename of [
+    "resume.json",
+    "resume.md",
+    "resume.pdf",
+    "mundi-morgado-resume.pdf",
+  ]) {
+    const profileArtifact = await fs.readFile(path.join(rootDir, "packages/profile/public", filename));
+    const cliArtifact = await fs.readFile(path.join(rootDir, "packages/cli/profile/public", filename));
+    assert(
+      profileArtifact.equals(cliArtifact),
+      `packages/cli/profile/public/${filename} is not mirrored from packages/profile/public/${filename}`,
+    );
+  }
+
+  for (const filename of [
+    "mcp-server.mjs",
+    "resume-data.mjs",
+    "sanitize-resume.mjs",
+  ]) {
+    const profileSource = await fs.readFile(path.join(rootDir, "packages/profile/src", filename));
+    const cliSource = await fs.readFile(path.join(rootDir, "packages/cli/profile/src", filename));
+    assert(
+      profileSource.equals(cliSource),
+      `packages/cli/profile/src/${filename} is not mirrored from packages/profile/src/${filename}`,
+    );
+  }
 }
 
 function collectPrivateValues(resume) {
