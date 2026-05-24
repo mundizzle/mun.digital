@@ -1,7 +1,7 @@
 # public-data-safety Specification
 
 ## Purpose
-TBD - created by archiving change backfill-current-system-specs. Update Purpose after archive.
+Define cross-surface privacy, redaction, read-only behavior, sanctioned data sources, and secret-handling invariants.
 ## Requirements
 ### Requirement: Private resume data exclusion
 The system SHALL exclude private resume fields from every public surface.
@@ -48,4 +48,3 @@ The public data safety contract SHALL be protected by all public-surface smoke c
 #### Scenario: Public safety verification runs
 - **WHEN** maintainers verify public data safety
 - **THEN** they run `pnpm run public:smoke`, `pnpm run raindrop:smoke`, `pnpm run profile:smoke`, `pnpm run mcp:smoke`, and `pnpm run pack:smoke`
-

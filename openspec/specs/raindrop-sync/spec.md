@@ -1,7 +1,7 @@
 # raindrop-sync Specification
 
 ## Purpose
-TBD - created by archiving change backfill-current-system-specs. Update Purpose after archive.
+Define private local Raindrop sync behavior and the sanitized public link snapshot used by website, CLI, MCP, and package surfaces.
 ## Requirements
 ### Requirement: Private local sync only
 The system SHALL sync Raindrop bookmarks only through a private local command that uses `RAINDROP_TOKEN`.
@@ -71,4 +71,3 @@ The Raindrop sync contract SHALL be protected by Raindrop, public-data, MCP, pro
 #### Scenario: Raindrop verification runs
 - **WHEN** maintainers verify Raindrop behavior
 - **THEN** they run `pnpm run raindrop:smoke`, `pnpm run public:smoke`, `pnpm run profile:smoke`, `pnpm run mcp:smoke`, and `pnpm run pack:smoke`
-

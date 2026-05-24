@@ -1,7 +1,7 @@
 # website-delivery Specification
 
 ## Purpose
-TBD - created by archiving change backfill-current-system-specs. Update Purpose after archive.
+Define how the portfolio website serves public pages, static artifacts, metadata routes, Markdown negotiation, and hosted MCP access.
 ## Requirements
 ### Requirement: Portfolio website delivery
 The system SHALL serve the public portfolio website at `mun.digital` through the Next.js App Router web app.
@@ -48,4 +48,3 @@ The website delivery contract SHALL be protected by build and HTTP smoke checks.
 #### Scenario: Website verification runs
 - **WHEN** maintainers verify website delivery
 - **THEN** they run `pnpm run build`, `pnpm run llms:smoke`, and `pnpm run mcp:http:smoke http://localhost:3000/api/mcp` against a local server when the HTTP route is changed
-

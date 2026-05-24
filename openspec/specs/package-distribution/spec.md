@@ -1,7 +1,7 @@
 # package-distribution Specification
 
 ## Purpose
-TBD - created by archiving change backfill-current-system-specs. Update Purpose after archive.
+Define the npm package identity, published file boundary, install safety, dependency boundary, and installed CLI/MCP behavior.
 ## Requirements
 ### Requirement: npm package identity
 The system SHALL publish the public CLI package as `@mun.digital/cli` with binary name `mundigital`.
@@ -52,4 +52,3 @@ The package distribution contract SHALL be protected by package smoke checks.
 #### Scenario: Package verification runs
 - **WHEN** maintainers verify package distribution
 - **THEN** they run `pnpm run pack:smoke`
-

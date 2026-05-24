@@ -1,7 +1,7 @@
 # artifact-generation Specification
 
 ## Purpose
-TBD - created by archiving change backfill-current-system-specs. Update Purpose after archive.
+Define how sanitized public profile and link artifacts are generated, mirrored, and verified for website, CLI, and agent consumption.
 ## Requirements
 ### Requirement: Public artifact generation
 The system SHALL generate public resume artifacts from sanitized profile data.
@@ -44,4 +44,3 @@ The artifact generation contract SHALL be protected by build and smoke checks.
 #### Scenario: Artifact verification runs
 - **WHEN** maintainers verify generated artifacts
 - **THEN** they run `pnpm run resume:build`, `pnpm run public:smoke`, and `pnpm run llms:smoke`
-

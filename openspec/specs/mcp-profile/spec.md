@@ -1,7 +1,7 @@
 # mcp-profile Specification
 
 ## Purpose
-TBD - created by archiving change backfill-current-system-specs. Update Purpose after archive.
+Define the public read-only MCP profile contract, including resources, tools, prompts, and stdio/HTTP transport behavior.
 ## Requirements
 ### Requirement: MCP server identity
 The system SHALL expose a public read-only MCP server named `mundigital`.
@@ -67,4 +67,3 @@ The MCP profile contract SHALL be protected by stdio and HTTP MCP smoke checks.
 #### Scenario: MCP verification runs
 - **WHEN** maintainers verify MCP behavior
 - **THEN** they run `pnpm run mcp:smoke` and `pnpm run mcp:http:smoke http://localhost:3000/api/mcp`
-

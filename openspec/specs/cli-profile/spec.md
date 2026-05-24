@@ -1,7 +1,7 @@
 # cli-profile Specification
 
 ## Purpose
-TBD - created by archiving change backfill-current-system-specs. Update Purpose after archive.
+Define the public read-only `mundigital` CLI commands for profile, search, brief, links, and local MCP access.
 ## Requirements
 ### Requirement: CLI profile command
 The system SHALL provide a `mundigital profile` command that prints the sanitized public profile.
@@ -60,4 +60,3 @@ The CLI profile contract SHALL be protected by profile and package smoke checks.
 #### Scenario: CLI verification runs
 - **WHEN** maintainers verify CLI behavior
 - **THEN** they run `pnpm run profile:smoke` and `pnpm run pack:smoke`
-

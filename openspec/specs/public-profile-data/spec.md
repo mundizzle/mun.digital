@@ -1,7 +1,7 @@
 # public-profile-data Specification
 
 ## Purpose
-TBD - created by archiving change backfill-current-system-specs. Update Purpose after archive.
+Define the editorial source, sanitized public profile data shape, evidence search behavior, and public career brief contract.
 ## Requirements
 ### Requirement: Editorial resume source
 The system SHALL treat `packages/profile/data/resume.json` as the editorial source of truth for profile data.
@@ -45,4 +45,3 @@ The public profile data contract SHALL be protected by public data, profile, MCP
 #### Scenario: Profile-data verification runs
 - **WHEN** maintainers verify profile data behavior
 - **THEN** they run `pnpm run public:smoke`, `pnpm run profile:smoke`, `pnpm run mcp:smoke`, and `pnpm run pack:smoke`
-
