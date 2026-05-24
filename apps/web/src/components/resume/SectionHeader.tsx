@@ -11,13 +11,13 @@ export function SectionHeader({ index, title }: SectionHeaderProps) {
       className="mb-[18px]"
       label={
         <>
-          <span className="text-accent">[</span>
+          <span className="text-primary">[</span>
           {index}
-          <span className="text-accent">]</span>
+          <span className="text-primary">]</span>
         </>
       }
     >
-      <h2 className="m-0 text-[15px] leading-[1.2] font-semibold tracking-[0.24em] text-ink uppercase">
+      <h2 className="m-0 text-[15px] leading-[1.2] font-semibold tracking-[0.24em] text-foreground uppercase">
         {title}
       </h2>
     </RailBaselineRow>

@@ -50,6 +50,7 @@ This file is only for durable rules needed to plan and code correctly in this re
 ## Planning
 
 - Keep plans small and scoped to the active branch or PR.
+- For design-system, token, architecture, public-data, MCP, CLI, deployment, agent-surface, or other foundation-level changes, create or update the relevant OpenSpec change before implementation. Review the spec before implementation when cross-agent review is requested, implement against the accepted spec, update the spec before code if the plan changes, and archive the OpenSpec change only after implementation and review are complete.
 - For architecture, deployment, public-data, MCP, CLI, or agent-surface changes, state risks and verification before coding.
 - Use `/ask claude ...` or the local ask skill when the user requests cross-agent review.
 - Keep implementation notes in the active PR or user-provided task context, not in this file.
