@@ -1,0 +1,7 @@
+# Shared UI
+
+Shared components live in `packages/ui`. They are data-agnostic and do not fetch profile data, own editorial content, or assume docs-specific prose styling.
+
+The first validated slice is `SectionHeader`. It keeps semantic Tailwind class names backed by shared tokens and uses `cn` for caller-provided class composition.
+
+CVA is intentionally deferred until a component has a real variant axis.

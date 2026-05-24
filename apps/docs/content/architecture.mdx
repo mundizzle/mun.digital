@@ -1,0 +1,11 @@
+# Architecture
+
+The workspace separates public surfaces by responsibility:
+
+- `apps/web` serves the portfolio and profile/resume LLM surface at `mun.digital`.
+- `apps/docs` serves design-system docs at `docs.mun.digital`.
+- `apps/storybook` serves the static component workbench at `storybook.mun.digital`.
+- `packages/tokens` distributes generated token CSS.
+- `packages/ui` contains reusable, data-agnostic components.
+
+Turborepo coordinates build tasks so shared token and UI changes are visible to affected apps.

@@ -18,9 +18,15 @@
     "dev": "pnpm --filter @mun.digital/web dev",
     "design:build": "node scripts/build-design-tokens.mjs",
     "design:check": "node scripts/build-design-tokens.mjs --check",
-    "build": "pnpm --filter @mun.digital/web build",
+    "build": "turbo run build --filter=@mun.digital/web",
+    "build:all": "turbo run build",
     "start": "pnpm --filter @mun.digital/web start",
-    "lint": "pnpm --filter @mun.digital/web lint",
+    "lint": "turbo run lint --filter=@mun.digital/web",
+    "docs:build": "turbo run build --filter=@mun.digital/docs",
+    "docs:llms:smoke": "node scripts/docs-llms-smoke.mjs",
+    "storybook:build": "turbo run build --filter=@mun.digital/storybook",
+    "storybook:a11y": "pnpm --filter @mun.digital/storybook test:a11y",
+    "tokens:smoke": "node scripts/token-distribution-smoke.mjs",
     "mun": "node packages/cli/bin/mundigital.mjs",
     "resume:build": "node packages/profile/scripts/build-artifacts.mjs",
     "raindrop:sync": "node packages/profile/scripts/sync-raindrops.mjs && pnpm run resume:build",
@@ -34,7 +40,8 @@
     "profile:smoke": "node scripts/profile-smoke.mjs"
   },
   "devDependencies": {
-    "@modelcontextprotocol/sdk": "^1.29.0"
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "turbo": "^2.9.14"
   },
   "engines": {
     "node": ">=20.9.0"

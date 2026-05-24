@@ -1,0 +1,11 @@
+# Token Model
+
+The source of truth is root `design.tokens.json`. Colors are structured OKLCH token values, and semantic light/dark groups reference primitive leaves.
+
+`packages/tokens` distributes generated CSS through `@mun.digital/tokens/css`. Apps should import that package entry instead of copying generated values.
+
+Verification:
+
+- Run `pnpm design:build` after editing `design.tokens.json`.
+- Run `pnpm design:check` before committing.
+- Run `pnpm tokens:smoke` when a consumer changes.

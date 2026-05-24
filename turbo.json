@@ -1,0 +1,17 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "storybook-static/**", "css/tokens.generated.css"]
+    },
+    "lint": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "design:check": {
+      "dependsOn": ["@mun.digital/tokens#build"],
+      "outputs": []
+    }
+  }
+}

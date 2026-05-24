@@ -1,0 +1,15 @@
+{
+  "buildCommand": "pnpm --dir ../.. storybook:build",
+  "outputDirectory": "storybook-static",
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    }
+  ]
+}

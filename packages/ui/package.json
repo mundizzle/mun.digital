@@ -1,0 +1,30 @@
+{
+  "name": "@mun.digital/ui",
+  "version": "0.0.0-private",
+  "private": true,
+  "description": "Shared, data-agnostic UI components for mun.digital.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./styles.css": "./src/styles.css"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc --noEmit",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@mun.digital/tokens": "workspace:*",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.6.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19",
+    "typescript": "^5"
+  },
+  "peerDependencies": {
+    "react": ">=19"
+  }
+}

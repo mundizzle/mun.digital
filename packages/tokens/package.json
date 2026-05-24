@@ -1,0 +1,17 @@
+{
+  "name": "@mun.digital/tokens",
+  "version": "0.0.0-private",
+  "private": true,
+  "description": "Generated design token CSS for mun.digital apps.",
+  "exports": {
+    "./css": "./css/tokens.generated.css",
+    "./tokens.generated.css": "./css/tokens.generated.css"
+  },
+  "files": [
+    "css"
+  ],
+  "scripts": {
+    "build": "pnpm --dir ../.. design:build",
+    "check": "pnpm --dir ../.. design:check"
+  }
+}
