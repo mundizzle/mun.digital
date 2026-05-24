@@ -14,7 +14,7 @@ The recommended MCP connection is the hosted Streamable HTTP endpoint:
 https://mun.digital/api/mcp
 ```
 
-This endpoint is public, read-only, and does not require authentication. It exposes `search`, `brief`, and `fetch` tools for LLM clients, plus a resume resource and portfolio prompt for clients that support MCP resources and prompts.
+This endpoint is public, read-only, and does not require authentication. It exposes `search`, `brief`, `links_search`, `links_fetch`, and `fetch` tools for LLM clients, plus a resume resource and portfolio prompt for clients that support MCP resources and prompts.
 
 Claude Code:
 
@@ -33,7 +33,7 @@ ChatGPT / OpenAI custom connector:
 - Add a remote MCP connector named `mundigital`.
 - Use URL `https://mun.digital/api/mcp`.
 - Use no authentication.
-- Available tools are `search`, `brief`, and `fetch`.
+- Available tools are `search`, `brief`, `links_search`, `links_fetch`, and `fetch`.
 
 For local stdio fallback, run the npm package directly:
 
@@ -64,6 +64,8 @@ Run the public profile tools without installing:
 npx -y @mun.digital/cli profile
 npx -y @mun.digital/cli search react
 npx -y @mun.digital/cli brief
+npx -y @mun.digital/cli links
+npx -y @mun.digital/cli links search "design systems"
 npx -y @mun.digital/cli mcp
 ```
 
@@ -72,6 +74,9 @@ npx -y @mun.digital/cli mcp
 | `npx -y @mun.digital/cli profile`        | Prints the public sanitized profile summary, links, and skills.                                                                                                              |
 | `npx -y @mun.digital/cli search <query>` | Searches public resume evidence for a topic, keyword, company, or technology.                                                                                                |
 | `npx -y @mun.digital/cli brief`          | Prints an agent-ready career brief with selected work evidence.                                                                                                              |
+| `npx -y @mun.digital/cli links`          | Lists curated public links from the sanitized Raindrop snapshot.                                                                                                             |
+| `npx -y @mun.digital/cli links search <query>` | Searches curated public links.                                                                                                                                        |
+| `npx -y @mun.digital/cli links fetch <id>` | Fetches one curated public link by id.                                                                                                                                     |
 | `npx -y @mun.digital/cli mcp`            | Starts the local stdio MCP server for MCP clients. This is intended to be launched by tools such as Claude Desktop or Claude Code, not run directly in an interactive shell. |
 
 Most commands also support `--json` for agent and script workflows:
@@ -80,6 +85,7 @@ Most commands also support `--json` for agent and script workflows:
 npx -y @mun.digital/cli profile --json
 npx -y @mun.digital/cli search "design systems" --json
 npx -y @mun.digital/cli brief --json
+npx -y @mun.digital/cli links search "design systems" --json
 ```
 
 Example fit checks:
@@ -134,6 +140,7 @@ mundigital profile
 - Agent discovery: [mun.digital/llms.txt](https://mun.digital/llms.txt)
 - JSON: [mun.digital/resume.json](https://mun.digital/resume.json)
 - Markdown: [mun.digital/resume.md](https://mun.digital/resume.md)
+- Curated links: [mun.digital/raindrops.json](https://mun.digital/raindrops.json)
 - PDF: [mun.digital/mundi-morgado-resume.pdf](https://mun.digital/mundi-morgado-resume.pdf)
 - GitHub: [github.com/mundizzle](https://github.com/mundizzle)
 
@@ -147,6 +154,8 @@ curl -H "Accept: text/markdown" https://mun.digital/
 
 Public surfaces exclude private contact details and private metadata. CLI and MCP output are read-only; they do not expose write, deploy, shell, filesystem, environment, secret, telemetry, or postinstall behavior.
 
+Raindrop links are published only through a sanitized generated snapshot. The Raindrop token is used only by the private local `pnpm run raindrop:sync` command and is never required by the website, hosted MCP endpoint, or npm package.
+
 ## Tech
 
 pnpm workspace with a Next.js App Router web app, TypeScript, Tailwind CSS, and shared profile logic, deployed on Vercel.
@@ -156,6 +165,7 @@ pnpm workspace with a Next.js App Router web app, TypeScript, Tailwind CSS, and 
 ```bash
 pnpm install
 pnpm run resume:build
+RAINDROP_TOKEN=... pnpm run raindrop:sync
 pnpm run dev   # http://localhost:3000
 ```
 
@@ -164,6 +174,7 @@ pnpm run dev   # http://localhost:3000
 ```bash
 pnpm run resume:build
 pnpm run public:smoke
+pnpm run raindrop:smoke
 pnpm run llms:smoke
 pnpm run profile:smoke
 pnpm run mcp:smoke

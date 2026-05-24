@@ -14,9 +14,10 @@ Use this package when you need CLI access or a local stdio MCP fallback.
 npx -y @mun.digital/cli profile
 npx -y @mun.digital/cli search react
 npx -y @mun.digital/cli brief
+npx -y @mun.digital/cli links search "design systems"
 npx -y @mun.digital/cli mcp
 ```
 
-MCP tools: `search`, `brief`, and `fetch`.
+MCP tools: `search`, `brief`, `links_search`, `links_fetch`, and `fetch`.
 
 The package is generated from sanitized public profile artifacts. It does not include private profile source data.

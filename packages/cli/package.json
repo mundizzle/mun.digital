@@ -1,6 +1,6 @@
 {
   "name": "@mun.digital/cli",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "type": "module",
   "description": "Public read-only resume CLI and MCP server for Mundi Morgado.",
   "homepage": "https://mun.digital",
@@ -22,6 +22,7 @@
   },
   "files": [
     "bin/",
+    "profile/public/raindrops.json",
     "profile/public/resume.json",
     "profile/public/resume.md",
     "profile/public/resume.pdf",
