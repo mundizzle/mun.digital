@@ -24,6 +24,7 @@ This file is only for durable rules needed to plan and code correctly in this re
 
 ## Local Skills
 
+- Use OpenSpec for spec-driven code changes. Start with `/opsx:propose` for new changes, follow the generated OpenSpec artifacts through implementation, and archive completed changes when appropriate.
 - Use locally installed skills when creating functionality, writing code, reviewing code, or deploying this repo.
 - For web UI, HTML, CSS, browser APIs, or client-side JavaScript, follow the installed web guidance skills before coding.
 - For React or Next.js work, follow the installed React, Next.js, and Vercel React best-practice skills in addition to the local Next 16 docs.

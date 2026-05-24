@@ -37,7 +37,10 @@ yarn-error.log*
 
 # local agent tooling
 .agents/skills/
-.claude/skills/
+.claude/skills/*
+!.claude/skills/openspec-*/
+.codex/skills/*
+!.codex/skills/openspec-*/
 
 # env files (can opt-in for committing if needed)
 .env*
