@@ -42,6 +42,9 @@
 - [x] 6.1 Add Vercel project configuration notes/files for docs and Storybook roots.
 - [x] 6.2 Ensure Storybook deploy output remains public/noindexed and does not expose MCP runtime.
 - [x] 6.3 Ensure shared token/UI changes are visible to web, docs, and Storybook build graphs.
+- [x] 6.4 Update deployment spec with separate Vercel project settings, include-outside-root requirements, and `turbo-ignore` ignored build steps.
+- [x] 6.5 Update Storybook robots policy to allow crawling while preserving `X-Robots-Tag: noindex, nofollow`.
+- [x] 6.6 Add the bounded cross-agent planning review workflow to AGENTS.md.
 
 ## 7. Verification
 

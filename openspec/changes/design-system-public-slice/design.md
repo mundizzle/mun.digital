@@ -78,8 +78,16 @@ The implementation may start with a lightweight local MDX/Markdown source adapte
 Vercel projects should use:
 
 - Web: existing `apps/web` root.
-- Docs: `apps/docs`, domain `docs.mun.digital`, indexable robots policy.
-- Storybook: `apps/storybook`, domain `storybook.mun.digital`, static build, `X-Robots-Tag: noindex, nofollow`, and `robots.txt` disallow-all.
+- Docs: Vercel project `mundigital-docs`, root directory `apps/docs`, Next.js framework preset, domain `docs.mun.digital`, indexable robots policy, build command `pnpm --dir ../.. docs:build`, and output directory `.next`.
+- Storybook: Vercel project `mundigital-storybook`, root directory `apps/storybook`, static build, domain `storybook.mun.digital`, build command `pnpm --dir ../.. storybook:build`, output directory `storybook-static`, and `X-Robots-Tag: noindex, nofollow`.
+
+Both new Vercel projects must enable files outside the root directory in the build step so the root lockfile, workspace config, `packages/tokens`, and `packages/ui` are available. All three Vercel projects should use Ignored Build Step commands backed by Turborepo dependency awareness:
+
+- Web: `npx turbo-ignore @mun.digital/web`
+- Docs: `npx turbo-ignore @mun.digital/docs`
+- Storybook: `npx turbo-ignore @mun.digital/storybook`
+
+Storybook must allow crawlers to fetch pages so they can observe the `X-Robots-Tag` noindex header. Do not combine the noindex header with a disallow-all `robots.txt`, because disallowed pages may not be fetched and therefore may not be reliably deindexed.
 
 Turborepo inputs include shared package outputs so changes in tokens or UI invalidate all affected builds.
 
@@ -90,7 +98,7 @@ Turborepo inputs include shared package outputs so changes in tokens or UI inval
 - **UI package coupling:** `packages/ui` must not import profile data, docs-specific prose styling, or app-owned helpers.
 - **Storybook MCP confusion:** Add local-only config/documentation and no deployed MCP route.
 - **Docs/profile LLM confusion:** Add explicit cross-links without merging content responsibilities.
-- **Vercel rebuild gaps:** Turborepo package dependencies and app package dependencies make shared changes visible to each project.
+- **Vercel rebuild gaps:** Turborepo package dependencies, app package dependencies, and `turbo-ignore` ignored-build settings make shared changes visible to each affected project without triple-building app-only changes.
 
 ## Verification
 
@@ -103,3 +111,5 @@ Turborepo inputs include shared package outputs so changes in tokens or UI inval
 - `pnpm run storybook:build`
 - `pnpm run storybook:a11y`
 - Existing profile/public/MCP/package smoke checks where touched.
+- Vercel project inspection for root directory, framework preset, output directory, Node version, include-outside-root, and Ignored Build Step settings.
+- HTTP checks for `docs.mun.digital` LLM/Markdown routes, docs robots/sitemap, Storybook `X-Robots-Tag`, and Storybook crawler-allowed `robots.txt`.
