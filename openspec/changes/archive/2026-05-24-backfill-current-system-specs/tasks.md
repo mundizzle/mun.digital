@@ -14,4 +14,4 @@
 
 - [x] 2.1 Validate the OpenSpec change in strict mode.
 - [x] 2.2 Run repository verification checks.
-- [ ] 2.3 After review consensus, archive the change as the final commit.
+- [x] 2.3 After review consensus, archive the change as the final commit.
