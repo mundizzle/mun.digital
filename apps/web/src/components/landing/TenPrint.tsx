@@ -9,8 +9,6 @@ export function TenPrint() {
     const canvas = ref.current;
     if (!canvas) return;
 
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-
     const draw = () => {
       const rect = canvas.getBoundingClientRect();
       if (rect.width === 0 || rect.height === 0) return;
@@ -51,10 +49,6 @@ export function TenPrint() {
     };
 
     draw();
-
-    if (reducedMotion.matches) {
-      return;
-    }
 
     const observer = new ResizeObserver(draw);
     observer.observe(canvas);

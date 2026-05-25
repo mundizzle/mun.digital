@@ -53,9 +53,12 @@ export function TypedRotator({ items }: TypedRotatorProps) {
   const displayText = prefersReducedMotion ? (stableItems[0] ?? "") : text;
 
   return (
-    <span aria-live="polite">
-      <span className="text-subtle-foreground">▸ </span>
-      <span>{displayText}</span>
+    <span>
+      <span className="sr-only">{stableItems[0] ?? ""}</span>
+      <span className="text-subtle-foreground" aria-hidden="true">
+        ▸{" "}
+      </span>
+      <span aria-hidden="true">{displayText}</span>
       <span className="typed-caret ml-1 inline-block h-[1.15em] w-0.5 translate-y-0.5 bg-primary" aria-hidden="true" />
     </span>
   );

@@ -51,11 +51,21 @@ export function SiteNav() {
                 )}
               >
                 <span>
-                  <span className={cn("text-primary transition-colors", active && "text-foreground")}>
+                  <span
+                    className={cn(
+                      "text-primary transition-colors group-hover:text-foreground",
+                      active && "text-foreground",
+                    )}
+                  >
                     [
                   </span>
                   {number}
-                  <span className={cn("text-primary transition-colors", active && "text-foreground")}>
+                  <span
+                    className={cn(
+                      "text-primary transition-colors group-hover:text-foreground",
+                      active && "text-foreground",
+                    )}
+                  >
                     ]
                   </span>
                 </span>

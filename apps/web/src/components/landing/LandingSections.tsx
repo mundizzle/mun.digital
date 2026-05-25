@@ -75,9 +75,9 @@ export function ReadingRail() {
 
   return (
     <section className="mb-8" aria-label="Reading">
-      <SectionMarker code="READING" className="lg:mt-0" />
-      <div className="reading-mask max-h-none overflow-hidden lg:max-h-[560px]">
-        <div className="reading-track grid gap-4 lg:animate-[scroll-up_86s_linear_infinite] lg:hover:[animation-play-state:paused]">
+      <SectionMarker code="READING" className="min-[900px]:mt-0" />
+      <div className="reading-mask max-h-none overflow-hidden min-[900px]:max-h-[380px]">
+        <div className="reading-track grid gap-4 min-[900px]:animate-[scroll-up_86s_linear_infinite] min-[900px]:hover:[animation-play-state:paused]">
           {looped.map((item, index) => (
             <article key={`${item.title}-${index}`} className="border border-border bg-card p-4">
               <div className="text-[10px] tracking-[0.18em] text-primary uppercase">

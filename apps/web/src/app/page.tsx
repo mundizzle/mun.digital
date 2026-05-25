@@ -24,13 +24,13 @@ export default function Home() {
       <main>
         <HeroCard />
 
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] xl:grid-cols-[minmax(0,1fr)_360px]">
+        <div className="grid gap-10 min-[900px]:grid-cols-[minmax(0,1fr)_320px] min-[1100px]:grid-cols-[minmax(0,1fr)_360px]">
           <div>
             <WritingTeaser />
             <WorkPreview />
             <EndorsementPull />
           </div>
-          <aside className="lg:sticky lg:top-28 lg:self-start">
+          <aside className="min-[900px]:sticky min-[900px]:top-28 min-[900px]:self-start">
             <ReadingRail />
             <AgentsBlock />
           </aside>
