@@ -26,6 +26,10 @@ Claude reviewed the plan and called out privacy risks to address before any real
 
    This change adds the safe machinery. A second PR will commit selected collection config, run the first real sync, wire the homepage reading rail to generated links, and add the daily pull-request workflow.
 
+6. Daily automation opens PRs, not direct pushes.
+
+   The scheduled workflow uses the `RAINDROP_TOKEN` GitHub secret, runs sync plus verification in-job, and uses minimal repository write permissions only to open or update a generated-data PR.
+
 ## Risks / Trade-offs
 
 - Keeping `mun.digital` in public tags exposes the selection marker, but that is intentional and testable.
@@ -38,4 +42,6 @@ Claude reviewed the plan and called out privacy risks to address before any real
 2. Add config validation, tag normalization, and required tag filtering to the sanitizer.
 3. Add local collection discovery script and package script.
 4. Extend smoke tests for privacy, fail-closed required tags, system collection ids, and discovery output.
-5. Run verification and use the helper to choose collection ids in the follow-up PR.
+5. Configure selected collection ids and commit the first sanitized public snapshot.
+6. Wire the homepage reading rail to the generated snapshot.
+7. Add a daily workflow that syncs Raindrop into a pull request after checks pass.

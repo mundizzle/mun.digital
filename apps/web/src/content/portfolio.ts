@@ -244,58 +244,6 @@ export const posts: Array<{
 
 export type Post = (typeof posts)[number];
 
-export const bookmarks = [
-  {
-    date: "2026-05-18",
-    title: "Design Tokens Format Module - W3C Community Draft",
-    domain: "tr.designtokens.org",
-    note: "The spec mun.digital's design.tokens.json follows: colorSpace, components, and alias references.",
-    tags: ["DESIGN SYSTEMS", "SPEC"],
-  },
-  {
-    date: "2026-05-12",
-    title: "Model Context Protocol - Streamable HTTP transport",
-    domain: "modelcontextprotocol.io",
-    note: "The hosted transport that lets a single HTTP endpoint become a second front door for a product.",
-    tags: ["MCP", "AGENTIC"],
-  },
-  {
-    date: "2026-04-30",
-    title: "OKLCH in production: a year-long retrospective",
-    domain: "evilmartians.com",
-    note: "Practical notes on shipping OKLCH-based palettes to real product teams.",
-    tags: ["COLOR", "CSS"],
-  },
-  {
-    date: "2026-04-22",
-    title: "Tailwind v4 @theme inline",
-    domain: "tailwindcss.com",
-    note: "Aliases tokens at the CSS layer rather than the config layer. This web app uses that pattern.",
-    tags: ["TAILWIND", "DESIGN SYSTEMS"],
-  },
-  {
-    date: "2026-04-10",
-    title: "Storybook 9 static export",
-    domain: "storybook.js.org",
-    note: "A better deployment fit when design-system docs sit alongside a component workbench.",
-    tags: ["STORYBOOK", "DOCS"],
-  },
-  {
-    date: "2026-03-28",
-    title: "git worktree for parallel agent sessions",
-    domain: "git-scm.com",
-    note: "Each agent gets its own working directory pointed at the same repo.",
-    tags: ["AGENTIC", "GIT"],
-  },
-  {
-    date: "2026-03-14",
-    title: "Editorial Layout in CSS",
-    domain: "robinrendle.com",
-    note: "The rail-and-content layout pattern this site uses, written about beautifully years ago.",
-    tags: ["LAYOUT", "CSS"],
-  },
-] as const;
-
 export function getWork(id: string) {
   return work.find((item) => item.id === id);
 }

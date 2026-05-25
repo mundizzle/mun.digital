@@ -170,6 +170,8 @@ RAINDROP_TOKEN=... pnpm run raindrop:sync
 pnpm run dev   # http://localhost:3000
 ```
 
+The scheduled Raindrop workflow also requires a repository secret named `RAINDROP_TOKEN`.
+
 ## Verification
 
 ```bash

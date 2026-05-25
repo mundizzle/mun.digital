@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SectionMarker } from "@/components/chrome/SectionMarker";
-import { bookmarks, posts, surfaces, work } from "@/content/portfolio";
+import { posts, surfaces, work } from "@/content/portfolio";
+import { readingLinks } from "@/content/reading";
 import { WorkTiles } from "./WorkTiles";
 
 export function WritingTeaser() {
@@ -71,7 +72,11 @@ export function EndorsementPull() {
 }
 
 export function ReadingRail() {
-  const looped = [...bookmarks, ...bookmarks];
+  if (readingLinks.length === 0) {
+    return null;
+  }
+
+  const looped = [...readingLinks, ...readingLinks];
 
   return (
     <section className="mb-8" aria-label="Reading">
@@ -79,7 +84,11 @@ export function ReadingRail() {
       <div className="reading-mask max-h-none overflow-hidden min-[900px]:max-h-[380px]">
         <div className="reading-track grid gap-4 min-[900px]:animate-[scroll-up_86s_linear_infinite] min-[900px]:hover:[animation-play-state:paused]">
           {looped.map((item, index) => (
-            <article key={`${item.title}-${index}`} className="border border-border bg-card p-4">
+            <a
+              key={`${item.id}-${index}`}
+              href={item.href}
+              className="block border border-border bg-card p-4 hover:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+            >
               <div className="text-[10px] tracking-[0.18em] text-primary uppercase">
                 {item.tags[0]}
                 {item.tags[1] ? (
@@ -93,7 +102,7 @@ export function ReadingRail() {
               <div className="mt-3 text-[10px] tracking-[0.16em] text-subtle-foreground uppercase">
                 {item.domain}
               </div>
-            </article>
+            </a>
           ))}
         </div>
       </div>

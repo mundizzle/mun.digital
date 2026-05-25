@@ -1,0 +1,69 @@
+name: Raindrop Sync
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 12 * * *"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: raindrop-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Sync Raindrop snapshot
+        run: pnpm run raindrop:sync
+        env:
+          RAINDROP_TOKEN: ${{ secrets.RAINDROP_TOKEN }}
+
+      - name: Verify generated public data
+        run: |
+          pnpm run raindrop:smoke
+          pnpm run public:smoke
+          pnpm run profile:smoke
+          pnpm run mcp:smoke
+          pnpm run pack:smoke
+          pnpm run lint
+          pnpm run build
+
+      - name: Open sync pull request
+        uses: peter-evans/create-pull-request@22a9089034f40e5a961c8808d113e2c98fb63676 # v7
+        with:
+          branch: automation/raindrop-sync
+          delete-branch: true
+          title: "Sync Raindrop public links"
+          commit-message: "Sync Raindrop public links"
+          body: |
+            ## Summary
+            - updates the sanitized public Raindrop snapshot
+            - refreshes mirrored website and CLI/package artifacts
+
+            ## Verification
+            - pnpm run raindrop:smoke
+            - pnpm run public:smoke
+            - pnpm run profile:smoke
+            - pnpm run mcp:smoke
+            - pnpm run pack:smoke
+            - pnpm run lint
+            - pnpm run build
