@@ -1,5 +1,6 @@
 {
   "collections": [],
+  "requiredTags": ["mun.digital"],
   "privateTags": ["private"],
   "privateTagPrefixes": ["_"]
 }
