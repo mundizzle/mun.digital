@@ -63,7 +63,7 @@ export function Experience({ index, title, jobs }: ExperienceProps) {
                 <ul className="m-0 list-none p-0 font-sans">
                   {job.bullets.map((bullet, bulletIndex) => (
                     <li
-                      className="relative mb-[10px] pl-[22px] text-[15px] before:absolute before:left-0 before:font-medium before:text-primary before:content-['—']"
+                      className="relative mb-[10px] pl-[22px] text-[15px] before:absolute before:top-[0.78em] before:left-0 before:size-[5px] before:-translate-y-1/2 before:bg-primary before:content-['']"
                       key={`${job.title}-bullet-${bulletIndex}`}
                     >
                       {bullet}
@@ -103,7 +103,7 @@ export function Experience({ index, title, jobs }: ExperienceProps) {
               <ul className="m-0 flex list-none flex-wrap gap-x-[8px] gap-y-[2px] p-0">
                 {job.selectedClients.map((client) => (
                   <li
-                    className="inline-flex items-center gap-[8px] before:font-medium before:text-primary before:content-['—']"
+                    className="inline-flex items-center gap-[8px] before:inline-block before:size-[5px] before:bg-primary before:content-['']"
                     key={`${job.title}-client-${client}`}
                   >
                     {client}

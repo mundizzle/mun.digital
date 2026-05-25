@@ -2,13 +2,12 @@
 // This is not profile source data and is not generated public-artifact data.
 
 export const heroRoles = [
-  "UX ENGINEER",
-  "FRONT-END ARCHITECT",
-  "DESIGN SYSTEMS LEAD",
-  "TECHNICAL LEADER",
-  "DESIGN-TOKEN ENGINEER",
-  "AGENTIC DEVELOPMENT PRACTITIONER",
-  "HIRING MANAGER & MENTOR",
+  "BEST FRONT-END DEVELOPER EVER...",
+  "SYSTEMS WRANGLING...",
+  "TEAM UNBLOCKING...",
+  "TOKEN TAMING...",
+  "HERDING AGENTS...",
+  "VIBING WITH HUMANS...",
 ] as const;
 
 export const hero = {

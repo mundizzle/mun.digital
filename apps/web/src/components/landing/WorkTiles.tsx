@@ -33,7 +33,7 @@ export function WorkTiles({ items }: WorkTilesProps) {
         <Link
           key={item.id}
           href={`/work/${item.id}`}
-          className="group flex min-h-[285px] flex-col border border-border/60 bg-card p-4 shadow-sm transition-colors hover:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+          className="group flex min-h-[285px] flex-col border border-border/60 bg-card p-4 transition-colors hover:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
         >
           <div className="mb-5 grid aspect-[16/9] place-items-end border border-border/60 bg-background p-3 text-[10px] tracking-[0.18em] text-subtle-foreground uppercase">
             {item.id}

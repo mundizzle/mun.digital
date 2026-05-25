@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <PageFrame wide>
+    <PageFrame wide className="overflow-x-visible pt-0 pb-8 md:pt-0 md:pb-12">
       <main>
         <HeroCard />
 
@@ -28,9 +28,11 @@ export default function Home() {
             <WritingTeaser />
             <WorkPreview />
           </div>
-          <aside className="min-[900px]:sticky min-[900px]:top-28 min-[900px]:self-start">
-            <ReadingRail />
-            <AgentsBlock />
+          <aside className="relative min-[900px]:self-stretch min-[900px]:overflow-hidden">
+            <div className="min-[900px]:absolute min-[900px]:inset-0 min-[900px]:flex min-[900px]:min-h-0 min-[900px]:flex-col">
+              <ReadingRail />
+              <AgentsBlock />
+            </div>
           </aside>
         </div>
       </main>

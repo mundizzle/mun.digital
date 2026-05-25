@@ -1,35 +1,87 @@
+"use client";
+
 import Image from "next/image";
+import { useCallback, useState } from "react";
 import { hero, heroRoles } from "@/content/portfolio";
-import { TenPrint } from "./TenPrint";
-import { TypedRotator } from "./TypedRotator";
+import { C64BootText } from "./C64BootText";
+import { TenPrint, type TenPrintProps } from "./TenPrint";
+
+const c64InkColor = "var(--foreground)";
+const c64ScreenOffset = 166;
+
+const heroPattern: TenPrintProps = {
+  // Tweak the C64 pattern from here while iterating on the hero.
+  cellsPerSecond: 52,
+  cellSize: 14,
+  fillMode: "stop",
+  lineCap: "round",
+  lineJoin: "round",
+  lineWidth: 3,
+  opacity: 0.2,
+  strokeColor: c64InkColor,
+};
 
 export function HeroCard() {
+  const [phase, setPhase] = useState<"titles" | "program" | "pattern" | "complete">("titles");
+  const [patternProgress, setPatternProgress] = useState(0);
+  const screenOffset = Math.round(patternProgress * c64ScreenOffset);
+
+  const handleTitlesComplete = useCallback(() => {
+    setPhase("program");
+  }, []);
+
+  const handleProgramComplete = useCallback(() => {
+    setPhase("pattern");
+  }, []);
+
+  const handlePatternComplete = useCallback(() => {
+    setPhase("complete");
+    setPatternProgress(1);
+  }, []);
+
   return (
     <>
       <h1 id="hero-title" className="sr-only">
         {hero.title}
       </h1>
-      <div className="mb-3 min-h-6 text-[11px] tracking-[0.2em] text-primary uppercase">
-        <span aria-hidden="true" className="mr-2 text-subtle-foreground">
-          ▸
-        </span>
-        <span>
-          <TypedRotator items={heroRoles} />
-        </span>
-      </div>
       <section
         aria-labelledby="hero-title"
-        className="hero-card-veil relative mb-12 min-h-[190px] overflow-hidden border border-border/60 bg-card shadow-sm md:min-h-[210px]"
+        className="relative left-1/2 mb-8 min-h-[190px] w-screen -translate-x-1/2 overflow-hidden border-b border-border/60 bg-card md:mb-12 md:min-h-[210px]"
       >
-        <TenPrint />
-        <Image
-          src="/images/mundi.png"
-          alt=""
-          width={210}
-          height={210}
-          priority
-          className="absolute -top-px -right-px -bottom-px z-[1] h-[calc(100%+2px)] w-[150px] object-cover grayscale mix-blend-multiply sm:w-[180px] md:w-[210px]"
-        />
+        <div
+          className="absolute inset-x-0 top-0 h-[calc(100%+168px)] transition-transform duration-100 ease-linear"
+          style={{ transform: `translateY(-${screenOffset}px)` }}
+        >
+          <div className="relative z-[1] mx-auto h-full max-w-[1180px] px-5 md:px-8">
+            <div className="absolute top-4 right-9 left-[194px] sm:left-[224px] md:top-5 md:right-14 md:left-[266px]">
+              <C64BootText
+                inkColor={c64InkColor}
+                mode={phase === "titles" ? "titles" : "program"}
+                onProgramComplete={handleProgramComplete}
+                onTitlesComplete={handleTitlesComplete}
+                roles={heroRoles}
+              />
+            </div>
+            <div className="absolute right-9 bottom-[-4px] left-[194px] top-[134px] sm:left-[224px] md:right-14 md:left-[266px] md:top-[154px]">
+              <TenPrint
+                {...heroPattern}
+                active={phase === "pattern" || phase === "complete"}
+                onComplete={handlePatternComplete}
+                onProgress={setPatternProgress}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="relative z-[2] mx-auto min-h-[190px] max-w-[1180px] px-5 md:min-h-[210px] md:px-8">
+          <Image
+            src="/images/mundi.png"
+            alt=""
+            width={210}
+            height={210}
+            priority
+            className="absolute top-0 bottom-0 left-5 h-full w-[150px] object-cover sm:w-[180px] md:left-8 md:w-[210px]"
+          />
+        </div>
       </section>
     </>
   );

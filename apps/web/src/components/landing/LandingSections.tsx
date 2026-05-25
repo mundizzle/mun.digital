@@ -15,12 +15,12 @@ export async function WritingTeaser() {
   return (
     <section className="mb-10" aria-labelledby="latest-writing">
       <SectionMarker code="WRITING" />
-      <article className="grid gap-4 border-y border-border py-5 sm:grid-cols-[110px_1fr]">
+      <article className="grid gap-4 py-5 sm:grid-cols-[110px_1fr]">
         <div className="text-[11px] tracking-[0.18em] text-subtle-foreground uppercase">
           <time dateTime={post.date}>{post.displayDate}</time>
         </div>
         <div>
-          <h2 id="latest-writing" className="m-0 text-[24px] leading-tight tracking-normal">
+          <h2 id="latest-writing" className="m-0 text-[18px] leading-tight font-semibold tracking-normal text-foreground">
             <Link className="hover:text-primary" href={`/writing/${post.id}`}>
               {post.title}
             </Link>
@@ -42,18 +42,12 @@ export async function WritingTeaser() {
 
 export function WorkPreview() {
   return (
-    <section className="mb-10" aria-labelledby="work-preview">
+    <section aria-labelledby="work-preview">
       <SectionMarker code="WORK" />
       <h2 id="work-preview" className="sr-only">
         Selected work
       </h2>
       <WorkTiles items={work} />
-      <Link
-        href="/work"
-        className="mt-5 inline-block text-[11px] tracking-[0.2em] text-primary uppercase hover:text-foreground"
-      >
-        All work →
-      </Link>
     </section>
   );
 }
@@ -66,26 +60,27 @@ export function ReadingRail() {
   const looped = [...readingLinks, ...readingLinks];
 
   return (
-    <section className="mb-8" aria-label="Reading">
+    <section className="mb-8 min-[900px]:flex min-[900px]:min-h-0 min-[900px]:flex-1 min-[900px]:flex-col" aria-label="Reading">
       <SectionMarker code="READING" className="min-[900px]:mt-0" />
-      <div className="reading-mask max-h-none overflow-hidden min-[900px]:max-h-[380px]">
+      <div className="reading-mask max-h-none overflow-hidden min-[900px]:min-h-0 min-[900px]:flex-1">
         <div className="reading-track grid gap-4 min-[900px]:animate-[scroll-up_86s_linear_infinite] min-[900px]:hover:[animation-play-state:paused]">
           {looped.map((item, index) => (
             <a
               key={`${item.id}-${index}`}
               href={item.href}
-              className="block border border-border/60 bg-card p-4 shadow-sm hover:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block border border-border/60 bg-card p-4 hover:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
             >
               <div className="text-[10px] tracking-[0.18em] text-primary uppercase">
                 {item.tags[0]}
-                {item.tags[1] ? (
-                  <span className="text-subtle-foreground">/{item.tags[1]}</span>
-                ) : null}
               </div>
               <h3 className="mt-3 text-[14px] leading-snug font-semibold">{item.title}</h3>
-              <p className="mt-2 font-sans text-[13px] leading-[1.55] text-muted-foreground">
-                {item.note}
-              </p>
+              {item.note ? (
+                <p className="mt-2 font-sans text-[13px] leading-[1.55] text-muted-foreground">
+                  {item.note}
+                </p>
+              ) : null}
               <div className="mt-3 text-[10px] tracking-[0.16em] text-subtle-foreground uppercase">
                 {item.domain}
               </div>
@@ -99,26 +94,23 @@ export function ReadingRail() {
 
 export function AgentsBlock() {
   return (
-    <section aria-label="Agents">
+    <section className="min-[900px]:mt-auto" aria-label="Agents">
       <SectionMarker code="AGENTS" />
-      <div className="border border-border/60 p-4 shadow-sm">
+      <ul className="m-0 list-none border border-border/60 p-4 font-sans text-[13px] leading-[1.6]">
         {surfaces.map((surface) => (
-          <a
+          <li
             key={surface.kind}
-            href={surface.href}
-            className="block border-b border-border py-4 first:pt-0 last:border-b-0 last:pb-0 hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+            className="relative mb-3 pl-[22px] last:mb-0 before:absolute before:top-[0.78em] before:left-0 before:size-[5px] before:-translate-y-1/2 before:bg-primary before:content-['']"
           >
-            <div className="flex items-center justify-between gap-4 text-[12px] tracking-[0.16em] uppercase">
-              <span>{surface.label}</span>
-              <span aria-hidden="true">↗</span>
-            </div>
-            <div className="mt-2 text-[11px] text-primary">{surface.target}</div>
-            <p className="mt-2 font-sans text-[13px] leading-[1.55] text-subtle-foreground">
-              {surface.note}
-            </p>
-          </a>
+            <a
+              href={surface.href}
+              className="text-primary hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+            >
+              {surface.target}
+            </a>
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }

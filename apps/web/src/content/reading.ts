@@ -7,7 +7,7 @@ export type ReadingLink = {
   title: string;
   href: string;
   domain: string;
-  note: string;
+  note?: string;
   tags: string[];
 };
 
@@ -19,7 +19,7 @@ function toReadingLink(link: PublicLink): ReadingLink {
     title: link.title,
     href: link.url,
     domain: domainFor(link.url),
-    note: link.excerpt || labelForCollection(link.collection),
+    note: link.excerpt || undefined,
     tags: tagsFor(link),
   };
 }
