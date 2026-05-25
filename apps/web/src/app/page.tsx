@@ -3,7 +3,6 @@ import { PageFrame } from "@/components/chrome/PageFrame";
 import { HeroCard } from "@/components/landing/HeroCard";
 import {
   AgentsBlock,
-  EndorsementPull,
   ReadingRail,
   WorkPreview,
   WritingTeaser,
@@ -28,7 +27,6 @@ export default function Home() {
           <div>
             <WritingTeaser />
             <WorkPreview />
-            <EndorsementPull />
           </div>
           <aside className="min-[900px]:sticky min-[900px]:top-28 min-[900px]:self-start">
             <ReadingRail />

@@ -22,9 +22,9 @@ export const surfaces = [
   {
     kind: "MCP",
     label: "MCP endpoint",
-    target: "mun.digital/api/mcp",
-    href: "https://mun.digital/api/mcp",
-    note: "Hosted, public, no auth. Tools: search, brief, links_search, fetch.",
+    target: "https://mun.digital/api/mcp",
+    href: "https://docs.mun.digital/mcp",
+    note: "Hosted, public, no auth. Browser link opens setup docs for the POST endpoint.",
   },
   {
     kind: "CLI",
@@ -32,20 +32,6 @@ export const surfaces = [
     target: "npx -y @mun.digital/cli",
     href: "https://www.npmjs.com/package/@mun.digital/cli",
     note: "profile, search, brief, links. Agent and human readable.",
-  },
-  {
-    kind: "DOCS",
-    label: "Design system",
-    target: "docs.mun.digital",
-    href: "https://docs.mun.digital",
-    note: "MCP, CLI, architecture, tokens, and agentic workflow.",
-  },
-  {
-    kind: "UI",
-    label: "Storybook",
-    target: "storybook.mun.digital",
-    href: "https://storybook.mun.digital",
-    note: "Live workbench for app-owned portfolio components and tokens.",
   },
   {
     kind: "REPO",
