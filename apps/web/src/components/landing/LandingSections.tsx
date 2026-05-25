@@ -58,23 +58,6 @@ export function WorkPreview() {
   );
 }
 
-export function EndorsementPull() {
-  return (
-    <figure className="relative m-0 border-l-2 border-primary py-2 pl-7">
-      <div className="absolute -left-1 top-0 text-[52px] leading-none text-primary">”</div>
-      <blockquote className="m-0 font-sans text-[16px] leading-[1.8] text-foreground italic">
-        Mundi is extremely talented, forward-thinking, and consistently pairs technology
-        decisions with real business needs. As a leader, he is humble, hard-working, and
-        leads by action. As a mentor, he is patient, wise, and a great communicator.
-      </blockquote>
-      <figcaption className="mt-5 text-[10px] tracking-[0.18em] text-subtle-foreground uppercase">
-        <span className="text-primary">—</span> Nathan Logan <span className="mx-2">{"//"}</span>
-        Engineering Manager, Bluebeam Inc.
-      </figcaption>
-    </figure>
-  );
-}
-
 export function ReadingRail() {
   if (readingLinks.length === 0) {
     return null;
@@ -91,7 +74,7 @@ export function ReadingRail() {
             <a
               key={`${item.id}-${index}`}
               href={item.href}
-              className="block border border-border bg-card p-4 hover:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+              className="block border border-border/60 bg-card p-4 shadow-sm hover:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
             >
               <div className="text-[10px] tracking-[0.18em] text-primary uppercase">
                 {item.tags[0]}
@@ -118,7 +101,7 @@ export function AgentsBlock() {
   return (
     <section aria-label="Agents">
       <SectionMarker code="AGENTS" />
-      <div className="border border-border-strong p-4">
+      <div className="border border-border/60 p-4 shadow-sm">
         {surfaces.map((surface) => (
           <a
             key={surface.kind}

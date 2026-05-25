@@ -18,7 +18,7 @@ export function WorkIndex({ items }: { items: readonly WorkItem[] }) {
                 {item.year}
               </div>
               <div
-                className="grid aspect-[16/10] place-items-end border border-border bg-card p-2 text-[9px] tracking-[0.16em] text-subtle-foreground uppercase"
+                className="grid aspect-[16/10] place-items-end border border-border/60 bg-card p-2 text-[9px] tracking-[0.16em] text-subtle-foreground uppercase shadow-sm"
                 aria-hidden="true"
               >
                 {item.id}
@@ -75,7 +75,7 @@ export function CaseStudy({ item }: { item: WorkItem }) {
         </div>
       </section>
 
-      <div className="my-9 grid aspect-video place-items-center border border-border bg-card text-[10px] tracking-[0.18em] text-subtle-foreground uppercase">
+      <div className="my-9 grid aspect-video place-items-center border border-border/60 bg-card text-[10px] tracking-[0.18em] text-subtle-foreground uppercase shadow-sm">
         [ project hero · 16:9 · drop image here ]
       </div>
 
@@ -94,7 +94,7 @@ export function CaseStudy({ item }: { item: WorkItem }) {
               <li>A token and theming pipeline that survived rebrands without engineering rework.</li>
             </ul>
           </div>
-          <div className="border border-border bg-card">
+          <div className="border border-border/60 bg-card shadow-sm">
             {item.facts.map(([key, value]) => (
               <div key={key} className="border-b border-border p-3 last:border-b-0">
                 <div className="text-[10px] tracking-[0.18em] text-subtle-foreground uppercase">

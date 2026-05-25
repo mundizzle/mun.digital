@@ -28,11 +28,11 @@ export function SiteNav() {
         <Link
           href="/"
           className="group inline-flex w-fit items-baseline text-[15px] leading-none font-semibold tracking-[0.04em] text-foreground"
-          aria-label="mun.digital home"
+          aria-label="Mundi Morgado home"
         >
-          <span>mun</span>
+          <span>mundi</span>
           <span className="text-primary">.</span>
-          <span>digital</span>
+          <span>morgado</span>
         </Link>
 
         <div className="flex flex-wrap gap-x-5 gap-y-3 text-[11px] leading-none tracking-[0.18em] uppercase">
