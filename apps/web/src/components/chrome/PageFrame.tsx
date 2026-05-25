@@ -1,5 +1,5 @@
-import { cn } from "@mun.digital/ui";
 import type { ReactNode } from "react";
+import { cn } from "@/lib/cn";
 
 interface PageFrameProps {
   children: ReactNode;

@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@source "../../../packages/ui/src/**/*.{ts,tsx}";
+@source "../../web/src/**/*.{ts,tsx}";
 
 @theme inline {
   --font-mono: ui-monospace, monospace;

@@ -1,6 +1,6 @@
 import type { Preview } from "@storybook/nextjs-vite";
 import { initialize, mswLoader } from "msw-storybook-addon";
-import "@mun.digital/ui/styles.css";
+import "@mun.digital/tokens/css";
 import "./preview.css";
 import { munDigitalStorybookTheme } from "./mun-digital-theme";
 

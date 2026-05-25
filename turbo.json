@@ -9,6 +9,10 @@
       "dependsOn": ["^build"],
       "outputs": []
     },
+    "test:unit": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
     "design:check": {
       "dependsOn": ["@mun.digital/tokens#build"],
       "outputs": []

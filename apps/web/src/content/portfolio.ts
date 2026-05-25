@@ -38,21 +38,21 @@ export const surfaces = [
     label: "Design system",
     target: "docs.mun.digital",
     href: "https://docs.mun.digital",
-    note: "Token model, shared UI, architecture, agentic workflow.",
+    note: "MCP, CLI, architecture, tokens, and agentic workflow.",
   },
   {
     kind: "UI",
     label: "Storybook",
     target: "storybook.mun.digital",
     href: "https://storybook.mun.digital",
-    note: "Live component workbench for the shared UI package.",
+    note: "Live workbench for app-owned portfolio components and tokens.",
   },
   {
     kind: "REPO",
     label: "Source",
     target: "github.com/mundizzle/mun.digital",
     href: "https://github.com/mundizzle/mun.digital",
-    note: "pnpm monorepo: web, docs, storybook, ui, tokens, cli.",
+    note: "pnpm monorepo: web, docs, storybook, tokens, cli.",
   },
 ] as const;
 

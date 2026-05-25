@@ -20,7 +20,7 @@ export async function generateMetadata({
   if (!currentSlug) {
     return {
       title: "mun.digital Public Reference",
-      description: "Public reference documentation for mun.digital UI, tokens, CLI, MCP, Storybook, and agent workflows.",
+      description: "Public reference documentation for the read-only mundigital MCP server, CLI, and supporting workflows.",
       alternates: {
         canonical: docsOrigin,
       },
@@ -91,7 +91,7 @@ function DocsShell() {
             mun.digital Public Reference
           </h1>
           <p className="mt-3 mb-0 max-w-[72ch] text-[15px] leading-7 text-muted-foreground">
-            Public documentation for reusable UI, tokens, CLI, MCP, Storybook, and agent workflow.
+            Public documentation for the read-only MCP server and CLI, with supporting architecture, workflow, token, component, and Storybook references.
           </p>
         </div>
         <ul className="mt-6 grid list-none gap-4 p-0">

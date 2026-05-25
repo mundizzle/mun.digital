@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const docsContentDir = path.join(rootDir, "apps/docs/content");
+const docsRegistryPath = path.join(rootDir, "apps/docs/src/lib/docs.tsx");
 const cliBinPath = path.join(rootDir, "packages/cli/bin/mundigital.mjs");
 const mcpServerPath = path.join(rootDir, "packages/cli/profile/src/mcp-server.mjs");
 const files = fs.readdirSync(docsContentDir).filter((file) => file.endsWith(".mdx"));
@@ -16,10 +17,23 @@ const fullText = files
   .map((file) => fs.readFileSync(path.join(docsContentDir, file), "utf8"))
   .join("\n");
 
-for (const required of ["Shared UI", "Token Model", "CLI", "MCP", "Storybook Workflow", "Agent Workflow"]) {
+for (const required of ["Portfolio Components", "Token Model", "CLI", "MCP", "Storybook Workflow", "Agent Workflow"]) {
   if (!fullText.includes(required)) {
     throw new Error(`Missing docs LLM content: ${required}`);
   }
+}
+
+const docsRegistry = fs.readFileSync(docsRegistryPath, "utf8");
+const cliSlugIndex = docsRegistry.indexOf('slug: "cli"');
+const mcpSlugIndex = docsRegistry.indexOf('slug: "mcp"');
+const componentsSlugIndex = docsRegistry.indexOf('slug: "components"');
+
+if (cliSlugIndex < 0 || mcpSlugIndex < 0 || componentsSlugIndex < 0) {
+  throw new Error("Docs registry must include CLI, MCP, and component support pages");
+}
+
+if (cliSlugIndex > componentsSlugIndex || mcpSlugIndex > componentsSlugIndex) {
+  throw new Error("Docs registry should prioritize CLI and MCP before component support docs");
 }
 
 if (!fullText.includes("https://mun.digital/llms.txt")) {

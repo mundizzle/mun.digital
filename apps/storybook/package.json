@@ -7,11 +7,10 @@
     "dev": "storybook dev -p 6006",
     "build": "storybook build",
     "test:storybook": "vitest --project storybook --run",
-    "test:a11y": "node scripts/run-test-storybook.mjs --label a11y --includeTags section-header"
+    "test:a11y": "node scripts/run-test-storybook.mjs --label a11y --includeTags a11y"
   },
   "dependencies": {
     "@mun.digital/tokens": "workspace:*",
-    "@mun.digital/ui": "workspace:*",
     "next": "16.2.4",
     "react": "19.2.4",
     "react-dom": "19.2.4"

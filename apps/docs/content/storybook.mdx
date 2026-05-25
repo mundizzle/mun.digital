@@ -1,24 +1,24 @@
 # Storybook Workflow
 
-Storybook lives in `apps/storybook` and uses `@storybook/nextjs-vite`. It is the high-level design-system workbench for `packages/ui`, not the CLI or MCP manual.
+Storybook lives in `apps/storybook` and uses `@storybook/nextjs-vite`. It is the workbench for app-owned portfolio components, template fixtures, generated token references, and visual test evidence. It is not the CLI or MCP manual.
 
-The workbench includes Docs, Controls, metadata-rendered design token references, `@storybook/addon-a11y`, local-only `@storybook/addon-mcp`, and MSW infrastructure. The current component catalog contains one reusable package component: `SectionHeader`.
+The workbench includes Docs, Controls, `Design/Tokens` rendered from `@mun.digital/tokens/metadata`, `@storybook/addon-a11y`, local-only `@storybook/addon-mcp`, and MSW infrastructure.
 
 ## Docs And Controls
 
-Use Storybook Docs as the acceptance surface for reusable UI. Component pages should include:
+Use Storybook Docs as the acceptance surface for presentational app components. Component pages should include:
 
-- A component description tied to the design-system boundary.
+- A component description tied to app usage.
 - Representative stories for real states.
 - Explicit `argTypes` for primitive props.
 - Disabled or constrained controls for `ReactNode` slots and class-name overrides.
-- Props tables that help reviewers inspect the public API.
+- Props tables that help reviewers inspect the app contract.
 
-As new components land in `packages/ui`, enumerate them in Storybook with representative states before treating them as part of the shared design system.
+As new portfolio components need durable visual evidence, enumerate them in Storybook with representative states. Template stories should use fixtures and should not import route `page.tsx` files.
 
 ## Design Tokens
 
-The primary token reference is `@mun.digital/tokens/metadata`, which is generated from `design.tokens.json` and used by docs and Storybook component documentation.
+The primary token reference is `Design/Tokens`, rendered from `@mun.digital/tokens/metadata`, which is generated from `design.tokens.json`.
 
 The generated CSS keeps `storybook-design-token` comment annotations for future compatibility, but the addon is not registered in public Storybook because its color presenter currently routes OKLCH values through `polished`, which cannot parse them reliably.
 
@@ -36,7 +36,7 @@ Accessibility uses the Storybook test-runner against the static build so the sam
 pnpm --filter @mun.digital/storybook test:a11y
 ```
 
-The a11y script builds static Storybook, serves it locally, and runs `test-storybook` against stories tagged for the current slice. `SectionHeader` sets `parameters.a11y.test = "error"` so accessibility violations fail the run.
+The a11y script builds static Storybook, serves it locally, and runs `test-storybook` against stories tagged `a11y`. Checked stories set `parameters.a11y.test = "error"` so accessibility violations fail the run.
 
 Both Vitest browser mode and the test-runner require Playwright browser binaries to be available in the local or CI environment.
 
