@@ -1,19 +1,22 @@
 "use client";
 
 import Image from "next/image";
+import type { CSSProperties } from "react";
 import { useCallback, useState } from "react";
 import { hero, heroRoles } from "@/content/portfolio";
 import { C64BootText } from "./C64BootText";
 import { TenPrint, type TenPrintProps } from "./TenPrint";
 
 const c64InkColor = "var(--foreground)";
-const c64ScreenOffset = 166;
+// These values are paired: the C64 layer is taller than the visible hero so the
+// completed tile field can push the boot text fully out of view.
+const c64ScrollOffset = 166;
+const c64LayerExtraHeight = 168;
 
 const heroPattern: TenPrintProps = {
   // Tweak the C64 pattern from here while iterating on the hero.
   cellsPerSecond: 52,
   cellSize: 14,
-  fillMode: "stop",
   lineCap: "round",
   lineJoin: "round",
   lineWidth: 3,
@@ -24,7 +27,7 @@ const heroPattern: TenPrintProps = {
 export function HeroCard() {
   const [phase, setPhase] = useState<"titles" | "program" | "pattern" | "complete">("titles");
   const [patternProgress, setPatternProgress] = useState(0);
-  const screenOffset = Math.round(patternProgress * c64ScreenOffset);
+  const screenOffset = Math.round(patternProgress * c64ScrollOffset);
 
   const handleTitlesComplete = useCallback(() => {
     setPhase("program");
@@ -49,8 +52,13 @@ export function HeroCard() {
         className="relative left-1/2 mb-8 min-h-[190px] w-screen -translate-x-1/2 overflow-hidden border-b border-border/60 bg-card md:mb-12 md:min-h-[210px]"
       >
         <div
-          className="absolute inset-x-0 top-0 h-[calc(100%+168px)] transition-transform duration-100 ease-linear"
-          style={{ transform: `translateY(-${screenOffset}px)` }}
+          className="absolute inset-x-0 top-0 h-[calc(100%+var(--c64-layer-extra-height))] transition-transform duration-100 ease-linear"
+          style={
+            {
+              "--c64-layer-extra-height": `${c64LayerExtraHeight}px`,
+              transform: `translateY(-${screenOffset}px)`,
+            } as CSSProperties
+          }
         >
           <div className="relative z-[1] mx-auto h-full max-w-[1180px] px-5 md:px-8">
             <div className="absolute top-4 right-9 left-[194px] sm:left-[224px] md:top-5 md:right-14 md:left-[266px]">

@@ -8,7 +8,6 @@ export interface TenPrintProps {
   cellsPerSecond?: number;
   cellSize?: number;
   className?: string;
-  fillMode?: "scroll" | "stop";
   lineCap?: CanvasLineCap;
   lineJoin?: CanvasLineJoin;
   lineWidth?: number;
@@ -23,7 +22,6 @@ export function TenPrint({
   cellsPerSecond = 32,
   cellSize = 14,
   className,
-  fillMode = "scroll",
   lineCap = "round",
   lineJoin = "round",
   lineWidth = 2,
@@ -109,30 +107,6 @@ export function TenPrint({
       context.stroke();
     };
 
-    const scrollUp = (pixels: number) => {
-      if (!context) return;
-
-      const scaledPixels = pixels * dpr;
-      context.save();
-      context.setTransform(1, 0, 0, 1, 0, 0);
-      context.globalAlpha = 1;
-      context.globalCompositeOperation = "copy";
-      context.drawImage(
-        canvas,
-        0,
-        scaledPixels,
-        canvas.width,
-        Math.max(canvas.height - scaledPixels, 0),
-        0,
-        0,
-        canvas.width,
-        Math.max(canvas.height - scaledPixels, 0),
-      );
-      context.globalCompositeOperation = "source-over";
-      context.clearRect(0, Math.max(canvas.height - scaledPixels, 0), canvas.width, scaledPixels);
-      context.restore();
-    };
-
     const drawNextCell = () => {
       clearCell(column, row);
       drawCell(column, row);
@@ -140,24 +114,17 @@ export function TenPrint({
 
       if (column >= columns) {
         column = 0;
-        if (fillMode === "scroll") {
-          scrollUp(cellSize);
-          for (let x = 0; x < columns; x += 1) {
-            clearCell(x, row);
-          }
-        } else {
-          row += 1;
-          onProgress?.(Math.min(row / rows, 1));
-          complete = row >= rows;
-        }
+        row += 1;
+        onProgress?.(Math.min(row / rows, 1));
+        complete = row >= rows;
       }
     };
 
     const fillStaticPattern = () => {
       if (!context) return;
 
-      const rows = Math.ceil(height / cellSize) + 1;
-      for (let y = 0; y < rows; y += 1) {
+      const staticRows = Math.ceil(height / cellSize) + 1;
+      for (let y = 0; y < staticRows; y += 1) {
         for (let x = 0; x < columns; x += 1) {
           drawCell(x, y);
         }
@@ -206,12 +173,7 @@ export function TenPrint({
 
       if (!active) return;
 
-      if (fillMode === "scroll") {
-        fillStaticPattern();
-        row = Math.max(Math.ceil(height / cellSize) - 1, 0);
-      } else {
-        row = 0;
-      }
+      row = 0;
       column = 0;
       animationFrame = requestAnimationFrame(draw);
     };
@@ -227,7 +189,7 @@ export function TenPrint({
       observer.disconnect();
       motionQuery.removeEventListener("change", reset);
     };
-  }, [active, cellSize, cellsPerSecond, fillMode, lineCap, lineJoin, lineWidth, onComplete, onProgress, opacity, strokeColor]);
+  }, [active, cellSize, cellsPerSecond, lineCap, lineJoin, lineWidth, onComplete, onProgress, opacity, strokeColor]);
 
   return (
     <canvas

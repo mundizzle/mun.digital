@@ -2,12 +2,11 @@
 // This is not profile source data and is not generated public-artifact data.
 
 export const heroRoles = [
-  "BEST FRONT-END DEVELOPER EVER...",
-  "SYSTEMS WRANGLING...",
-  "TEAM UNBLOCKING...",
-  "TOKEN TAMING...",
+  "PUSHING PIXELS...",
+  "TAMING TOKENS...",
   "HERDING AGENTS...",
   "VIBING HUMANS...",
+  "BEST FRONT-END DEVELOPER EVER...",
 ] as const;
 
 export const hero = {
@@ -20,24 +19,18 @@ export const hero = {
 export const surfaces = [
   {
     kind: "MCP",
-    label: "MCP endpoint",
     target: "https://mun.digital/api/mcp",
     href: "https://docs.mun.digital/mcp",
-    note: "Hosted, public, no auth. Browser link opens setup docs for the POST endpoint.",
   },
   {
     kind: "CLI",
-    label: "Command-line",
     target: "npx -y @mun.digital/cli",
     href: "https://www.npmjs.com/package/@mun.digital/cli",
-    note: "profile, search, brief, links. Agent and human readable.",
   },
   {
     kind: "REPO",
-    label: "Source",
     target: "github.com/mundizzle/mun.digital",
     href: "https://github.com/mundizzle/mun.digital",
-    note: "pnpm monorepo: web, docs, storybook, tokens, cli.",
   },
 ] as const;
 

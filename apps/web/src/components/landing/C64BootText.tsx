@@ -15,13 +15,29 @@ const lineClassName = "h-[1.18em]";
 
 export function C64BootText({ inkColor, mode, onProgramComplete, onTitlesComplete, roles }: C64BootTextProps) {
   const stableRoles = useMemo(() => roles.filter(Boolean), [roles]);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [roleIndex, setRoleIndex] = useState(0);
   const [programLineIndex, setProgramLineIndex] = useState(0);
   const [programText, setProgramText] = useState("");
   const [text, setText] = useState("");
 
   useEffect(() => {
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const handleMotionChange = () => setPrefersReducedMotion(motionQuery.matches);
+
+    handleMotionChange();
+    motionQuery.addEventListener("change", handleMotionChange);
+
+    return () => motionQuery.removeEventListener("change", handleMotionChange);
+  }, []);
+
+  useEffect(() => {
     if (mode !== "titles" || stableRoles.length === 0) return;
+
+    if (prefersReducedMotion) {
+      onTitlesComplete();
+      return;
+    }
 
     if (roleIndex >= stableRoles.length) {
       onTitlesComplete();
@@ -43,10 +59,15 @@ export function C64BootText({ inkColor, mode, onProgramComplete, onTitlesComplet
     }, 950);
 
     return () => window.clearTimeout(timeout);
-  }, [mode, onTitlesComplete, roleIndex, stableRoles, text]);
+  }, [mode, onTitlesComplete, prefersReducedMotion, roleIndex, stableRoles, text]);
 
   useEffect(() => {
     if (mode !== "program") return;
+
+    if (prefersReducedMotion) {
+      onProgramComplete();
+      return;
+    }
 
     const currentLine = programLines[programLineIndex] ?? "";
     if (programLineIndex >= programLines.length) {
@@ -68,9 +89,11 @@ export function C64BootText({ inkColor, mode, onProgramComplete, onTitlesComplet
     }, 180);
 
     return () => window.clearTimeout(timeout);
-  }, [mode, onProgramComplete, programLineIndex, programText]);
+  }, [mode, onProgramComplete, prefersReducedMotion, programLineIndex, programText]);
 
-  const visibleProgramLines = programLines.slice(0, programLineIndex);
+  const titleText = prefersReducedMotion ? (stableRoles.at(-1) ?? "") : text;
+  const visibleProgramLines = prefersReducedMotion && mode === "program" ? programLines : programLines.slice(0, programLineIndex);
+  const showCaret = !prefersReducedMotion;
 
   return (
     <div
@@ -84,8 +107,8 @@ export function C64BootText({ inkColor, mode, onProgramComplete, onTitlesComplet
       <div className={lineClassName}>READY.</div>
       {mode === "titles" ? (
         <div className={lineClassName}>
-          {text}
-          <span className="typed-caret ml-1 inline-block h-[0.95em] w-0.5 translate-y-[0.08em] bg-current" />
+          {titleText}
+          {showCaret ? <span className="typed-caret ml-1 inline-block h-[0.95em] w-0.5 translate-y-[0.08em] bg-current" /> : null}
         </div>
       ) : (
         <>
@@ -99,7 +122,9 @@ export function C64BootText({ inkColor, mode, onProgramComplete, onTitlesComplet
                 {isTyping ? (
                   <>
                     {programText}
-                    <span className="typed-caret ml-1 inline-block h-[0.95em] w-0.5 translate-y-[0.08em] bg-current" />
+                    {showCaret ? (
+                      <span className="typed-caret ml-1 inline-block h-[0.95em] w-0.5 translate-y-[0.08em] bg-current" />
+                    ) : null}
                   </>
                 ) : null}
               </div>
