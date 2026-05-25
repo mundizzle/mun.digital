@@ -30,6 +30,7 @@
     "tokens:smoke": "node scripts/token-distribution-smoke.mjs",
     "mun": "node packages/cli/bin/mundigital.mjs",
     "resume:build": "node packages/profile/scripts/build-artifacts.mjs",
+    "raindrop:collections": "node packages/profile/scripts/list-raindrop-collections.mjs",
     "raindrop:sync": "node packages/profile/scripts/sync-raindrops.mjs && pnpm run resume:build",
     "public:smoke": "node scripts/public-data-smoke.mjs",
     "raindrop:smoke": "node scripts/raindrop-smoke.mjs",

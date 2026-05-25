@@ -70,23 +70,28 @@ export function sanitizeLinkSnapshot(value) {
 }
 
 export function sanitizeRaindropItems(items, config) {
-  const collections = collectionMap(config);
+  const normalizedConfig = normalizeRaindropConfig(config);
 
   return {
     schema_version: LINKS_SCHEMA_VERSION,
     links: sortLinks(
       items
-        .map((item) => sanitizeRaindropItem(item, collections, config))
+        .map((item) => sanitizeRaindropItem(item, normalizedConfig))
         .filter(Boolean),
     ),
   };
 }
 
-export function sanitizeRaindropItem(item, collections, config) {
+export function sanitizeRaindropItem(item, config) {
   const collectionId = String(item?.collection?.$id ?? item?.collectionId ?? "");
-  const collection = collections.get(collectionId);
+  const collection = config.collections.get(collectionId);
 
   if (!collection) {
+    return null;
+  }
+
+  const itemTags = normalizedTags(item?.tags);
+  if (!hasRequiredTag(itemTags, config.requiredTags) || hasPrivateTag(itemTags, config)) {
     return null;
   }
 
@@ -103,7 +108,7 @@ export function sanitizeRaindropItem(item, collections, config) {
     title,
     url,
     excerpt: cleanText(item?.excerpt),
-    tags: publicTags(item?.tags, config),
+    tags: itemTags,
     collection: collection.slug ?? collection.label,
     created: isoDate(item?.created),
     updated: isoDate(item?.lastUpdate ?? item?.updated),
@@ -115,7 +120,8 @@ export async function fetchRaindropSnapshot({ token, config, fetchImpl = fetch }
     throw new Error("RAINDROP_TOKEN is required");
   }
 
-  const collections = Array.isArray(config?.collections) ? config.collections : [];
+  const normalizedConfig = normalizeRaindropConfig(config);
+  const collections = Array.from(normalizedConfig.collections.values());
   if (collections.length === 0) {
     throw new Error("At least one Raindrop collection must be configured");
   }
@@ -141,6 +147,44 @@ export async function fetchRaindropSnapshot({ token, config, fetchImpl = fetch }
   }
 
   return snapshot;
+}
+
+export async function fetchRaindropCollections({ token, fetchImpl = fetch } = {}) {
+  if (!token) {
+    throw new Error("RAINDROP_TOKEN is required");
+  }
+
+  const [rootCollections, childCollections] = await Promise.all([
+    fetchCollectionList({ token, fetchImpl, path: "/collections", label: "root collections" }),
+    fetchCollectionList({ token, fetchImpl, path: "/collections/childrens", label: "child collections" }),
+  ]);
+
+  return [...rootCollections, ...childCollections]
+    .map((collection) => ({
+      id: String(collection?._id ?? ""),
+      title: cleanText(collection?.title),
+      count: Number.isFinite(Number(collection?.count)) ? Number(collection.count) : 0,
+      public: Boolean(collection?.public),
+      parentId: stringValue(collection?.parent?.$id),
+    }))
+    .filter((collection) => collection.id && collection.title)
+    .sort((a, b) => a.title.localeCompare(b.title) || Number(a.id) - Number(b.id));
+}
+
+async function fetchCollectionList({ token, fetchImpl, path, label }) {
+  const response = await fetchImpl(new URL(`${RAINDROP_API_BASE_URL}${path}`), {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Raindrop API request failed for ${label}: ${response.status}`);
+  }
+
+  const body = await response.json();
+  return Array.isArray(body?.items) ? body.items : [];
 }
 
 async function fetchCollectionItems({ collectionId, collectionName, fetchImpl, token }) {
@@ -234,21 +278,28 @@ function scoreLink(link, query) {
   return terms.reduce((score, term) => (haystack.includes(term) ? score + 10 : score), 0);
 }
 
-function publicTags(tags, config) {
+function normalizeRaindropConfig(config) {
+  const privateTags = normalizedTags(config?.privateTags);
+  const privateTagPrefixes = normalizedTags(config?.privateTagPrefixes);
+  const requiredTags = normalizedTags(config?.requiredTags);
+
+  return {
+    collections: collectionMap(config),
+    privateTags,
+    privateTagPrefixes,
+    requiredTags,
+  };
+}
+
+function normalizedTags(tags) {
   if (!Array.isArray(tags)) {
     return [];
   }
 
-  const privateTags = new Set((config?.privateTags ?? []).map((tag) => String(tag).toLowerCase()));
-  const privatePrefixes = (config?.privateTagPrefixes ?? []).map(String);
-
   return tags
-    .map(cleanText)
+    .map(normalizeTag)
     .filter(Boolean)
-    .filter((tag) => {
-      const lowerTag = tag.toLowerCase();
-      return !privateTags.has(lowerTag) && !privatePrefixes.some((prefix) => tag.startsWith(prefix));
-    })
+    .filter((tag, index, all) => all.indexOf(tag) === index)
     .sort();
 }
 
@@ -256,11 +307,13 @@ function collectionMap(config) {
   const map = new Map();
   for (const collection of config?.collections ?? []) {
     const id = String(collection?.id ?? "");
+    validateCollectionId(id);
     const label = cleanText(collection?.label);
     const slug = cleanText(collection?.slug);
 
     if (id && label) {
       map.set(id, {
+        id,
         label,
         slug: slug || slugify(label),
       });
@@ -268,6 +321,32 @@ function collectionMap(config) {
   }
 
   return map;
+}
+
+function hasRequiredTag(tags, requiredTags) {
+  if (!Array.isArray(requiredTags) || requiredTags.length === 0) {
+    return false;
+  }
+
+  return tags.some((tag) => requiredTags.includes(tag));
+}
+
+function hasPrivateTag(tags, config) {
+  return tags.some((tag) => (
+    config.privateTags.includes(tag) ||
+    config.privateTagPrefixes.some((prefix) => tag.startsWith(prefix))
+  ));
+}
+
+function validateCollectionId(id) {
+  if (!id) {
+    throw new Error("Configured Raindrop collection is missing an id");
+  }
+
+  const numericId = Number(id);
+  if (!Number.isInteger(numericId) || numericId <= 0) {
+    throw new Error(`Configured Raindrop collection id must be a positive user collection id: ${id}`);
+  }
 }
 
 function sortLinks(links) {
@@ -287,6 +366,10 @@ function stringValue(value) {
 
 function cleanText(value) {
   return stringValue(value).replace(/\s+/g, " ");
+}
+
+function normalizeTag(value) {
+  return cleanText(value).toLowerCase().replace(/^#+/, "");
 }
 
 function cleanUrl(value) {

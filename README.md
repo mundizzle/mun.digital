@@ -154,7 +154,7 @@ curl -H "Accept: text/markdown" https://mun.digital/
 
 Public surfaces exclude private contact details and private metadata. CLI and MCP output are read-only; they do not expose write, deploy, shell, filesystem, environment, secret, telemetry, or postinstall behavior.
 
-Raindrop links are published only through a sanitized generated snapshot. The Raindrop token is used only by the private local `pnpm run raindrop:sync` command and is never required by the website, hosted MCP endpoint, or npm package.
+Raindrop links are published only through a sanitized generated snapshot. The Raindrop token is used only by private local commands and is never required by the website, hosted MCP endpoint, or npm package. Bookmarks must come from an explicitly configured collection and include the `mun.digital` Raindrop tag to publish.
 
 ## Tech
 
@@ -165,6 +165,7 @@ pnpm workspace with a Next.js App Router web app, TypeScript, Tailwind CSS, and 
 ```bash
 pnpm install
 pnpm run resume:build
+RAINDROP_TOKEN=... pnpm run raindrop:collections
 RAINDROP_TOKEN=... pnpm run raindrop:sync
 pnpm run dev   # http://localhost:3000
 ```

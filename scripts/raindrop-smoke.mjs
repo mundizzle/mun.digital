@@ -4,6 +4,7 @@ import path from "node:path";
 import { promisify } from "node:util";
 
 import {
+  fetchRaindropCollections,
   fetchRaindropSnapshot,
   sanitizeRaindropItems,
 } from "../packages/profile/src/raindrop-links.mjs";
@@ -19,6 +20,7 @@ const config = {
       slug: "design-systems",
     },
   ],
+  requiredTags: ["mun.digital"],
   privateTags: ["private"],
   privateTagPrefixes: ["_"],
 };
@@ -29,13 +31,37 @@ const fixture = [
     link: "https://example.com/design-systems",
     excerpt: "Useful public excerpt.",
     note: "PRIVATE NOTE MUST NOT LEAK",
-    tags: ["tokens", "_draft", "private", "accessibility"],
+    tags: ["Tokens", "#mun.digital", "ACCESSIBILITY", "tokens"],
     collection: { $id: 123 },
     created: "2026-01-02T03:04:05.000Z",
     lastUpdate: "2026-01-03T03:04:05.000Z",
     user: { $id: 456 },
     creatorRef: { _id: 789 },
     cover: "private-cache-reference",
+  },
+  {
+    _id: 3,
+    title: "Missing required tag",
+    link: "https://example.com/not-selected",
+    tags: ["tokens"],
+    collection: { $id: 123 },
+    created: "2026-01-01T00:00:00.000Z",
+  },
+  {
+    _id: 4,
+    title: "Private selected link",
+    link: "https://example.com/private-selected",
+    tags: ["mun.digital", "private"],
+    collection: { $id: 123 },
+    created: "2026-01-01T00:00:00.000Z",
+  },
+  {
+    _id: 5,
+    title: "Draft selected link",
+    link: "https://example.com/draft-selected",
+    tags: ["mun.digital", "_draft"],
+    collection: { $id: 123 },
+    created: "2026-01-01T00:00:00.000Z",
   },
   {
     _id: 1,
@@ -66,7 +92,10 @@ assert(link.id === "99", "link id should be stringified");
 assert(link.collection === "design-systems", "link collection should use public slug");
 assert(link.created === "2026-01-02T03:04:05.000Z", "link created date should be ISO");
 assert(link.updated === "2026-01-03T03:04:05.000Z", "link updated date should be ISO");
-assert(JSON.stringify(link.tags) === JSON.stringify(["accessibility", "tokens"]), "link tags were not filtered and sorted");
+assert(
+  JSON.stringify(link.tags) === JSON.stringify(["accessibility", "mun.digital", "tokens"]),
+  "link tags were not normalized, deduped, and sorted",
+);
 
 for (const forbidden of [
   "PRIVATE NOTE MUST NOT LEAK",
@@ -79,12 +108,22 @@ for (const forbidden of [
   "789",
   "999",
   "Unsafe URL",
+  "Missing required tag",
+  "Private selected link",
+  "Draft selected link",
+  "not-selected",
+  "private-selected",
+  "draft-selected",
   "javascript:",
 ]) {
   assert(!serialized.includes(forbidden), `raindrop public output leaked forbidden value: ${forbidden}`);
 }
 
 await assertNoTokenFailsClosed();
+await assertCollectionListingNoTokenFailsClosed();
+await assertCollectionListingSanitizesOutput();
+await assertRequiredTagsFailClosed();
+await assertSystemCollectionIdsFailClosed();
 await assertEmptyApiFailsClosed();
 await assertSanitizedEmptyFailsClosed();
 await assertPaginationFailsClosed();
@@ -105,6 +144,93 @@ async function assertNoTokenFailsClosed() {
 
   assert(before === after, "sync without token changed raindrops artifact");
   assert(`${stdout ?? ""}${stderr ?? ""}`.includes("RAINDROP_TOKEN is required"), "sync without token did not fail clearly");
+}
+
+async function assertCollectionListingNoTokenFailsClosed() {
+  await fetchRaindropCollections().then(
+    () => {
+      throw new Error("collection listing without token did not fail closed");
+    },
+    (error) => {
+      assert(
+        error instanceof Error && error.message.includes("RAINDROP_TOKEN is required"),
+        "collection listing without token failed with the wrong error",
+      );
+    },
+  );
+}
+
+async function assertCollectionListingSanitizesOutput() {
+  const seenUrls = [];
+  const collections = await fetchRaindropCollections({
+    token: "secret-token-must-not-leak",
+    fetchImpl: async (url, options) => {
+      seenUrls.push(String(url));
+      assert(
+        options?.headers?.Authorization === "Bearer secret-token-must-not-leak",
+        "collection listing did not use bearer authorization",
+      );
+      return {
+        ok: true,
+        async json() {
+          return {
+            items: [
+              {
+                _id: 123,
+                title: " Design Systems ",
+                count: "7",
+                public: false,
+                parent: { $id: 456 },
+                user: { $id: 999 },
+              },
+            ],
+          };
+        },
+      };
+    },
+  });
+
+  assert(seenUrls.some((url) => url.endsWith("/collections")), "root collections endpoint was not requested");
+  assert(seenUrls.some((url) => url.endsWith("/collections/childrens")), "child collections endpoint was not requested");
+  assert(collections.length === 2, `expected two listed fixture collections, got ${collections.length}`);
+  assert(
+    JSON.stringify(collections[0]) === JSON.stringify({
+      id: "123",
+      title: "Design Systems",
+      count: 7,
+      public: false,
+      parentId: "456",
+    }),
+    "collection listing did not emit the safe public fields",
+  );
+  assert(!JSON.stringify(collections).includes("secret-token-must-not-leak"), "collection listing leaked token");
+  assert(!JSON.stringify(collections).includes("999"), "collection listing leaked user id");
+}
+
+async function assertRequiredTagsFailClosed() {
+  const result = sanitizeRaindropItems(fixture, {
+    ...config,
+    requiredTags: [],
+  });
+
+  assert(result.links.length === 0, "empty requiredTags should publish nothing");
+}
+
+async function assertSystemCollectionIdsFailClosed() {
+  for (const id of [0, -1, -99, "not-a-number"]) {
+    try {
+      sanitizeRaindropItems(fixture, {
+        ...config,
+        collections: [{ id, label: "System" }],
+      });
+      throw new Error(`collection id ${id} did not fail closed`);
+    } catch (error) {
+      assert(
+        error instanceof Error && error.message.includes("positive user collection id"),
+        `collection id ${id} failed with the wrong error`,
+      );
+    }
+  }
 }
 
 async function assertEmptyApiFailsClosed() {
