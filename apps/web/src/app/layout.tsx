@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { loadResume } from "@mun.digital/profile";
+import { SiteFooter } from "@/components/chrome/SiteFooter";
+import { SiteNav } from "@/components/chrome/SiteNav";
 import "./globals.css";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -57,7 +59,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full antialiased">
-      <body>{children}</body>
+      <body>
+        <SiteNav />
+        {children}
+        <SiteFooter />
+      </body>
     </html>
   );
 }
