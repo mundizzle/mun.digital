@@ -3,6 +3,7 @@ import { SectionMarker } from "@/components/chrome/SectionMarker";
 import { surfaces, work } from "@/content/portfolio";
 import { readingLinks } from "@/content/reading";
 import { getWritingPosts } from "@/lib/writing";
+import { ReadingCard } from "./ReadingCard";
 import { WorkTiles } from "./WorkTiles";
 
 export async function WritingTeaser() {
@@ -65,26 +66,7 @@ export function ReadingRail() {
       <div className="reading-mask max-h-none overflow-hidden min-[900px]:min-h-0 min-[900px]:flex-1">
         <div className="reading-track grid gap-4 min-[900px]:animate-[scroll-up_86s_linear_infinite] min-[900px]:hover:[animation-play-state:paused]">
           {looped.map((item, index) => (
-            <a
-              key={`${item.id}-${index}`}
-              href={item.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block border border-border/60 bg-card p-4 hover:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
-            >
-              <div className="text-[10px] tracking-[0.18em] text-primary uppercase">
-                {item.tags[0]}
-              </div>
-              <h3 className="mt-3 text-[14px] leading-snug font-semibold">{item.title}</h3>
-              {item.note ? (
-                <p className="mt-2 font-sans text-[13px] leading-[1.55] text-muted-foreground">
-                  {item.note}
-                </p>
-              ) : null}
-              <div className="mt-3 text-[10px] tracking-[0.16em] text-subtle-foreground uppercase">
-                {item.domain}
-              </div>
-            </a>
+            <ReadingCard key={`${item.id}-${index}`} item={item} />
           ))}
         </div>
       </div>

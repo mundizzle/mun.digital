@@ -1,6 +1,16 @@
 import raindrops from "../../public/raindrops.json";
 
-type PublicLink = (typeof raindrops.links)[number];
+type PublicLink = {
+  id: string;
+  title: string;
+  url: string;
+  excerpt: string;
+  tags: string[];
+  collection: string;
+  created: string;
+  updated: string;
+  thumbnailUrl?: string;
+};
 
 export type ReadingLink = {
   id: string;
@@ -8,6 +18,7 @@ export type ReadingLink = {
   href: string;
   domain: string;
   note?: string;
+  thumbnailUrl?: string;
   tags: string[];
 };
 
@@ -20,6 +31,7 @@ function toReadingLink(link: PublicLink): ReadingLink {
     href: link.url,
     domain: domainFor(link.url),
     note: link.excerpt || undefined,
+    thumbnailUrl: link.thumbnailUrl,
     tags: tagsFor(link),
   };
 }

@@ -133,13 +133,26 @@ function assertNoRaindropPrivateFields(value) {
 }
 
 function assertRaindropLinkAllowlist(value) {
-  const allowedKeys = new Set(["id", "title", "url", "excerpt", "tags", "collection", "created", "updated"]);
+  const allowedKeys = new Set(["id", "title", "url", "excerpt", "tags", "collection", "created", "updated", "thumbnailUrl"]);
   for (const link of value.links) {
     const extraKeys = Object.keys(link).filter((key) => !allowedKeys.has(key));
     assert(extraKeys.length === 0, `public raindrop link has unexpected keys: ${extraKeys.join(", ")}`);
     assert(Array.isArray(link.tags), "public raindrop link tags must be an array");
     assert(link.tags.includes("mun.digital"), "public raindrop link missing mun.digital tag");
     assert(!link.tags.some((tag) => String(tag).startsWith("#")), "public raindrop link emitted a raw # tag");
+    if (Object.hasOwn(link, "thumbnailUrl")) {
+      assert(typeof link.thumbnailUrl === "string", "public raindrop thumbnailUrl must be a string");
+      assert(isHttpUrl(link.thumbnailUrl), "public raindrop thumbnailUrl must use HTTP(S)");
+    }
+  }
+}
+
+function isHttpUrl(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
   }
 }
 

@@ -1,6 +1,6 @@
 import publicLinks from "../public/raindrops.json" with { type: "json" };
 
-export const LINKS_SCHEMA_VERSION = "1.0.0";
+export const LINKS_SCHEMA_VERSION = "1.1.0";
 const RAINDROP_API_BASE_URL = "https://api.raindrop.io/rest/v1";
 const RAINDROP_MAX_PAGES = 20;
 const RAINDROP_PER_PAGE = 50;
@@ -112,6 +112,7 @@ export function sanitizeRaindropItem(item, config) {
     collection: collection.slug ?? collection.label,
     created: isoDate(item?.created),
     updated: isoDate(item?.lastUpdate ?? item?.updated),
+    thumbnailUrl: thumbnailUrlFor(item),
   });
 }
 
@@ -236,7 +237,8 @@ function sanitizePublicLink(link) {
     return null;
   }
 
-  return {
+  const thumbnailUrl = cleanUrl(link?.thumbnailUrl);
+  const publicLink = {
     id,
     title,
     url,
@@ -246,6 +248,12 @@ function sanitizePublicLink(link) {
     created: isoDate(link?.created),
     updated: isoDate(link?.updated),
   };
+
+  if (thumbnailUrl) {
+    publicLink.thumbnailUrl = thumbnailUrl;
+  }
+
+  return publicLink;
 }
 
 function searchLinkEntries(links, normalizedQuery, limit) {
@@ -388,6 +396,26 @@ function cleanUrl(value) {
   } catch {
     return "";
   }
+}
+
+function thumbnailUrlFor(item) {
+  const coverUrl = cleanUrl(item?.cover);
+  if (coverUrl) {
+    return coverUrl;
+  }
+
+  if (!Array.isArray(item?.media)) {
+    return "";
+  }
+
+  for (const media of item.media) {
+    const mediaUrl = cleanUrl(media?.link);
+    if (mediaUrl) {
+      return mediaUrl;
+    }
+  }
+
+  return "";
 }
 
 function isoDate(value) {
