@@ -1,19 +1,23 @@
 import Link from "next/link";
 import { SectionMarker } from "@/components/chrome/SectionMarker";
-import { posts, surfaces, work } from "@/content/portfolio";
+import { surfaces, work } from "@/content/portfolio";
 import { readingLinks } from "@/content/reading";
+import { getWritingPosts } from "@/lib/writing";
 import { WorkTiles } from "./WorkTiles";
 
-export function WritingTeaser() {
-  const post = posts[0];
+export async function WritingTeaser() {
+  const [post] = await getWritingPosts();
+
+  if (!post) {
+    return null;
+  }
 
   return (
     <section className="mb-10" aria-labelledby="latest-writing">
       <SectionMarker code="WRITING" />
       <article className="grid gap-4 border-y border-border py-5 sm:grid-cols-[110px_1fr]">
         <div className="text-[11px] tracking-[0.18em] text-subtle-foreground uppercase">
-          <div>{post.date.replace(" ", ".")}</div>
-          <div className="mt-2 text-primary">{post.readTime}</div>
+          <time dateTime={post.date}>{post.displayDate}</time>
         </div>
         <div>
           <h2 id="latest-writing" className="m-0 text-[24px] leading-tight tracking-normal">
@@ -22,7 +26,7 @@ export function WritingTeaser() {
             </Link>
           </h2>
           <p className="mt-3 font-sans text-[15px] leading-[1.7] text-muted-foreground">
-            {post.excerpt}
+            {post.description}
           </p>
           <Link
             href={`/writing/${post.id}`}

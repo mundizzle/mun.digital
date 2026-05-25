@@ -1,8 +1,10 @@
 import type { MetadataRoute } from "next";
-import { posts, work } from "@/content/portfolio";
+import { work } from "@/content/portfolio";
+import { getWritingPosts } from "@/lib/writing";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const lastModified = new Date("2026-05-25");
+  const posts = await getWritingPosts();
 
   return [
     {
@@ -37,10 +39,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...posts.map((post) => ({
       url: `https://mun.digital/writing/${post.id}`,
-      lastModified,
+      lastModified: new Date(`${post.date}T00:00:00.000Z`),
       changeFrequency: "monthly" as const,
       priority: 0.6,
     })),
+    {
+      url: "https://mun.digital/rss.xml",
+      lastModified,
+      changeFrequency: "weekly",
+      priority: 0.6,
+    },
     {
       url: "https://mun.digital/resume.json",
       lastModified,

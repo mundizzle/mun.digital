@@ -43,6 +43,9 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     alternates: {
       canonical: "https://mun.digital",
+      types: {
+        "application/rss+xml": "/rss.xml",
+      },
     },
     icons: {
       icon: "/icon",
@@ -59,6 +62,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full antialiased">
+      <head>
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="mun.digital Writing"
+          href="/rss.xml"
+        />
+      </head>
       <body>
         <SiteNav />
         {children}
