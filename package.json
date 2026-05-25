@@ -33,6 +33,7 @@
     "raindrop:collections": "node packages/profile/scripts/list-raindrop-collections.mjs",
     "raindrop:sync": "node packages/profile/scripts/sync-raindrops.mjs && pnpm run resume:build",
     "public:smoke": "node scripts/public-data-smoke.mjs",
+    "rss:smoke": "node scripts/rss-smoke.mjs",
     "raindrop:smoke": "node scripts/raindrop-smoke.mjs",
     "llms:smoke": "node scripts/llms-smoke.mjs",
     "mcp:start": "node packages/cli/bin/mundigital.mjs mcp",

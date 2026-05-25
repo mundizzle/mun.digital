@@ -2,19 +2,21 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PageFrame } from "@/components/chrome/PageFrame";
 import { WritingPost } from "@/components/writing/WritingViews";
-import { getPost, posts } from "@/content/portfolio";
+import { getWritingPost, getWritingPosts } from "@/lib/writing";
 
 type Props = PageProps<"/writing/[id]">;
 
 export const dynamicParams = false;
+export const dynamic = "force-static";
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const posts = await getWritingPosts();
   return posts.map((post) => ({ id: post.id }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const post = getPost(id);
+  const post = await getWritingPost(id);
 
   if (!post) {
     return {
@@ -24,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `${post.title} | mun.digital`,
-    description: post.excerpt,
+    description: post.description,
     alternates: {
       canonical: `https://mun.digital/writing/${post.id}`,
     },
@@ -33,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function WritingPostPage({ params }: Props) {
   const { id } = await params;
-  const post = getPost(id);
+  const post = await getWritingPost(id);
 
   if (!post) {
     notFound();

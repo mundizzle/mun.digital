@@ -10,7 +10,7 @@ export function SiteFooter() {
         <a className="hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="https://linkedin.com/in/mundi">
           LinkedIn
         </a>
-        <a className="hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/raindrops.json">
+        <a className="hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/rss.xml">
           RSS
         </a>
       </div>
