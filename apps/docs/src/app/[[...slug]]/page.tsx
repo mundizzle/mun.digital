@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { docPages, getPage, readPageMarkdown, renderMarkdown } from "@/lib/docs";
+import { docPages, getPage, readPageMarkdown, renderMarkdown, TokenReference } from "@/lib/docs";
 
 const docsOrigin = "https://docs.mun.digital";
 
@@ -74,6 +74,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
           </a>
         </div>
         <div>{renderMarkdown(markdown)}</div>
+        {page.slug === "tokens" ? <TokenReference /> : null}
       </article>
     </main>
   );

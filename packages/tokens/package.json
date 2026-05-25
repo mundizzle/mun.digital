@@ -5,10 +5,15 @@
   "description": "Generated design token CSS for mun.digital apps.",
   "exports": {
     "./css": "./css/tokens.generated.css",
+    "./metadata": {
+      "types": "./metadata/tokens.generated.d.ts",
+      "default": "./metadata/tokens.generated.mjs"
+    },
     "./tokens.generated.css": "./css/tokens.generated.css"
   },
   "files": [
-    "css"
+    "css",
+    "metadata"
   ],
   "scripts": {
     "build": "pnpm --dir ../.. design:build",

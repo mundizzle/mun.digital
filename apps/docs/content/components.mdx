@@ -5,3 +5,29 @@ Shared components live in `packages/ui`. They are data-agnostic and do not fetch
 The first validated slice is `SectionHeader`. It keeps semantic Tailwind class names backed by shared tokens and uses `cn` for caller-provided class composition.
 
 CVA is intentionally deferred until a component has a real variant axis.
+
+## SectionHeader
+
+`SectionHeader` renders the portfolio section rail label and heading. It is intentionally small: the component owns layout and typography, while the app owns editorial content and section ordering.
+
+| Prop | Type | Control | Notes |
+| --- | --- | --- | --- |
+| `index` | `string` | text | Used by the default bracketed label. |
+| `title` | `string` | text | Rendered as the section heading. |
+| `label` | `ReactNode` | disabled | Optional custom label slot. Disabled in Storybook Controls because freeform ReactNode editing is noisy. |
+| `className` | `string` | disabled | Root override for integration layout. |
+| `labelClassName` | `string` | disabled | Label override for integration cases. |
+| `titleClassName` | `string` | disabled | Heading override for integration cases. |
+
+```tsx
+import { SectionHeader } from "@mun.digital/ui";
+
+<SectionHeader index="02" title="Experience" />
+```
+
+## Acceptance Surface
+
+- Storybook Docs describes the component and its props.
+- Storybook Controls expose only useful primitive props.
+- Storybook play functions assert visible output for representative stories.
+- Storybook a11y runs the checked `SectionHeader` path in hard-error mode.

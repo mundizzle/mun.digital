@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "fumadocs-ui/style.css";
 @import "@mun.digital/tokens/css";
 
 @source "../../content/**/*.{md,mdx}";

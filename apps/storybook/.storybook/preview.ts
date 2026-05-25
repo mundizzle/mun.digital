@@ -2,6 +2,7 @@ import type { Preview } from "@storybook/nextjs-vite";
 import { initialize, mswLoader } from "msw-storybook-addon";
 import "@mun.digital/ui/styles.css";
 import "./preview.css";
+import { munDigitalStorybookTheme } from "./mun-digital-theme";
 
 initialize({
   onUnhandledRequest: "bypass",
@@ -22,6 +23,9 @@ const preview: Preview = {
     },
     msw: {
       handlers: [],
+    },
+    docs: {
+      theme: munDigitalStorybookTheme,
     },
   },
 };
