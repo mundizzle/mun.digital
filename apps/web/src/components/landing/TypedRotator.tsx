@@ -31,7 +31,7 @@ export function TypedRotator({ items }: TypedRotatorProps) {
     let next = () => setText(current.slice(0, text.length + 1));
 
     if (phase === "typing" && text.length >= current.length) {
-      delay = 1700;
+      delay = 2800;
       next = () => setPhase("deleting");
     } else if (phase === "deleting" && text.length > 0) {
       delay = 38;

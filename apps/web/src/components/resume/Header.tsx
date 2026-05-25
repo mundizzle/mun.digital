@@ -19,7 +19,7 @@ export function Header({ location, name, contactLinks }: HeaderProps) {
         <RailBaselineRow
           label={
             <span className="inline-flex items-baseline gap-[10px]">
-              <span className="inline-block size-[7px] rounded-full bg-primary"></span>
+              <span className="inline-block size-[5px] bg-primary"></span>
               <span>CV</span>
             </span>
           }
@@ -74,7 +74,7 @@ function ContactLinkRow({ links }: { links: ContactLink[] }) {
     <ul className="m-0 flex list-none flex-wrap gap-x-[18px] gap-y-[6px] p-0">
       {links.map((item) => (
         <li
-          className="flex min-w-0 max-w-full items-center gap-[18px] before:font-medium before:text-primary before:content-['—'] first:before:hidden"
+          className="flex min-w-0 max-w-full items-center gap-[18px] before:inline-block before:size-[5px] before:bg-primary before:content-[''] first:before:hidden"
           key={item.href}
         >
           <a

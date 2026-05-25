@@ -35,7 +35,7 @@ export function Skills({ index, title, groups }: SkillsProps) {
             >
               {group.tokens.map((token) => (
                 <li
-                  className="inline-flex items-center gap-[8px] before:font-medium before:text-primary before:content-['—']"
+                  className="inline-flex items-center gap-[8px] before:inline-block before:size-[5px] before:bg-primary before:content-['']"
                   key={token}
                 >
                   {token}
