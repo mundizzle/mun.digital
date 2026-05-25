@@ -1,0 +1,57 @@
+# CLI
+
+The `mundigital` CLI is published as `@mun.digital/cli`. It exposes read-only public profile evidence, public link snapshots, and the local stdio MCP server.
+
+Use the CLI when an agent or developer needs a terminal-friendly reference surface instead of browsing the website.
+
+## Run It
+
+```bash
+npx -y @mun.digital/cli profile
+npx -y @mun.digital/cli search react
+npx -y @mun.digital/cli brief
+```
+
+For local workspace development, the root script points at the package bin:
+
+```bash
+pnpm run mun -- profile
+pnpm run mun -- search "design systems"
+```
+
+## Commands
+
+| Command | Purpose | JSON |
+| --- | --- | --- |
+| `profile` | Prints the sanitized public JSON Resume profile as readable text. | `mundigital profile --json` |
+| `search <query>` | Searches public resume evidence and returns grounded snippets. | `mundigital search react --json` |
+| `brief` | Generates an agent-ready public career brief from sanitized evidence. | `mundigital brief --json` |
+| `links` | Lists the curated public link snapshot. This is a secondary public-links surface, not a docs section of its own. | `mundigital links --json` |
+| `links search <query>` | Searches curated public links from the Raindrop-backed snapshot. | `mundigital links search "design systems" --json` |
+| `links fetch <id>` | Fetches one public link by id from a prior links result. | `mundigital links fetch <id> --json` |
+| `mcp` | Starts the local read-only MCP server on stdio. | Not applicable |
+
+## Public Data Boundary
+
+CLI output is generated from sanitized public artifacts. Examples in docs should use placeholders or already-sanitized public artifacts only.
+
+Do not paste raw local profile output into docs. Public outputs must not expose private phone, street address, postal code, `meta.private.*`, or non-public email fields.
+
+## MCP Entry
+
+The CLI also starts the local MCP transport:
+
+```bash
+npx -y @mun.digital/cli mcp
+```
+
+Use the MCP page for the exact resource, tool, prompt, and hosted HTTP details.
+
+## Verification
+
+Run these checks when CLI docs or package exports change:
+
+```bash
+pnpm run profile:smoke
+pnpm run pack:smoke
+```

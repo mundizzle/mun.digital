@@ -13,33 +13,45 @@ export interface DocPage {
 
 export const docPages: DocPage[] = [
   {
+    slug: "components",
+    title: "Shared UI",
+    description: "Reusable, data-agnostic components from packages/ui.",
+    file: "components.mdx",
+  },
+  {
     slug: "tokens",
     title: "Token Model",
     description: "How design.tokens.json becomes shared semantic CSS.",
     file: "tokens.mdx",
   },
   {
-    slug: "components",
-    title: "Shared UI",
-    description: "Rules for reusable, data-agnostic components.",
-    file: "components.mdx",
+    slug: "cli",
+    title: "CLI",
+    description: "How to use the read-only mundigital command-line interface.",
+    file: "cli.mdx",
   },
   {
-    slug: "architecture",
-    title: "Architecture",
-    description: "Workspace boundaries for web, docs, Storybook, tokens, and UI.",
-    file: "architecture.mdx",
+    slug: "mcp",
+    title: "MCP",
+    description: "Hosted and local access to the read-only mundigital MCP server.",
+    file: "mcp.mdx",
   },
   {
     slug: "storybook",
     title: "Storybook Workflow",
-    description: "Local workbench, accessibility posture, MSW, and MCP boundaries.",
+    description: "Component catalog, design-system workbench, and test evidence.",
     file: "storybook.mdx",
+  },
+  {
+    slug: "architecture",
+    title: "Architecture",
+    description: "Workspace boundaries for web, docs, Storybook, packages, CLI, and MCP.",
+    file: "architecture.mdx",
   },
   {
     slug: "agent-workflow",
     title: "Agent Workflow",
-    description: "How agents should extend the design system safely.",
+    description: "How agents should extend public reference surfaces safely.",
     file: "agent-workflow.mdx",
   },
 ];
@@ -56,9 +68,9 @@ export function readPageMarkdown(page: DocPage) {
 
 export function docsLlmsTxt() {
   return [
-    "# mun.digital Design System",
+    "# mun.digital Public Reference",
     "",
-    "> Design-system documentation for tokens, shared UI, Storybook, and agent workflows.",
+    "> Public reference documentation for reusable UI, tokens, CLI, MCP, Storybook, and agent workflows.",
     "",
     "Primary docs: https://docs.mun.digital",
     "Profile/resume LLM surface: https://mun.digital/llms.txt",
@@ -66,7 +78,7 @@ export function docsLlmsTxt() {
     "## Pages",
     ...docPages.map((page) => `- [${page.title}](https://docs.mun.digital/${page.slug}) - ${page.description}`),
     "",
-    "This docs LLM surface is design-system-only and does not replace the profile/resume LLM surface.",
+    "This docs LLM surface documents public interfaces and workflows. Use the separate profile/resume LLM surface for profile facts.",
   ].join("\n");
 }
 

@@ -1,8 +1,8 @@
 # Storybook Workflow
 
-Storybook lives in `apps/storybook` and uses `@storybook/nextjs-vite`.
+Storybook lives in `apps/storybook` and uses `@storybook/nextjs-vite`. It is the high-level design-system workbench for `packages/ui`, not the CLI or MCP manual.
 
-The workbench includes Docs, Controls, metadata-rendered design token references, `@storybook/addon-a11y`, local-only `@storybook/addon-mcp`, and MSW infrastructure. The current static slice has no network-like data, so handlers are intentionally empty.
+The workbench includes Docs, Controls, metadata-rendered design token references, `@storybook/addon-a11y`, local-only `@storybook/addon-mcp`, and MSW infrastructure. The current component catalog contains one reusable package component: `SectionHeader`.
 
 ## Docs And Controls
 
@@ -13,6 +13,8 @@ Use Storybook Docs as the acceptance surface for reusable UI. Component pages sh
 - Explicit `argTypes` for primitive props.
 - Disabled or constrained controls for `ReactNode` slots and class-name overrides.
 - Props tables that help reviewers inspect the public API.
+
+As new components land in `packages/ui`, enumerate them in Storybook with representative states before treating them as part of the shared design system.
 
 ## Design Tokens
 
@@ -41,3 +43,5 @@ Both Vitest browser mode and the test-runner require Playwright browser binaries
 ## Local MCP Boundary
 
 Static Storybook deployment is public but noindexed. Local Storybook MCP support exists only through `@storybook/addon-mcp` while running Storybook locally. `storybook.mun.digital` does not expose or imply a live MCP endpoint.
+
+Use the MCP docs page for the public `mundigital` MCP server.

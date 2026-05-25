@@ -3,8 +3,9 @@
 The workspace separates public surfaces by responsibility:
 
 - `apps/web` serves the portfolio and profile/resume LLM surface at `mun.digital`.
-- `apps/docs` serves design-system docs at `docs.mun.digital`.
+- `apps/docs` serves public reference docs at `docs.mun.digital`.
 - `apps/storybook` serves the static component workbench at `storybook.mun.digital`.
+- `packages/cli` publishes the `mundigital` CLI and local stdio MCP server.
 - `packages/tokens` distributes generated token CSS.
 - `packages/ui` contains reusable, data-agnostic components.
 
@@ -17,9 +18,11 @@ Docs pages are generated from local Markdown-compatible content and expose match
 Canonical metadata is page-specific:
 
 - `https://docs.mun.digital` for the docs homepage.
-- `https://docs.mun.digital/tokens` for token docs.
-- Matching page URLs for shared UI, architecture, Storybook, and agent workflow docs.
+- `https://docs.mun.digital/components` for shared UI docs.
+- Matching page URLs for tokens, CLI, MCP, Storybook, architecture, and agent workflow docs.
 
 ## Public Data Boundary
 
-The docs and Storybook apps document the design system only. They must not import `packages/profile/data/resume.json`, generated resume artifacts, or private profile fields.
+The docs and Storybook apps document public interfaces and design-system workflow only. They must not import `packages/profile/data/resume.json`, generated resume artifacts, or private profile fields.
+
+CLI and MCP docs can describe sanitized public outputs, but examples must use placeholders or sanitized public artifacts only.

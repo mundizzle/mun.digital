@@ -1,6 +1,8 @@
 # Shared UI
 
-Shared components live in `packages/ui`. They are data-agnostic and do not fetch profile data, own editorial content, or assume docs-specific prose styling.
+Shared components live in `packages/ui`. The docs project is the written reference for those components, while Storybook is the interactive workbench and component catalog.
+
+Components are data-agnostic. They do not fetch profile data, own editorial content, or assume docs-specific prose styling.
 
 The first validated slice is `SectionHeader`. It keeps semantic Tailwind class names backed by shared tokens and uses `cn` for caller-provided class composition.
 
@@ -27,6 +29,7 @@ import { SectionHeader } from "@mun.digital/ui";
 
 ## Acceptance Surface
 
+- This page documents the component contract for readers.
 - Storybook Docs describes the component and its props.
 - Storybook Controls expose only useful primitive props.
 - Storybook play functions assert visible output for representative stories.

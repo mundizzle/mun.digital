@@ -1,10 +1,10 @@
 # Agent Workflow
 
-For foundation-level design-system changes, start with an OpenSpec change and keep implementation notes in the active PR or user-provided context.
+For foundation-level docs, design-system, CLI, MCP, deployment, public-data, or agent-surface changes, start with an OpenSpec change and keep implementation notes in the active PR or user-provided context.
 
 Before editing web UI, read the relevant local Next.js 16 docs and installed web guidance skills. Keep shared UI components reusable, semantic-token-backed, and free of profile data ownership.
 
-The docs LLM surface is design-system-only. Use `https://mun.digital/llms.txt` for profile and resume information.
+The docs LLM surface covers public reference docs: reusable UI, tokens, CLI, MCP, Storybook, and agent workflow. Use `https://mun.digital/llms.txt` for profile and resume facts.
 
 ## Change Sequence
 
@@ -34,6 +34,7 @@ pnpm run public:smoke
 pnpm run llms:smoke
 pnpm run profile:smoke
 pnpm run mcp:smoke
+pnpm run mcp:http:smoke http://localhost:3000/api/mcp
 pnpm run pack:smoke
 ```
 
