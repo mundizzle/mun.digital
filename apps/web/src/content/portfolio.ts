@@ -7,7 +7,7 @@ export const heroRoles = [
   "TEAM UNBLOCKING...",
   "TOKEN TAMING...",
   "HERDING AGENTS...",
-  "VIBING WITH HUMANS...",
+  "VIBING HUMANS...",
 ] as const;
 
 export const hero = {
