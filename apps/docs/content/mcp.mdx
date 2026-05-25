@@ -1,0 +1,47 @@
+# MCP
+
+The `mundigital` MCP server exposes read-only, sanitized public evidence for agents. It has one public resource, five tools, and one prompt.
+
+Use MCP when an agent needs structured access to the same public profile and link evidence without scraping pages.
+
+## Access Paths
+
+| Path | Use |
+| --- | --- |
+| Hosted Streamable HTTP | `https://mun.digital/api/mcp` |
+| Local stdio | `npx -y @mun.digital/cli mcp` |
+| Local workspace stdio | `pnpm run mcp:start` |
+
+The hosted endpoint belongs to the portfolio app. Static Storybook does not expose a live MCP endpoint; Storybook MCP support is local-only through `@storybook/addon-mcp`.
+
+## Public Surface
+
+| Type | Name | Purpose |
+| --- | --- | --- |
+| Resource | `resume` at `mun://resume` | Sanitized public JSON Resume data. |
+| Tool | `search` | Searches public profile evidence. |
+| Tool | `brief` | Generates a public career brief from sanitized evidence. |
+| Tool | `fetch` | Fetches full public profile evidence by id from a prior `search` result. |
+| Tool | `links_search` | Searches curated public links from the Raindrop-backed snapshot. This is secondary public-link evidence. |
+| Tool | `links_fetch` | Fetches one public link by id from a prior `links_search` result. |
+| Prompt | `portfolio_brief` | Guides an agent to summarize fit using only the MCP server's evidence. |
+
+## Public Data Boundary
+
+The MCP server is read-only. It does not provide write, deploy, shell, arbitrary filesystem, environment, secret, telemetry, or postinstall behavior.
+
+MCP responses come from sanitized public artifacts. Docs examples should use placeholders or sanitized public artifacts only and must not expose private phone, street address, postal code, `meta.private.*`, or non-public email fields.
+
+## Verification
+
+Use the stdio smoke when MCP code or docs change:
+
+```bash
+pnpm run mcp:smoke
+```
+
+Use the hosted route smoke against a running local web app when HTTP transport behavior changes:
+
+```bash
+pnpm run mcp:http:smoke http://localhost:3000/api/mcp
+```
