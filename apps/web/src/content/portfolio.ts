@@ -2,11 +2,11 @@
 // This is not profile source data and is not generated public-artifact data.
 
 export const heroRoles = [
+  "BEST FRONT-END DEVELOPER EVER...",
   "PUSHING PIXELS...",
   "TAMING TOKENS...",
   "HERDING AGENTS...",
   "VIBING HUMANS...",
-  "BEST FRONT-END DEVELOPER EVER...",
 ] as const;
 
 export const hero = {

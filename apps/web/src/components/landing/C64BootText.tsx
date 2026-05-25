@@ -1,9 +1,14 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import type { CSSProperties } from "react";
 
 interface C64BootTextProps {
+  fontSize: number;
+  fontSizeMd: number;
   inkColor: string;
+  inkOpacity: number;
+  lineHeight: number;
   mode: "titles" | "program";
   onProgramComplete: () => void;
   onTitlesComplete: () => void;
@@ -11,9 +16,25 @@ interface C64BootTextProps {
 }
 
 const programLines = ["10 PRINT CHR$(205.5+RND(1));", "20 GOTO 10", "RUN"] as const;
-const lineClassName = "h-[1.18em]";
+const lineClassName = "h-[calc(1em*var(--c64-boot-line-height))]";
 
-export function C64BootText({ inkColor, mode, onProgramComplete, onTitlesComplete, roles }: C64BootTextProps) {
+type C64BootTextStyle = CSSProperties & {
+  "--c64-boot-line-height": string;
+  "--c64-boot-text-size": string;
+  "--c64-boot-text-size-md": string;
+};
+
+export function C64BootText({
+  fontSize,
+  fontSizeMd,
+  inkColor,
+  inkOpacity,
+  lineHeight,
+  mode,
+  onProgramComplete,
+  onTitlesComplete,
+  roles,
+}: C64BootTextProps) {
   const stableRoles = useMemo(() => roles.filter(Boolean), [roles]);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [roleIndex, setRoleIndex] = useState(0);
@@ -98,8 +119,16 @@ export function C64BootText({ inkColor, mode, onProgramComplete, onTitlesComplet
   return (
     <div
       aria-hidden="true"
-      className="font-c64 text-[14px] leading-[1.18] font-normal tracking-normal whitespace-pre uppercase opacity-[0.45] [-webkit-font-smoothing:none] [font-smooth:never] [text-rendering:geometricPrecision] md:text-[16px]"
-      style={{ color: inkColor }}
+      className="font-c64 text-[length:var(--c64-boot-text-size)] leading-[var(--c64-boot-line-height)] font-normal tracking-normal whitespace-pre uppercase [-webkit-font-smoothing:none] [font-smooth:never] [text-rendering:geometricPrecision] md:text-[length:var(--c64-boot-text-size-md)]"
+      style={
+        {
+          "--c64-boot-line-height": String(lineHeight),
+          "--c64-boot-text-size": `${fontSize}px`,
+          "--c64-boot-text-size-md": `${fontSizeMd}px`,
+          color: inkColor,
+          opacity: inkOpacity,
+        } as C64BootTextStyle
+      }
     >
       <div className={lineClassName}>**** COMMODORE 64 BASIC V2 ****</div>
       <div className={lineClassName}>64K RAM SYSTEM&nbsp;&nbsp;38911 BASIC BYTES FREE</div>

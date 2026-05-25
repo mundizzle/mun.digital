@@ -66,7 +66,7 @@ export function TenPrint({
 
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
       context.clearRect(0, 0, width, height);
-      context.strokeStyle = strokeColor ?? getComputedStyle(canvas).color;
+      context.strokeStyle = getComputedStyle(canvas).color;
       context.globalAlpha = opacity;
       context.lineWidth = lineWidth;
       context.lineCap = lineCap;
@@ -196,6 +196,7 @@ export function TenPrint({
       ref={ref}
       className={cn("absolute inset-0 h-full w-full text-foreground", className)}
       aria-hidden="true"
+      style={strokeColor ? { color: strokeColor } : undefined}
     />
   );
 }
