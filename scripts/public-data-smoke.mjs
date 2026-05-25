@@ -100,6 +100,7 @@ async function assertCliMirror() {
 assert(publicLinks.schema_version, "public raindrops missing schema_version");
 assert(Array.isArray(publicLinks.links), "public raindrops links must be an array");
 assertNoRaindropPrivateFields(publicLinks);
+assertRaindropLinkAllowlist(publicLinks);
 
 console.log("public data smoke passed");
 
@@ -126,10 +127,32 @@ function hasPrivateMeta(value) {
 }
 
 function assertNoRaindropPrivateFields(value) {
-  const serialized = JSON.stringify(value);
   for (const privateField of ["note", "user", "creatorRef", "media", "cache", "file", "cover", "collectionId"]) {
-    assert(!serialized.includes(privateField), `public raindrops leaked private field: ${privateField}`);
+    assert(!hasObjectKey(value, privateField), `public raindrops leaked private field: ${privateField}`);
   }
+}
+
+function assertRaindropLinkAllowlist(value) {
+  const allowedKeys = new Set(["id", "title", "url", "excerpt", "tags", "collection", "created", "updated"]);
+  for (const link of value.links) {
+    const extraKeys = Object.keys(link).filter((key) => !allowedKeys.has(key));
+    assert(extraKeys.length === 0, `public raindrop link has unexpected keys: ${extraKeys.join(", ")}`);
+    assert(Array.isArray(link.tags), "public raindrop link tags must be an array");
+    assert(link.tags.includes("mun.digital"), "public raindrop link missing mun.digital tag");
+    assert(!link.tags.some((tag) => String(tag).startsWith("#")), "public raindrop link emitted a raw # tag");
+  }
+}
+
+function hasObjectKey(value, key) {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  if (!Array.isArray(value) && Object.hasOwn(value, key)) {
+    return true;
+  }
+
+  return Object.values(value).some((child) => hasObjectKey(child, key));
 }
 
 function flatten(value) {

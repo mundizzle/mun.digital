@@ -1,5 +1,51 @@
 {
-  "collections": [],
+  "collections": [
+    {
+      "id": 71039867,
+      "label": "JavaScript & TypeScript",
+      "slug": "javascript-typescript"
+    },
+    {
+      "id": 71039872,
+      "label": "Tooling & Developer Workflow",
+      "slug": "tooling-developer-workflow"
+    },
+    {
+      "id": 71039873,
+      "label": "Testing, Quality & Performance",
+      "slug": "testing-quality-performance"
+    },
+    {
+      "id": 71039874,
+      "label": "Backend, Runtime & Infrastructure",
+      "slug": "backend-runtime-infrastructure"
+    },
+    {
+      "id": 71039886,
+      "label": "Layout & Grid",
+      "slug": "layout-grid"
+    },
+    {
+      "id": 71080847,
+      "label": "Agents, MCP & Orchestration",
+      "slug": "agents-mcp-orchestration"
+    },
+    {
+      "id": 71080848,
+      "label": "AI-Assisted Development",
+      "slug": "ai-assisted-development"
+    },
+    {
+      "id": 71080851,
+      "label": "Models, Research & Technical Analysis",
+      "slug": "models-research-technical-analysis"
+    },
+    {
+      "id": 71080852,
+      "label": "AI Industry, Strategy & Culture",
+      "slug": "ai-industry-strategy-culture"
+    }
+  ],
   "requiredTags": ["mun.digital"],
   "privateTags": ["private"],
   "privateTagPrefixes": ["_"]

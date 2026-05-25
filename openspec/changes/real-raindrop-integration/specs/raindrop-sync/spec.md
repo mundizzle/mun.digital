@@ -47,3 +47,16 @@ The system SHALL generate a deterministic public Raindrop snapshot.
 #### Scenario: Tags are normalized
 - **WHEN** Raindrop tags include different casing, duplicate values, or leading `#`
 - **THEN** matching and public output use lowercased deduped tags without leading `#`
+
+### Requirement: Scheduled sync pull request
+
+The system SHALL provide scheduled automation that syncs Raindrop into a pull request instead of pushing directly to main.
+
+#### Scenario: Scheduled sync runs
+- **WHEN** the daily Raindrop sync workflow runs
+- **THEN** it uses the `RAINDROP_TOKEN` GitHub secret
+- **AND** runs sync and verification before opening or updating a pull request
+
+#### Scenario: Sync has no changes
+- **WHEN** the daily Raindrop sync produces no artifact changes
+- **THEN** no generated-data pull request is opened
