@@ -41,8 +41,8 @@ Docs and Storybook SHALL be deployed as separate Vercel projects from the same G
 ### Requirement: Shared package rebuilds
 Vercel projects SHALL rebuild affected apps when shared tokens or UI change.
 
-#### Scenario: Token or UI package changes
-- **WHEN** `packages/tokens` or `packages/ui` changes
+#### Scenario: Token or app story changes
+- **WHEN** `packages/tokens`, app component stories, or Storybook config changes
 - **THEN** docs, Storybook, and web project builds include those package changes through workspace dependencies and Turborepo tasks
 
 #### Scenario: App-only changes

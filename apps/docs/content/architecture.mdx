@@ -4,12 +4,11 @@ The workspace separates public surfaces by responsibility:
 
 - `apps/web` serves the portfolio and profile/resume LLM surface at `mun.digital`.
 - `apps/docs` serves public reference docs at `docs.mun.digital`.
-- `apps/storybook` serves the static component workbench at `storybook.mun.digital`.
+- `apps/storybook` serves the static app-component workbench at `storybook.mun.digital`.
 - `packages/cli` publishes the `mundigital` CLI and local stdio MCP server.
 - `packages/tokens` distributes generated token CSS.
-- `packages/ui` contains reusable, data-agnostic components.
 
-Turborepo coordinates build tasks so shared token and UI changes are visible to affected apps.
+Portfolio components live in `apps/web`; they are not a workspace package. Turborepo coordinates build tasks so shared token and public interface changes are visible to affected apps.
 
 ## Static Documentation Routes
 
@@ -18,8 +17,8 @@ Docs pages are generated from local Markdown-compatible content and expose match
 Canonical metadata is page-specific:
 
 - `https://docs.mun.digital` for the docs homepage.
-- `https://docs.mun.digital/components` for shared UI docs.
-- Matching page URLs for tokens, CLI, MCP, Storybook, architecture, and agent workflow docs.
+- `https://docs.mun.digital/mcp` and `https://docs.mun.digital/cli` for the primary agentic reference surfaces.
+- Matching page URLs for architecture, agent workflow, tokens, components, and Storybook supporting docs.
 
 ## Public Data Boundary
 

@@ -45,7 +45,7 @@ for (const [name, mode] of metadataRequiredTokens) {
 
 for (const consumer of consumers) {
   const content = fs.readFileSync(consumer, "utf8");
-  if (!content.includes("@mun.digital/tokens/css") && !content.includes("@mun.digital/ui/styles.css")) {
+  if (!content.includes("@mun.digital/tokens/css")) {
     throw new Error(`Missing shared token import in ${consumer}`);
   }
 }

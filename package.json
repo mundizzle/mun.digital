@@ -22,6 +22,7 @@
     "build:all": "turbo run build",
     "start": "pnpm --filter @mun.digital/web start",
     "lint": "turbo run lint --filter=@mun.digital/web",
+    "test:unit": "turbo run test:unit --filter=@mun.digital/web",
     "docs:build": "turbo run build --filter=@mun.digital/docs",
     "docs:llms:smoke": "node scripts/docs-llms-smoke.mjs",
     "storybook:build": "turbo run build --filter=@mun.digital/storybook",

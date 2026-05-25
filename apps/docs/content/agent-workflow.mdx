@@ -2,9 +2,9 @@
 
 For foundation-level docs, design-system, CLI, MCP, deployment, public-data, or agent-surface changes, start with an OpenSpec change and keep implementation notes in the active PR or user-provided context.
 
-Before editing web UI, read the relevant local Next.js 16 docs and installed web guidance skills. Keep shared UI components reusable, semantic-token-backed, and free of profile data ownership.
+Before editing web UI, read the relevant local Next.js 16 docs and installed web guidance skills. Keep portfolio components app-owned, semantic-token-backed, and free of private profile data ownership.
 
-The docs LLM surface covers public reference docs: reusable UI, tokens, CLI, MCP, Storybook, and agent workflow. Use `https://mun.digital/llms.txt` for profile and resume facts.
+The docs LLM surface covers public reference docs for MCP, CLI, architecture, workflow, tokens, components, and Storybook. Use `https://mun.digital/llms.txt` for profile and resume facts.
 
 ## Change Sequence
 
@@ -43,4 +43,4 @@ pnpm run pack:smoke
 - Do not create parallel profile data sources.
 - Do not expose private resume fields in docs or Storybook.
 - Do not add write, deploy, shell, arbitrary filesystem, environment, secret, telemetry, or postinstall behavior to public CLI or MCP surfaces without an explicit plan.
-- Do not expand the reusable component surface during a docs/reference-only phase.
+- Do not introduce a reusable UI package without an accepted plan and a real second consumer.

@@ -13,18 +13,6 @@ export interface DocPage {
 
 export const docPages: DocPage[] = [
   {
-    slug: "components",
-    title: "Shared UI",
-    description: "Reusable, data-agnostic components from packages/ui.",
-    file: "components.mdx",
-  },
-  {
-    slug: "tokens",
-    title: "Token Model",
-    description: "How design.tokens.json becomes shared semantic CSS.",
-    file: "tokens.mdx",
-  },
-  {
     slug: "cli",
     title: "CLI",
     description: "How to use the read-only mundigital command-line interface.",
@@ -37,12 +25,6 @@ export const docPages: DocPage[] = [
     file: "mcp.mdx",
   },
   {
-    slug: "storybook",
-    title: "Storybook Workflow",
-    description: "Component catalog, design-system workbench, and test evidence.",
-    file: "storybook.mdx",
-  },
-  {
     slug: "architecture",
     title: "Architecture",
     description: "Workspace boundaries for web, docs, Storybook, packages, CLI, and MCP.",
@@ -53,6 +35,24 @@ export const docPages: DocPage[] = [
     title: "Agent Workflow",
     description: "How agents should extend public reference surfaces safely.",
     file: "agent-workflow.mdx",
+  },
+  {
+    slug: "tokens",
+    title: "Token Model",
+    description: "How design.tokens.json becomes shared semantic CSS.",
+    file: "tokens.mdx",
+  },
+  {
+    slug: "components",
+    title: "Portfolio Components",
+    description: "Supporting notes for app-owned components documented in Storybook.",
+    file: "components.mdx",
+  },
+  {
+    slug: "storybook",
+    title: "Storybook Workflow",
+    description: "App component workbench, token reference, and visual test evidence.",
+    file: "storybook.mdx",
   },
 ];
 
@@ -70,7 +70,7 @@ export function docsLlmsTxt() {
   return [
     "# mun.digital Public Reference",
     "",
-    "> Public reference documentation for reusable UI, tokens, CLI, MCP, Storybook, and agent workflows.",
+    "> Public reference documentation for the read-only mundigital MCP server and CLI, with supporting architecture, workflow, token, and Storybook notes.",
     "",
     "Primary docs: https://docs.mun.digital",
     "Profile/resume LLM surface: https://mun.digital/llms.txt",
@@ -78,7 +78,7 @@ export function docsLlmsTxt() {
     "## Pages",
     ...docPages.map((page) => `- [${page.title}](https://docs.mun.digital/${page.slug}) - ${page.description}`),
     "",
-    "This docs LLM surface documents public interfaces and workflows. Use the separate profile/resume LLM surface for profile facts.",
+    "Use MCP or CLI for structured public profile evidence. Use the separate profile/resume LLM surface for profile facts.",
   ].join("\n");
 }
 

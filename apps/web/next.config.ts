@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  transpilePackages: ["@mun.digital/profile", "@mun.digital/ui"],
+  transpilePackages: ["@mun.digital/profile"],
 };
 
 export default nextConfig;

@@ -1,4 +1,4 @@
-import { cn } from "@mun.digital/ui";
+import { cn } from "@/lib/cn";
 
 interface SectionMarkerProps {
   code: string;

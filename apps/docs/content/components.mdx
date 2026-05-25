@@ -1,16 +1,16 @@
-# Shared UI
+# Portfolio Components
 
-Shared components live in `packages/ui`. The docs project is the written reference for those components, while Storybook is the interactive workbench and component catalog.
+Portfolio components live in `apps/web`. They are app implementation details documented and tested through Storybook, not a reusable package API.
 
-Components are data-agnostic. They do not fetch profile data, own editorial content, or assume docs-specific prose styling.
+Use this page as a stable pointer for agents that already know `/components.md`. New component evidence belongs in Storybook stories colocated with the app component or under `apps/web/src/stories`.
 
-The first validated slice is `SectionHeader`. It keeps semantic Tailwind class names backed by shared tokens and uses `cn` for caller-provided class composition.
+`@mun.digital/tokens` remains the shared design source. App components should use token-backed Tailwind utilities and the local `apps/web/src/lib/cn.ts` helper when class composition is needed.
 
-CVA is intentionally deferred until a component has a real variant axis.
+CVA and package-level abstractions remain deferred until there is real variant complexity and a second consumer.
 
 ## SectionHeader
 
-`SectionHeader` renders the portfolio section rail label and heading. It is intentionally small: the component owns layout and typography, while the app owns editorial content and section ordering.
+`SectionHeader` renders the portfolio section rail label and heading from `apps/web/src/components/resume/SectionHeader.tsx`.
 
 | Prop | Type | Control | Notes |
 | --- | --- | --- | --- |
@@ -22,15 +22,15 @@ CVA is intentionally deferred until a component has a real variant axis.
 | `titleClassName` | `string` | disabled | Heading override for integration cases. |
 
 ```tsx
-import { SectionHeader } from "@mun.digital/ui";
+import { SectionHeader } from "@/components/resume/SectionHeader";
 
 <SectionHeader index="02" title="Experience" />
 ```
 
 ## Acceptance Surface
 
-- This page documents the component contract for readers.
-- Storybook Docs describes the component and its props.
-- Storybook Controls expose only useful primitive props.
-- Storybook play functions assert visible output for representative stories.
-- Storybook a11y runs the checked `SectionHeader` path in hard-error mode.
+- Storybook Docs describes app component props and representative states.
+- Storybook Controls expose useful primitive props.
+- Storybook play functions assert stateful behavior and visible output.
+- Storybook a11y runs checked stories in hard-error mode.
+- App unit tests are reserved for real logic such as resume adaptation, not duplicate presentational assertions.

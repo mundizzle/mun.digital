@@ -9,13 +9,13 @@ The source of truth is root `design.tokens.json`. Colors are structured OKLCH to
 - Primitive color tokens describe raw OKLCH values.
 - Semantic color tokens describe product intent: `background`, `foreground`, `primary`, `border`, and related surface roles.
 - Layout tokens describe shared structure such as the portfolio rail width and gap.
-- Shared UI authors use semantic Tailwind utilities backed by generated variables, not raw color literals.
+- App component authors use semantic Tailwind utilities backed by generated variables, not raw color literals.
 
 ## Generated Outputs
 
 | Export | File | Purpose |
 | --- | --- | --- |
-| `@mun.digital/tokens/css` | `packages/tokens/css/tokens.generated.css` | Runtime CSS variables for web, docs, Storybook, and shared UI styles. |
+| `@mun.digital/tokens/css` | `packages/tokens/css/tokens.generated.css` | Runtime CSS variables for web, docs, and Storybook styles. |
 | `@mun.digital/tokens/metadata` | `packages/tokens/metadata/tokens.generated.mjs` | Static metadata for docs and Storybook references. |
 
 The CSS includes `storybook-design-token` comment annotations so token categories remain compatible with Storybook token browsing. The docs token reference below is rendered from metadata, so reference content does not depend on Storybook addon compatibility.
