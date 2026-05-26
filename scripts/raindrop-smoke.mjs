@@ -6,6 +6,7 @@ import { promisify } from "node:util";
 import {
   fetchRaindropCollections,
   fetchRaindropSnapshot,
+  sanitizeLinkSnapshot,
   sanitizeRaindropItems,
 } from "../packages/profile/src/raindrop-links.mjs";
 
@@ -37,7 +38,39 @@ const fixture = [
     lastUpdate: "2026-01-03T03:04:05.000Z",
     user: { $id: 456 },
     creatorRef: { _id: 789 },
-    cover: "private-cache-reference",
+    cover: "https://images.example.com/design-systems.jpg",
+    media: [{ link: "https://images.example.com/unused-media.jpg" }],
+    cache: { status: "PRIVATE CACHE MUST NOT LEAK" },
+    file: { name: "PRIVATE FILE MUST NOT LEAK" },
+  },
+  {
+    _id: 100,
+    title: "Media thumbnail article",
+    link: "https://example.com/media-thumbnail",
+    excerpt: "Uses media thumbnail.",
+    tags: ["mun.digital"],
+    collection: { $id: 123 },
+    created: "2026-01-04T03:04:05.000Z",
+    lastUpdate: "2026-01-05T03:04:05.000Z",
+    cover: "data:image/png;base64,unsafe",
+    media: [
+      { link: "javascript:alert(1)" },
+      { link: "https://images.example.com/media-thumbnail.jpg" },
+    ],
+  },
+  {
+    _id: 101,
+    title: "Unsafe thumbnail article",
+    link: "https://example.com/unsafe-thumbnail",
+    excerpt: "No thumbnail should be emitted.",
+    tags: ["mun.digital"],
+    collection: { $id: 123 },
+    created: "2026-01-01T03:04:05.000Z",
+    cover: "file:///private.png",
+    media: [
+      { link: "blob:https://example.com/private" },
+      { link: "data:image/png;base64,unsafe" },
+    ],
   },
   {
     _id: 3,
@@ -84,26 +117,70 @@ const second = sanitizeRaindropItems(fixture, config);
 const serialized = JSON.stringify(first);
 
 assert(JSON.stringify(first) === JSON.stringify(second), "raindrop sanitizer output is not deterministic");
-assert(first.schema_version === "1.0.0", "raindrop snapshot missing schema_version");
-assert(first.links.length === 1, `expected 1 public link, got ${first.links.length}`);
+assert(first.schema_version === "1.1.0", "raindrop snapshot missing schema_version");
+assert(first.links.length === 3, `expected 3 public links, got ${first.links.length}`);
+assertNoRawPrivateKeys(first);
 
-const link = first.links[0];
+const link = first.links.find((entry) => entry.id === "99");
+assert(link, "safe cover fixture link missing");
 assert(link.id === "99", "link id should be stringified");
 assert(link.collection === "design-systems", "link collection should use public slug");
 assert(link.created === "2026-01-02T03:04:05.000Z", "link created date should be ISO");
 assert(link.updated === "2026-01-03T03:04:05.000Z", "link updated date should be ISO");
+assert(link.thumbnailUrl === "https://images.example.com/design-systems.jpg", "link thumbnail should use safe cover");
 assert(
   JSON.stringify(link.tags) === JSON.stringify(["accessibility", "mun.digital", "tokens"]),
   "link tags were not normalized, deduped, and sorted",
 );
 
+const mediaThumbnailLink = first.links.find((entry) => entry.id === "100");
+assert(mediaThumbnailLink, "safe media thumbnail fixture link missing");
+assert(
+  mediaThumbnailLink.thumbnailUrl === "https://images.example.com/media-thumbnail.jpg",
+  "link thumbnail should fall back to the first safe media link",
+);
+
+const unsafeThumbnailLink = first.links.find((entry) => entry.id === "101");
+assert(unsafeThumbnailLink, "unsafe thumbnail fixture link missing");
+assert(!Object.hasOwn(unsafeThumbnailLink, "thumbnailUrl"), "unsafe thumbnail link should not emit thumbnailUrl");
+
+const resanitized = sanitizeLinkSnapshot({
+  links: [
+    {
+      ...link,
+      thumbnailUrl: "https://images.example.com/resanitized.jpg",
+      cover: "PRIVATE RAW COVER MUST NOT LEAK",
+      media: [{ link: "PRIVATE RAW MEDIA MUST NOT LEAK" }],
+    },
+    {
+      ...unsafeThumbnailLink,
+      thumbnailUrl: "blob:https://example.com/private",
+    },
+  ],
+});
+assert(
+  resanitized.links.find((entry) => entry.id === "99")?.thumbnailUrl === "https://images.example.com/resanitized.jpg",
+  "runtime link sanitizer should preserve safe thumbnailUrl",
+);
+assert(
+  !Object.hasOwn(resanitized.links.find((entry) => entry.id === "101") ?? {}, "thumbnailUrl"),
+  "runtime link sanitizer should omit unsafe thumbnailUrl",
+);
+assertNoRawPrivateKeys(resanitized);
+
 for (const forbidden of [
   "PRIVATE NOTE MUST NOT LEAK",
+  "PRIVATE CACHE MUST NOT LEAK",
+  "PRIVATE FILE MUST NOT LEAK",
   "note",
   "user",
   "creatorRef",
   "cover",
-  "private-cache-reference",
+  "cache",
+  "file",
+  "PRIVATE RAW COVER MUST NOT LEAK",
+  "PRIVATE RAW MEDIA MUST NOT LEAK",
+  "unused-media",
   "456",
   "789",
   "999",
@@ -115,6 +192,9 @@ for (const forbidden of [
   "private-selected",
   "draft-selected",
   "javascript:",
+  "data:",
+  "blob:",
+  "file:",
 ]) {
   assert(!serialized.includes(forbidden), `raindrop public output leaked forbidden value: ${forbidden}`);
 }
@@ -123,6 +203,8 @@ await assertNoTokenFailsClosed();
 await assertCollectionListingNoTokenFailsClosed();
 await assertCollectionListingSanitizesOutput();
 await assertRequiredTagsFailClosed();
+await assertSyncSearchesByRequiredTag();
+await assertMultipleRequiredTagsDeduped();
 await assertSystemCollectionIdsFailClosed();
 await assertEmptyApiFailsClosed();
 await assertSanitizedEmptyFailsClosed();
@@ -214,6 +296,49 @@ async function assertRequiredTagsFailClosed() {
   });
 
   assert(result.links.length === 0, "empty requiredTags should publish nothing");
+}
+
+async function assertSyncSearchesByRequiredTag() {
+  const seenUrls = [];
+  await fetchRaindropSnapshot({
+    token: "token",
+    config,
+    fetchImpl: async (url) => {
+      seenUrls.push(new URL(String(url)));
+      return {
+        ok: true,
+        async json() {
+          return { items: [fixture[0]] };
+        },
+      };
+    },
+  });
+
+  assert(seenUrls.length === 1, `expected one required-tag request, got ${seenUrls.length}`);
+  assert(seenUrls[0].searchParams.get("search") === "#mun.digital", "sync did not search by required public tag");
+}
+
+async function assertMultipleRequiredTagsDeduped() {
+  let calls = 0;
+  const result = await fetchRaindropSnapshot({
+    token: "token",
+    config: {
+      ...config,
+      requiredTags: ["mun.digital", "featured"],
+    },
+    fetchImpl: async () => {
+      calls += 1;
+      return {
+        ok: true,
+        async json() {
+          return { items: [fixture[0]] };
+        },
+      };
+    },
+  });
+
+  assert(calls === 2, `expected one request per required tag, got ${calls}`);
+  assert(result.links.length === 1, "duplicate required-tag results were not deduped by id");
 }
 
 async function assertSystemCollectionIdsFailClosed() {
@@ -328,6 +453,24 @@ function withoutRaindropToken(env) {
   const nextEnv = { ...env };
   delete nextEnv.RAINDROP_TOKEN;
   return nextEnv;
+}
+
+function assertNoRawPrivateKeys(value) {
+  for (const privateField of ["note", "user", "creatorRef", "media", "cache", "file", "cover", "collectionId"]) {
+    assert(!hasObjectKey(value, privateField), `raindrop public output leaked private field: ${privateField}`);
+  }
+}
+
+function hasObjectKey(value, key) {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  if (!Array.isArray(value) && Object.hasOwn(value, key)) {
+    return true;
+  }
+
+  return Object.values(value).some((child) => hasObjectKey(child, key));
 }
 
 function assert(condition, message) {
