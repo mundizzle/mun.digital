@@ -203,6 +203,8 @@ await assertNoTokenFailsClosed();
 await assertCollectionListingNoTokenFailsClosed();
 await assertCollectionListingSanitizesOutput();
 await assertRequiredTagsFailClosed();
+await assertSyncSearchesByRequiredTag();
+await assertMultipleRequiredTagsDeduped();
 await assertSystemCollectionIdsFailClosed();
 await assertEmptyApiFailsClosed();
 await assertSanitizedEmptyFailsClosed();
@@ -294,6 +296,49 @@ async function assertRequiredTagsFailClosed() {
   });
 
   assert(result.links.length === 0, "empty requiredTags should publish nothing");
+}
+
+async function assertSyncSearchesByRequiredTag() {
+  const seenUrls = [];
+  await fetchRaindropSnapshot({
+    token: "token",
+    config,
+    fetchImpl: async (url) => {
+      seenUrls.push(new URL(String(url)));
+      return {
+        ok: true,
+        async json() {
+          return { items: [fixture[0]] };
+        },
+      };
+    },
+  });
+
+  assert(seenUrls.length === 1, `expected one required-tag request, got ${seenUrls.length}`);
+  assert(seenUrls[0].searchParams.get("search") === "#mun.digital", "sync did not search by required public tag");
+}
+
+async function assertMultipleRequiredTagsDeduped() {
+  let calls = 0;
+  const result = await fetchRaindropSnapshot({
+    token: "token",
+    config: {
+      ...config,
+      requiredTags: ["mun.digital", "featured"],
+    },
+    fetchImpl: async () => {
+      calls += 1;
+      return {
+        ok: true,
+        async json() {
+          return { items: [fixture[0]] };
+        },
+      };
+    },
+  });
+
+  assert(calls === 2, `expected one request per required tag, got ${calls}`);
+  assert(result.links.length === 1, "duplicate required-tag results were not deduped by id");
 }
 
 async function assertSystemCollectionIdsFailClosed() {

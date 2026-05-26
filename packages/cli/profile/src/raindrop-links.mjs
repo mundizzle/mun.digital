@@ -129,12 +129,16 @@ export async function fetchRaindropSnapshot({ token, config, fetchImpl = fetch }
 
   const items = [];
   for (const collection of collections) {
-    const collectionItems = await fetchCollectionItems({
-      collectionId: stringValue(collection.id),
-      collectionName: publicCollectionName(collection),
-      fetchImpl,
-      token,
-    });
+    const collectionItems = [];
+    for (const requiredTag of normalizedConfig.requiredTags) {
+      collectionItems.push(...await fetchCollectionItems({
+        collectionId: stringValue(collection.id),
+        collectionName: publicCollectionName(collection),
+        fetchImpl,
+        search: `#${requiredTag}`,
+        token,
+      }));
+    }
     items.push(...collectionItems);
   }
 
@@ -142,7 +146,7 @@ export async function fetchRaindropSnapshot({ token, config, fetchImpl = fetch }
     throw new Error("Raindrop API returned no items; refusing to overwrite public artifact");
   }
 
-  const snapshot = sanitizeRaindropItems(items, config);
+  const snapshot = sanitizeRaindropItems(dedupeRaindropItems(items), config);
   if (snapshot.links.length === 0) {
     throw new Error("Raindrop sync produced no public links; refusing to overwrite public artifact");
   }
@@ -188,7 +192,7 @@ async function fetchCollectionList({ token, fetchImpl, path, label }) {
   return Array.isArray(body?.items) ? body.items : [];
 }
 
-async function fetchCollectionItems({ collectionId, collectionName, fetchImpl, token }) {
+async function fetchCollectionItems({ collectionId, collectionName, fetchImpl, search, token }) {
   if (!collectionId) {
     throw new Error("Configured Raindrop collection is missing an id");
   }
@@ -201,6 +205,9 @@ async function fetchCollectionItems({ collectionId, collectionName, fetchImpl, t
     url.searchParams.set("page", String(page));
     url.searchParams.set("perpage", String(RAINDROP_PER_PAGE));
     url.searchParams.set("sort", "-created");
+    if (search) {
+      url.searchParams.set("search", search);
+    }
 
     const response = await fetchImpl(url, {
       headers: {
@@ -225,6 +232,23 @@ async function fetchCollectionItems({ collectionId, collectionName, fetchImpl, t
   }
 
   throw new Error(`Raindrop API pagination exceeded ${RAINDROP_MAX_PAGES} pages for ${collectionName}`);
+}
+
+function dedupeRaindropItems(items) {
+  const seen = new Set();
+  const deduped = [];
+
+  for (const item of items) {
+    const id = stringValue(item?._id);
+    if (!id || seen.has(id)) {
+      continue;
+    }
+
+    seen.add(id);
+    deduped.push(item);
+  }
+
+  return deduped;
 }
 
 function sanitizePublicLink(link) {
