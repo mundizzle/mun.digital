@@ -5,171 +5,313 @@
       "id": "1731890646",
       "title": "Hyper — an API framework for Bun, distributed as source",
       "url": "https://hyperjs.ai/",
-      "excerpt": "",
-      "tags": ["mun.digital"],
+      "excerpt": "An HTTP framework for Bun. The CLI copies the components you want into your repo. No runtime dependency on the framework — the code is yours.",
+      "tags": [
+        "mun.digital"
+      ],
       "collection": "backend-runtime-infrastructure",
-      "created": "2026-05-25T06:00:47.000Z",
-      "updated": ""
+      "created": "2026-05-25T06:00:47.881Z",
+      "updated": "2026-05-25T13:17:12.921Z",
+      "thumbnailUrl": "https://hyperjs.ai/opengraph-image?08a05b7cea93ed28"
     },
     {
       "id": "1731660150",
       "title": "Claude Is Not Your Architect. Stop Letting It Pretend.",
       "url": "https://www.hollandtech.net/claude-is-not-your-architect/?utm_source=brevo",
-      "excerpt": "",
-      "tags": ["mun.digital"],
+      "excerpt": "Somewhere between 'ask Claude for a quick opinion' and 'Claude is writing our Jira tickets,' we lost the plot. AI agents are brilliant implementers. They're also confidently wrong about every decision that matters. And when it all falls over, they won't be the ones carrying the bag.",
+      "tags": [
+        "mun.digital"
+      ],
       "collection": "ai-industry-strategy-culture",
-      "created": "2026-05-24T22:17:19.000Z",
-      "updated": ""
+      "created": "2026-05-24T22:17:19.219Z",
+      "updated": "2026-05-25T13:17:12.921Z",
+      "thumbnailUrl": "https://www.hollandtech.net/og/claude-is-not-your-architect.png"
     },
     {
       "id": "1731632016",
       "title": "Agents want flexible schemas",
       "url": "https://newsletter.squishy.computer/p/agents-want-flexible-schemas",
-      "excerpt": "",
-      "tags": ["mun.digital"],
+      "excerpt": "The NoSQL comeback nobody saw coming",
+      "tags": [
+        "mun.digital"
+      ],
       "collection": "models-research-technical-analysis",
-      "created": "2026-05-24T21:19:15.000Z",
-      "updated": ""
+      "created": "2026-05-24T21:19:15.568Z",
+      "updated": "2026-05-25T13:17:12.921Z",
+      "thumbnailUrl": "https://substackcdn.com/image/fetch/$s_!9hty!,f_auto,q_auto:best,fl_progressive:steep/https%3A%2F%2Fsubconscious.substack.com%2Fapi%2Fv1%2Fpost_preview%2F195593947%2Ftwitter.jpg%3Fversion%3D4"
     },
     {
       "id": "1731630088",
       "title": "The Eternal Sloptember",
       "url": "https://geohot.github.io//blog/jekyll/update/2026/05/24/the-eternal-sloptember.html",
-      "excerpt": "",
-      "tags": ["mun.digital"],
+      "excerpt": "I’m calling it now, the adoption of AI agents into software development will be one of the most costly mistakes in the field’s history. Agents cannot program, and it’s taking longer and longer to realize that they can’t. They are a highly sophisticated statistical model designed to mimic the distribution of programming. The output is broken, but in a way that’s getting harder and harder to detect. Which is exactly what you’d expect from an increasingly accurate statistical model.",
+      "tags": [
+        "mun.digital"
+      ],
       "collection": "ai-industry-strategy-culture",
-      "created": "2026-05-24T21:13:51.000Z",
-      "updated": ""
+      "created": "2026-05-24T21:13:51.110Z",
+      "updated": "2026-05-25T13:17:12.921Z",
+      "thumbnailUrl": "https://rdl.ink/render/https%3A%2F%2Fgeohot.github.io%2F%2Fblog%2Fjekyll%2Fupdate%2F2026%2F05%2F24%2Fthe-eternal-sloptember.html"
     },
     {
       "id": "1731328238",
       "title": "What Is Code?",
       "url": "https://martinfowler.com/articles/what-is-code.html",
-      "excerpt": "",
-      "tags": ["mun.digital"],
+      "excerpt": "What is code actually for in the era of LLMs.",
+      "tags": [
+        "mun.digital"
+      ],
       "collection": "ai-assisted-development",
-      "created": "2026-05-24T13:44:21.000Z",
-      "updated": ""
+      "created": "2026-05-24T13:44:21.940Z",
+      "updated": "2026-05-25T13:17:12.921Z",
+      "thumbnailUrl": "https://martinfowler.com/logo-sq.png"
     },
     {
       "id": "1731328176",
       "title": "bliki: Interrogatory LLM",
       "url": "https://martinfowler.com/bliki/InterrogatoryLLM.html",
-      "excerpt": "",
-      "tags": ["mun.digital"],
+      "excerpt": "To give an LLM context, I can ask the LLM to interview me for it",
+      "tags": [
+        "mun.digital"
+      ],
       "collection": "ai-assisted-development",
-      "created": "2026-05-24T13:44:10.000Z",
-      "updated": ""
+      "created": "2026-05-24T13:44:10.604Z",
+      "updated": "2026-05-25T13:17:12.921Z",
+      "thumbnailUrl": "https://martinfowler.com/logo-sq.png"
     },
     {
       "id": "1731328030",
       "title": "Harness engineering for coding agent users",
       "url": "https://martinfowler.com/articles/harness-engineering.html",
-      "excerpt": "",
-      "tags": ["mun.digital"],
+      "excerpt": "A mental model for building trust in coding agents through feedforward guides, feedback sensors, and iterative harness engineering.",
+      "tags": [
+        "mun.digital"
+      ],
       "collection": "ai-assisted-development",
-      "created": "2026-05-24T13:44:00.000Z",
-      "updated": ""
+      "created": "2026-05-24T13:44:00.879Z",
+      "updated": "2026-05-25T13:17:12.921Z",
+      "thumbnailUrl": "https://martinfowler.com/articles/harness-engineering/card.png"
     },
     {
       "id": "1731327752",
       "title": "Maintainability sensors for coding agents",
       "url": "https://martinfowler.com/articles/sensors-for-coding-agents.html",
-      "excerpt": "",
-      "tags": ["mun.digital"],
+      "excerpt": "A practical walkthrough of computational sensors on the path to production, with a deep dive on ESLint and static analysis as feedback for coding agents.",
+      "tags": [
+        "mun.digital"
+      ],
       "collection": "ai-assisted-development",
-      "created": "2026-05-24T13:43:03.000Z",
-      "updated": ""
+      "created": "2026-05-24T13:43:03.004Z",
+      "updated": "2026-05-25T13:17:12.921Z",
+      "thumbnailUrl": "https://martinfowler.com/articles/sensors-for-coding-agents/card.png"
     },
     {
       "id": "1731327078",
       "title": "bliki: Vibe Coding",
       "url": "https://martinfowler.com/bliki/VibeCoding.html",
-      "excerpt": "",
-      "tags": ["mun.digital"],
+      "excerpt": "a bliki entry for Vibe Coding",
+      "tags": [
+        "mun.digital"
+      ],
       "collection": "ai-industry-strategy-culture",
-      "created": "2026-05-24T13:41:21.000Z",
-      "updated": ""
+      "created": "2026-05-24T13:41:21.195Z",
+      "updated": "2026-05-25T13:17:12.921Z",
+      "thumbnailUrl": "https://martinfowler.com/logo-sq.png"
     },
     {
       "id": "1731320237",
-      "title": "OpenSpec — A lightweight spec-driven framework",
+      "title": "OpenSpec — A lightweight spec‑driven framework",
       "url": "https://openspec.dev/",
-      "excerpt": "",
-      "tags": ["mun.digital"],
+      "excerpt": "OpenSpec is a lightweight, spec‑driven framework for coding agents and CLIs — universal, open source, and no API keys or MCP required.",
+      "tags": [
+        "mun.digital"
+      ],
       "collection": "tooling-developer-workflow",
-      "created": "2026-05-24T13:30:45.000Z",
-      "updated": ""
+      "created": "2026-05-24T13:30:45.268Z",
+      "updated": "2026-05-25T13:17:12.921Z",
+      "thumbnailUrl": "https://rdl.ink/render/https%3A%2F%2Fopenspec.dev%2F"
     },
     {
       "id": "1731307529",
       "title": "Is AI causing a repeat of Frontend’s Lost Decade? | Mastro Blog",
       "url": "https://mastrojs.github.io/blog/2026-05-23-is-AI-causing-a-repeat-of-frontends-lost-decade/",
-      "excerpt": "",
-      "tags": ["mun.digital"],
+      "excerpt": "AI is doing to programming what framework-brain did to the frontend before. Deskilling, or just working at a higher level of abstraction?",
+      "tags": [
+        "mun.digital"
+      ],
       "collection": "ai-industry-strategy-culture",
-      "created": "2026-05-24T13:00:49.000Z",
-      "updated": ""
+      "created": "2026-05-24T13:00:49.738Z",
+      "updated": "2026-05-25T13:17:12.921Z",
+      "thumbnailUrl": "https://mastrojs.github.io/blog/2026-05-23-is-AI-causing-a-repeat-of-frontends-lost-decade/og.png"
     },
     {
       "id": "1730972083",
       "title": "Uncovering the Magic Behind Playwright's Fixtures API",
       "url": "https://ivakin.dev/blog/how-playwright-fixtures-work",
-      "excerpt": "",
-      "tags": ["mun.digital"],
+      "excerpt": "Exploring the API design behind Playwright fixtures, and how a simple test API hides a surprisingly magical implementation.",
+      "tags": [
+        "mun.digital"
+      ],
       "collection": "testing-quality-performance",
-      "created": "2026-05-24T05:14:32.000Z",
-      "updated": ""
+      "created": "2026-05-24T05:14:32.559Z",
+      "updated": "2026-05-25T13:17:12.921Z",
+      "thumbnailUrl": "https://rdl.ink/render/https%3A%2F%2Fivakin.dev%2Fblog%2Fhow-playwright-fixtures-work"
     },
     {
       "id": "1730598543",
       "title": "Cursor Team Kit | Cursor Plugins",
       "url": "https://cursor.com/marketplace/cursor/cursor-team-kit",
-      "excerpt": "",
-      "tags": ["mun.digital"],
+      "excerpt": "Internal workflows used by Cursor developers for CI, code review, shipping, control-cli, control-ui, verify-this, test reliability, code cleanup, and work…",
+      "tags": [
+        "mun.digital"
+      ],
       "collection": "tooling-developer-workflow",
-      "created": "2026-05-23T23:39:02.000Z",
-      "updated": ""
+      "created": "2026-05-23T23:39:02.619Z",
+      "updated": "2026-05-25T13:17:12.921Z",
+      "thumbnailUrl": "https://cursor.com/marketplace/cursor/cursor-team-kit/opengraph-image"
     },
     {
       "id": "1730580433",
       "title": "Kevin Powell",
       "url": "https://www.kevinpowell.co/article/tell-someone-you-appreciate-them/",
-      "excerpt": "",
-      "tags": ["mun.digital"],
+      "excerpt": "Helping you fall in love with CSS.",
+      "tags": [
+        "mun.digital"
+      ],
       "collection": "ai-industry-strategy-culture",
-      "created": "2026-05-23T23:31:40.000Z",
-      "updated": ""
+      "created": "2026-05-23T23:31:40.979Z",
+      "updated": "2026-05-25T13:17:12.921Z",
+      "thumbnailUrl": "https://kevinpowell.co/kp-og.jpg"
     },
     {
       "id": "1730580093",
       "title": "Date is out, Temporal is in",
       "url": "https://piccalil.li/blog/date-is-out-and-temporal-is-in/",
-      "excerpt": "",
-      "tags": ["mun.digital"],
+      "excerpt": "Temporal is the Date system we always wanted in JavaScript. It's extremely close to being available so Mat Marquis thought it would be a good idea to explain exactly what is better about this new JavaScript date system.",
+      "tags": [
+        "mun.digital"
+      ],
       "collection": "javascript-typescript",
-      "created": "2026-05-23T23:29:59.000Z",
-      "updated": ""
+      "created": "2026-05-23T23:29:59.637Z",
+      "updated": "2026-05-25T13:17:12.921Z",
+      "thumbnailUrl": "https://piccalil.b-cdn.net/api/og-image?slug=date-is-out-and-temporal-is-in/"
     },
     {
       "id": "1729642466",
       "title": "The Figma Design Agent is Here | Figma Blog",
       "url": "https://www.figma.com/blog/the-figma-agent-is-here/",
-      "excerpt": "",
-      "tags": ["mun.digital"],
+      "excerpt": "Starting today, work with an agent that is built for Figma—directly on the canvas.",
+      "tags": [
+        "mun.digital"
+      ],
       "collection": "agents-mcp-orchestration",
-      "created": "2026-05-23T14:59:06.000Z",
-      "updated": ""
+      "created": "2026-05-23T14:59:06.610Z",
+      "updated": "2026-05-25T13:17:12.921Z",
+      "thumbnailUrl": "https://cdn.sanity.io/images/599r6htc/regionalized/8aa92140083d09e23b326e35a784acc9f94264d0-2040x1148.png?w=1200&q=70&fit=max&auto=format"
     },
     {
       "id": "1729641978",
       "title": "CSS is filling the gaps with rules. A way to style gaps in grid and flex. | utilitybend",
       "url": "https://utilitybend.com/blog/css-is-filling-the-gaps-with-rules-a-way-to-style-gaps-in-grid-and-flex/",
-      "excerpt": "",
-      "tags": ["mun.digital"],
+      "excerpt": "A practical walkthrough of CSS gap decorations: column-rule, row-rule, rule-break, rule-inset, rule-visibility-items, repeat(), and animation.",
+      "tags": [
+        "mun.digital"
+      ],
       "collection": "layout-grid",
-      "created": "2026-05-23T14:57:40.000Z",
-      "updated": ""
+      "created": "2026-05-23T14:57:40.960Z",
+      "updated": "2026-05-25T13:17:12.921Z",
+      "thumbnailUrl": "https://utilitybend.com/_astro/visual.DW3JtBZh_ZmRjK7.webp"
+    },
+    {
+      "id": "1728710796",
+      "title": "Quickstart – Codex | OpenAI Developers",
+      "url": "https://developers.openai.com/codex/quickstart?setup=cli",
+      "excerpt": "Start using Codex in your IDE, CLI, or the cloud",
+      "tags": [
+        "mun.digital"
+      ],
+      "collection": "ai-assisted-development",
+      "created": "2026-05-22T19:48:40.648Z",
+      "updated": "2026-05-25T15:00:03.027Z",
+      "thumbnailUrl": "https://developers.openai.com/og/codex/quickstart.png"
+    },
+    {
+      "id": "1728553601",
+      "title": "The elephant in the room • Josh W. Comeau",
+      "url": "https://www.joshwcomeau.com/email/wham-launch-005-elephant-2-p/",
+      "excerpt": "Friendly tutorials for developers. Focus on React, CSS, Animation, and more!",
+      "tags": [
+        "mun.digital"
+      ],
+      "collection": "ai-industry-strategy-culture",
+      "created": "2026-05-22T14:43:22.704Z",
+      "updated": "2026-05-25T15:00:03.027Z",
+      "thumbnailUrl": "https://www.joshwcomeau.com/email/josh-decapitated.png"
+    },
+    {
+      "id": "1725804067",
+      "title": "Best practices for computer and browser use with Claude | Claude",
+      "url": "https://claude.com/blog/best-practices-for-computer-and-browser-use-with-claude",
+      "excerpt": "Practical guidance for developers building computer and browser use integrations with the Claude model family.",
+      "tags": [
+        "mun.digital"
+      ],
+      "collection": "agents-mcp-orchestration",
+      "created": "2026-05-21T04:47:40.744Z",
+      "updated": "2026-05-25T15:00:03.027Z",
+      "thumbnailUrl": "https://cdn.prod.website-files.com/6889473510b50328dbb70ae6/68c469d23594abeb9ab6ee48_70ed020ecf8fa028b9bc95fa819720b6_og_claude-generic.jpg"
+    },
+    {
+      "id": "1725792810",
+      "title": "Pierre on X: \"diffshub[dot]com Take any public diff from GitHub and virtualize it nearly instantly, no matter how large, with DiffsHub. Built to show off our brand new CodeView component. To try it out, replace `github` with `diffshub` in your address bar. https://t.co/5X30YwbpHn\" / X",
+      "url": "https://x.com/pierrecomputer/status/2057174934674124941",
+      "excerpt": "Take any public diff from GitHub and virtualize it nearly instantly, no matter how large, with DiffsHub. Built to show off our brand new CodeView component. To try it out, replace `github` with `diffshub` in your address bar.",
+      "tags": [
+        "mun.digital"
+      ],
+      "collection": "tooling-developer-workflow",
+      "created": "2026-05-21T04:20:02.195Z",
+      "updated": "2026-05-25T15:00:03.027Z",
+      "thumbnailUrl": "https://pbs.twimg.com/amplify_video_thumb/2055059018998337536/img/eNS0lYnpjePrhDeC.jpg"
+    },
+    {
+      "id": "1725780176",
+      "title": "Losing Focus | Tim Kadlec",
+      "url": "https://timkadlec.com/remembers/2026/05/losing-focus/",
+      "excerpt": "Tim Kadlec writes about performance, product management, and the web.",
+      "tags": [
+        "mun.digital"
+      ],
+      "collection": "ai-industry-strategy-culture",
+      "created": "2026-05-21T04:02:38.627Z",
+      "updated": "2026-05-25T15:00:03.027Z",
+      "thumbnailUrl": "https://rdl.ink/render/https%3A%2F%2Ftimkadlec.com%2Fremembers%2F2026%2F05%2Flosing-focus%2F"
+    },
+    {
+      "id": "1725779416",
+      "title": "Further Reading on AI Fatigue · Boris Schapira",
+      "url": "https://boris.schapira.dev/notes/2026-05-readings-ai-fatigue/",
+      "excerpt": "Last February, I wrote about productivity and quality: poorly thought-out delegation, the cognitive load on validators, the silent erosion of collective skills. A text built from an organizational perspective, drawing on my conversations with colleagues who ultimately hold roles peripheral…",
+      "tags": [
+        "mun.digital"
+      ],
+      "collection": "ai-industry-strategy-culture",
+      "created": "2026-05-21T04:01:36.379Z",
+      "updated": "2026-05-25T15:00:03.027Z",
+      "thumbnailUrl": "https://res.cloudinary.com/borisschapira/image/fetch/e_blur:200,c_crop,ar_1200:600,b_white/e_grayscale/w_1200/b_rgb:0a69c7,o_20/w_1000,c_fit,l_text:PT%20Sans_110:Further%20Reading%20on%20AI%20Fatigue,x_2,y_-68,co_black,o_80/w_1000,c_fit,l_text:PT%20Sans_110:Further%20Reading%20on%20AI%20Fatigue,y_-70,co_white/l_text:PT%20Sans_50:@boostmarks@hachyderm.io,g_south_east,x_98,y_65,co_black,o_20/l_text:PT%20Sans_50:@boostmarks@hachyderm.io,g_south_east,x_100,y_67,co_white/c_fill,g_south_east,r_max,h_45,l_masto,w_45,x_750,y_60/c_scale,g_south_west,l_avataar,w_150,x_60,y_40/https://boris.schapira.dev/assets/images/category/web.jpg"
+    },
+    {
+      "id": "1725301390",
+      "title": "Modern Web Guidance | Chrome for Developers",
+      "url": "https://developer.chrome.com/docs/modern-web-guidance",
+      "excerpt": "Guidance on how to build for the modern web.",
+      "tags": [
+        "mun.digital"
+      ],
+      "collection": "tooling-developer-workflow",
+      "created": "2026-05-20T16:05:47.616Z",
+      "updated": "2026-05-25T15:00:03.027Z",
+      "thumbnailUrl": "https://developer.chrome.com/static/docs/modern-web-guidance/image/mwg-animated-logo-noloop.gif"
     }
   ]
 }
