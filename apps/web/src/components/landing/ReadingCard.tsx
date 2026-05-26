@@ -14,11 +14,11 @@ export function ReadingCard({ item }: { item: ReadingLink }) {
         <img
           src={item.thumbnailUrl}
           alt=""
-          width="320"
-          height="180"
+          width="80"
+          height="45"
           loading="lazy"
           decoding="async"
-          className="mb-4 aspect-video w-full border border-border/50 object-cover"
+          className="float-right ml-3 mb-2 aspect-video w-20 border border-border/50 object-cover"
         />
       ) : null}
       <div className="text-[10px] tracking-[0.18em] text-primary uppercase">
