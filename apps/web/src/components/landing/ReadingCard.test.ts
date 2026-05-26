@@ -28,10 +28,11 @@ describe("ReadingCard", () => {
     expect(html).toContain('rel="noopener noreferrer"');
     expect(html).toContain('src="https://images.example.com/post.jpg"');
     expect(html).toContain('alt=""');
-    expect(html).toContain('width="80"');
-    expect(html).toContain('height="45"');
+    expect(html).toContain('width="64"');
+    expect(html).toContain('height="48"');
     expect(html).toContain('loading="lazy"');
     expect(html).toContain('decoding="async"');
+    expect(html).toContain("min-w-0 flex-1");
   });
 
   it("keeps links without thumbnails text-only", () => {
