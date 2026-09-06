@@ -1,0 +1,54 @@
+$ pnpm --dir ../.. run resume:build
+$ node packages/profile/scripts/build-artifacts.mjs
+resume artifacts built
+$ next build
+⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+▲ Next.js 16.2.4 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 4.8s
+  Running TypeScript ...
+  Finished TypeScript in 2.8s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/22) ...
+  Generating static pages using 3 workers (5/22) 
+  Generating static pages using 3 workers (10/22) 
+  Generating static pages using 3 workers (16/22) 
+✓ Generating static pages using 3 workers (22/22) in 922ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/mcp
+├ ○ /icon
+├ ○ /opengraph-image
+├ ○ /resume
+├ ○ /robots.txt
+├ ○ /rss.xml
+├ ○ /sitemap.xml
+├ ○ /work
+├ ● /work/[id]
+│ ├ /work/wilson-qbx
+│ ├ /work/p3
+│ ├ /work/gierd-ds
+│ └ [+2 more paths]
+├ ○ /writing
+└ ● /writing/[id]
+  ├ /writing/agents-are-users-too
+  ├ /writing/tokens-from-figma
+  ├ /writing/rails-views-design-system
+  └ [+2 more paths]
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
