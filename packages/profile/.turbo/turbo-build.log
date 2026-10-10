@@ -1,0 +1,2 @@
+$ node scripts/build-artifacts.mjs
+resume artifacts built
